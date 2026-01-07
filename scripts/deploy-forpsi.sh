@@ -8,18 +8,14 @@
 
 # --- KONFIGURÁCIA FORPSI ---
 # TODO: Upravte podľa vašich Forpsi VPS údajov
-VPS_HOST="forpsi.sk"  # alebo IP adresa Forpsi VPS
-VPS_USER="root"       # alebo váš Forpsi SSH user
-DOMAIN="papihairdesign.sk"
+VPS_HOST="194.182.87.6"  # Updated from diagnostics
+VPS_USER="root"          # Updated from diagnostics
+DOMAIN="papihairdesign.sk" # Defaulting to existing domain, easy to change if needed
 REMOTE_ROOT="/var/www"
 REMOTE_DIR="${REMOTE_ROOT}/${DOMAIN}"
 BACKUP_DIR="${REMOTE_ROOT}/${DOMAIN}_backup_$(date +%Y%m%d_%H%M%S)"
 LOCAL_DIST="dist/app/browser"
 
-# OpenAI API Key (z environment variable - NIKDY neukladajte do Git!)
-if [ -z "$OPENAI_API_KEY" ]; then
-    log_error "OPENAI_API_KEY nie je nastavený! Nastavte ho: export OPENAI_API_KEY='sk-...'"
-fi
 
 # --- FARBY ---
 RED='\033[0;31m'
@@ -32,6 +28,11 @@ log_info() { echo -e "${BLUE}[INFO]${NC} $1"; }
 log_success() { echo -e "${GREEN}[SUCCESS]${NC} $1"; }
 log_warn() { echo -e "${YELLOW}[WARN]${NC} $1"; }
 log_error() { echo -e "${RED}[ERROR]${NC} $1"; exit 1; }
+
+# OpenAI API Key (z environment variable - NIKDY neukladajte do Git!)
+if [ -z "$OPENAI_API_KEY" ]; then
+    log_warn "OPENAI_API_KEY nie je nastavený! AI funkcie nebudú fungovať. Dodajte ho neskôr do /etc/environment."
+fi
 
 # --- 1. KONTROLA PROSTREDIA ---
 log_info "1/7) Kontrola prostredia..."
