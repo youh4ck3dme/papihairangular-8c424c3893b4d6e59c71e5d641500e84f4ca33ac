@@ -90,7 +90,7 @@ export class BlogService {
         },
         {
           type: 'paragraph',
-          text: 'Dosiahnuť tento efekt doma len so šampónom je náročné. Kľúčom sú profesionálne salónne kúry ako brazílsky keratín, botox na vlasy alebo laminácia vlasov. Trendové účesy 2026 si vyžadujú zdravý základ. Ak sú vlasy poškodené a matné, ani ten najlepší strih nevynikne.'
+          text: 'Dosiahnuť tento efekt doma len so šampónom je náročné. Kľúčom sú profesionálne salónne kúry ako brazílsky keratín, Nová Kúra na vlasy alebo laminácia vlasov. Trendové účesy 2026 si vyžadujú zdravý základ. Ak sú vlasy poškodené a matné, ani ten najlepší strih nevynikne.'
         },
         {
           type: 'heading',

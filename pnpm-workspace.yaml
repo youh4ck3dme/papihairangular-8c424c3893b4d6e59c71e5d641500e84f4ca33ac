@@ -1,8 +1,0 @@
-ignoredBuiltDependencies:
-  - '@firebase/util'
-  - '@parcel/watcher'
-  - esbuild
-  - lmdb
-  - msgpackr-extract
-  - protobufjs
-  - puppeteer

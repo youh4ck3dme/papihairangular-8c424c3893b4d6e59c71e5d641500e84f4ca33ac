@@ -60,8 +60,8 @@ export class ServiceCardsComponent implements AfterViewInit {
             icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles"><path d="M9.9 10.8c.3.9.9 1.6 1.6 1.9l.2.1c.4.1.7.2 1 .2h.2c.4 0 .7-.1 1-.2l.2-.1c.7-.3 1.3-1 1.6-1.9l.1-.2c.1-.4.2-.7.2-1v-.2c0-.4-.1-.7-.2-1l-.1-.2c-.3-.9-.9-1.6-1.6-1.9l-.2-.1c-.4-.1-.7-.2-1-.2h-.2c-.4 0-.7.1-1 .2l-.2.1c-.7.3-1.3 1-1.6 1.9l-.1.2c-.1.4-.2.7-.2 1v.2c0 .4.1.7.2 1l.1.2Z"/><path d="M19 2v2"/><path d="M20.5 4.5 22 6"/><path d="M22 12h-2"/><path d="M20.5 19.5 22 18"/><path d="M19 22v-2"/><path d="M12 22h-2"/><path d="M4.5 19.5 3 18"/><path d="M2 12h2"/><path d="M3 6 4.5 4.5"/><path d="M12 2h-2"/></svg>`,
             title: 'Vlasové Kúry',
             subtitle: 'Regenerácia',
-            description: 'Hĺbková regenerácia pre poškodené vlasy. Keratín, botox a hydratačné kúry pre okamžitý efekt.',
-            benefits: ['Keratínová kúra', 'Botox na vlasy', 'Okamžitý efekt'],
+            description: 'Hĺbková regenerácia pre poškodené vlasy. Keratín, Nová Kúra a hydratačné kúry pre okamžitý efekt.',
+            benefits: ['Keratínová kúra', 'Nová Kúra na vlasy', 'Okamžitý efekt'],
             link: '/damske-strihy',
             external: false
         },
