@@ -1,0 +1,23 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "outDir": "./out-tsc/spec",
+        "types": [
+            "jasmine"
+        ]
+    },
+    "include": [
+        "src/**/*.spec.ts",
+        "src/**/*.d.ts",
+        "src/test.ts",
+        "src/polyfills.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "src/app/features/chatbot/**/*.spec.ts",
+        "src/app/features/virtual-salon/**/*.spec.ts",
+        "src/app/features/virtual-try-on/**/*.spec.ts",
+        "src/app/features/hair-styler/**/*.spec.ts"
+    ]
+}

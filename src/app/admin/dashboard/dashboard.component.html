@@ -1,0 +1,32 @@
+<div class="p-6">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold">Admin Dashboard</h1>
+    <button (click)="logout()"
+      class="bg-copper-500 hover:bg-copper-600 text-white py-2 px-4 rounded font-semibold transition-colors">
+      Odhlásiť sa
+    </button>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <a routerLink="/admin/seo"
+      class="bg-white dark:bg-neutral-800 rounded-lg shadow-lg p-6 flex flex-col items-center hover:shadow-xl transition-shadow border border-transparent hover:border-gold/30">
+      <div class="text-3xl mb-2">🧠</div>
+      <h3 class="font-semibold">SEO‑meta generátor</h3>
+    </a>
+    <a routerLink="/admin/blog-topics"
+      class="bg-white dark:bg-neutral-800 rounded-lg shadow-lg p-6 flex flex-col items-center hover:shadow-xl transition-shadow border border-transparent hover:border-gold/30">
+      <div class="text-3xl mb-2">📝</div>
+      <h3 class="font-semibold">Návrh blogových tém</h3>
+    </a>
+    <a routerLink="/admin/code-generator"
+      class="bg-white dark:bg-neutral-800 rounded-lg shadow-lg p-6 flex flex-col items-center hover:shadow-xl transition-shadow border border-transparent hover:border-gold/30">
+      <div class="text-3xl mb-2">⚙️</div>
+      <h3 class="font-semibold">Generátor CRUD komponentov</h3>
+    </a>
+    <a routerLink="/admin/api-keys"
+      class="bg-white dark:bg-neutral-800 rounded-lg shadow-lg p-6 flex flex-col items-center hover:shadow-xl transition-shadow border border-transparent hover:border-gold/30">
+      <div class="text-3xl mb-2">🔑</div>
+      <h3 class="font-semibold">Správa API kľúčov</h3>
+    </a>
+  </div>
+</div>

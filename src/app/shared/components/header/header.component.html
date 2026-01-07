@@ -1,0 +1,90 @@
+<header class="bg-white sticky top-0 z-50 shadow-md">
+  <nav class="container mx-auto px-6 py-2 md:py-3">
+    <div class="flex items-center justify-between">
+      <a routerLink="/" class="flex items-center">
+        <img src="assets/logo.png" alt="PAPI HAIR DESIGN Logo" width="180" height="52" priority
+          class="h-16 w-auto object-contain max-h-12 md:max-h-none">
+      </a>
+
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex items-center space-x-6">
+        @for(link of navLinks; track link.path) {
+        @if(link.isExternal) {
+        <a [href]="link.path" target="_blank" rel="noopener noreferrer"
+          class="text-brand-dark hover:text-gold transition-colors duration-300 pb-1 font-medium">{{
+          link.label }}</a>
+        } @else if (link.isDisabled) {
+        <span
+          class="text-brand-dark/50 transition-colors duration-300 pb-1 font-medium flex items-center gap-1 cursor-default">
+          {{ link.label }}
+          @if(link.isNew) {
+          <span class="bg-gold/50 text-brand-dark text-[10px] font-bold px-1.5 py-0.5 rounded-full">NEW</span>
+          }
+        </span>
+        } @else {
+        <a [routerLink]="link.path" [class.text-gold]="isLinkActive(link)" [class.border-b-2]="isLinkActive(link)"
+          [class.border-gold]="isLinkActive(link)" (click)="scrollToSection(link.sectionId, $event)"
+          class="text-brand-dark hover:text-gold transition-colors duration-300 pb-1 font-medium cursor-pointer flex items-center gap-1">
+          {{ link.label }}
+          @if(link.isNew) {
+          <span class="bg-gold text-brand-dark text-[10px] font-bold px-1.5 py-0.5 rounded-full">NEW</span>
+          }
+        </a>
+        }
+        }
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <div class="md:hidden flex items-center">
+        <button (click)="toggleMenu()" class="text-brand-dark focus:outline-none" aria-label="Otevřít mobilní menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    @if (isMenuOpen()) {
+    <div class="md:hidden fixed inset-0 bg-black/70 z-40" (click)="closeMenu()" (keydown.enter)="closeMenu()"
+      tabindex="0" role="button" aria-label="Close menu overlay"></div>
+    <div class="md:hidden absolute top-0 right-0 w-64 h-screen bg-white shadow-lg z-50 p-6"
+      [class.animate-slide-in-right]="!isAnimatingOut()" [class.animate-slide-out-right]="isAnimatingOut()">
+      <div class="flex justify-end mb-4">
+        <button (click)="closeMenu()" class="text-brand-dark focus:outline-none" aria-label="Zavřít mobilní menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <nav class="flex flex-col space-y-4 text-right">
+        @for(link of navLinks; track link.path) {
+        @if(link.isExternal) {
+        <a [href]="link.path" target="_blank" rel="noopener noreferrer" (click)="closeMenu()"
+          class="text-xl text-brand-dark hover:text-gold transition-colors duration-300 font-medium">{{ link.label
+          }}</a>
+        } @if (link.isDisabled) {
+        <span
+          class="text-xl text-brand-dark/50 transition-colors duration-300 font-medium flex items-center justify-end gap-2 cursor-default">
+          {{ link.label }}
+          @if(link.isNew) {
+          <span class="bg-gold/50 text-brand-dark text-[10px] font-bold px-1.5 py-0.5 rounded-full">NEW</span>
+          }
+        </span>
+        } @else {
+        <a [routerLink]="link.path" (click)="closeMenu(); scrollToSection(link.sectionId, $event)"
+          [class.text-gold]="isLinkActive(link)" [class.border-r-4]="isLinkActive(link)"
+          [class.border-gold]="isLinkActive(link)" [class.pr-2]="isLinkActive(link)"
+          class="text-xl text-brand-dark hover:text-gold transition-colors duration-300 font-medium cursor-pointer flex items-center justify-end gap-2">
+          {{ link.label }}
+          @if(link.isNew) {
+          <span class="bg-gold text-brand-dark text-[10px] font-bold px-1.5 py-0.5 rounded-full">NEW</span>
+          }
+        </a>
+        }
+        }
+      </nav>
+    </div>
+    }
+  </nav>
+</header>

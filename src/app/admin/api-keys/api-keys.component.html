@@ -1,0 +1,29 @@
+<div class="max-w-lg mx-auto p-4">
+    <h2 class="text-2xl font-bold mb-4 text-white">Správa API kľúčov</h2>
+    <form (ngSubmit)="save()" class="grid gap-4">
+        <label class="text-white">
+            OpenAI API key
+            <input [(ngModel)]="openaiKey" name="openaiKey" type="password"
+                class="border rounded p-2 w-full bg-neutral-800 text-white border-neutral-600 focus:border-gold focus:outline-none mt-1" />
+        </label>
+        <label class="text-white">
+            Gemini API key
+            <input [(ngModel)]="geminiKey" name="geminiKey" type="password"
+                class="border rounded p-2 w-full bg-neutral-800 text-white border-neutral-600 focus:border-gold focus:outline-none mt-1" />
+        </label>
+        <label class="text-white">
+            Blackbox API key
+            <input [(ngModel)]="blackboxKey" name="blackboxKey" type="password"
+                class="border rounded p-2 w-full bg-neutral-800 text-white border-neutral-600 focus:border-gold focus:outline-none mt-1" />
+        </label>
+        <button type="submit" class="bg-gold hover:bg-white text-black py-2 rounded font-semibold transition-colors">
+            Uložiť
+        </button>
+    </form>
+    @if (saved) {
+    <p class="mt-4 text-gold-400">✅ Kľúče úspešne uložené!</p>
+    }
+    <p class="mt-4 text-sm text-neutral-400">
+        ⚠️ Kľúče sú uložené v localStorage (demo). Pre produkciu použite backend.
+    </p>
+</div>

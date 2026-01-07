@@ -1,0 +1,177 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - progressbar
+  - generic [ref=e4]:
+    - banner [ref=e6]:
+      - navigation [ref=e7]:
+        - generic [ref=e8]:
+          - link "PAPI HAIR DESIGN Logo" [ref=e9] [cursor=pointer]:
+            - /url: /
+            - img "PAPI HAIR DESIGN Logo" [ref=e10]
+          - generic [ref=e11]:
+            - link "Domov" [ref=e12] [cursor=pointer]:
+              - /url: /
+            - link "Cenník" [ref=e13] [cursor=pointer]:
+              - /url: /cennik
+            - link "O nás" [ref=e14] [cursor=pointer]:
+              - /url: /o-nas
+            - link "Kontakt" [ref=e15] [cursor=pointer]:
+              - /url: /kontakt
+            - link "Blog NEW" [ref=e16] [cursor=pointer]:
+              - /url: /blog
+              - text: Blog
+              - generic [ref=e17]: NEW
+            - generic [ref=e18]:
+              - text: AI Stylista
+              - generic [ref=e19]: NEW
+            - link "Rezervácia" [ref=e20] [cursor=pointer]:
+              - /url: https://services.bookio.com/papi-hair-design/widget?lang=sk
+            - link "Shop" [ref=e21] [cursor=pointer]:
+              - /url: http://www.goldhaircare.sk/affiliate/2208
+    - main [ref=e22]:
+      - generic [ref=e24]:
+        - generic [ref=e25]:
+          - heading "Náš Blog" [level=1] [ref=e27]
+          - paragraph [ref=e28]: Novinky, príbehy a tipy zo sveta PAPI HAIR DESIGN.
+        - generic [ref=e29]:
+          - article [ref=e30]:
+            - link "Trendové účesy 2026 - Čo bude IN?" [ref=e31] [cursor=pointer]:
+              - /url: /blog/trendove-ucesy-2026
+              - img "Trendové účesy 2026 - Čo bude IN?" [ref=e32]
+            - generic [ref=e33]:
+              - generic [ref=e34]:
+                - generic [ref=e35]: trendy
+                - generic [ref=e36]: účesy
+              - heading "Trendové účesy 2026 - Čo bude IN?" [level=2] [ref=e37]:
+                - link "Trendové účesy 2026 - Čo bude IN?" [ref=e38] [cursor=pointer]:
+                  - /url: /blog/trendove-ucesy-2026
+              - paragraph [ref=e39]: Objavte najhorúcejšie trendy v účesoch pre rok 2026. Od krátkych pixie strihov po dlhé vlny - pripravte sa na nový rok štýlovo!
+              - generic [ref=e40]:
+                - generic [ref=e41]:
+                  - generic [ref=e42]: R
+                  - generic [ref=e43]: Róbert Papcun
+                - generic [ref=e44]:
+                  - generic [ref=e45]: 5. Jan 2026
+                  - generic [ref=e46]:
+                    - img [ref=e47]
+                    - text: 4 min
+          - article [ref=e49]:
+            - link "Starostlivosť o vlasy v zime - 7 overených tipov" [ref=e50] [cursor=pointer]:
+              - /url: /blog/starostlivost-o-vlasy-v-zime
+              - img "Starostlivosť o vlasy v zime - 7 overených tipov" [ref=e51]
+            - generic [ref=e52]:
+              - generic [ref=e53]:
+                - generic [ref=e54]: starostlivosť
+                - generic [ref=e55]: zima
+              - heading "Starostlivosť o vlasy v zime - 7 overených tipov" [level=2] [ref=e56]:
+                - link "Starostlivosť o vlasy v zime - 7 overených tipov" [ref=e57] [cursor=pointer]:
+                  - /url: /blog/starostlivost-o-vlasy-v-zime
+              - paragraph [ref=e58]: Zima je náročné obdobie pre vaše vlasy. Mráz, vietor a suchý vzduch z kúrenia ich vysušujú. Pozrite si naše tipy na zdravé vlasy počas zimy.
+              - generic [ref=e59]:
+                - generic [ref=e60]:
+                  - generic [ref=e61]: M
+                  - generic [ref=e62]: Michaela Kováčová
+                - generic [ref=e63]:
+                  - generic [ref=e64]: 2. Jan 2026
+                  - generic [ref=e65]:
+                    - img [ref=e66]
+                    - text: 5 min
+          - article [ref=e68]:
+            - link "Balayage vs Ombre - Aký je rozdiel?" [ref=e69] [cursor=pointer]:
+              - /url: /blog/balayage-vs-ombre-rozdiel
+              - img "Balayage vs Ombre - Aký je rozdiel?" [ref=e70]
+            - generic [ref=e71]:
+              - generic [ref=e72]:
+                - generic [ref=e73]: balayage
+                - generic [ref=e74]: ombre
+              - heading "Balayage vs Ombre - Aký je rozdiel?" [level=2] [ref=e75]:
+                - link "Balayage vs Ombre - Aký je rozdiel?" [ref=e76] [cursor=pointer]:
+                  - /url: /blog/balayage-vs-ombre-rozdiel
+              - paragraph [ref=e77]: Balayage a ombre sú dve najpopulárnejšie techniky farbenia vlasov v našom salóne. Mnohí klienti si ich mýlia. Vysvetlíme vám rozdiel.
+              - generic [ref=e78]:
+                - generic [ref=e79]:
+                  - generic [ref=e80]: R
+                  - generic [ref=e81]: Róbert Papcun
+                - generic [ref=e82]:
+                  - generic [ref=e83]: 28. Dec 2025
+                  - generic [ref=e84]:
+                    - img [ref=e85]
+                    - text: 6 min
+    - contentinfo [ref=e88]:
+      - generic [ref=e90]:
+        - generic [ref=e91]:
+          - img "PAPI HAIR DESIGN Logo" [ref=e93] [cursor=pointer]
+          - generic [ref=e94]:
+            - paragraph [ref=e95]: Hair studio & Barber
+            - paragraph [ref=e96]: Predaj vlasovej kozmetiky
+            - paragraph [ref=e97]:
+              - text: Trieda SNP 61 (Spoločenský pavilon)
+              - text: Košice, Slovensko
+          - 'link "tel: +421 949 459 624" [ref=e98] [cursor=pointer]':
+            - /url: tel:+421949459624
+          - link "papihairdesign@gmail.com" [ref=e99] [cursor=pointer]:
+            - /url: mailto:papihairdesign@gmail.com
+        - generic [ref=e100]:
+          - heading "Otváracie hodiny" [level=3] [ref=e101]
+          - list [ref=e102]:
+            - listitem [ref=e103]:
+              - text: Pondelok
+              - generic [ref=e104]: 08:00 – 17:00
+            - listitem [ref=e105]:
+              - text: Utorok
+              - generic [ref=e106]: 08:00 – 17:00
+            - listitem [ref=e107]:
+              - text: Streda
+              - generic [ref=e108]: 08:00 – 17:00
+            - listitem [ref=e109]:
+              - text: Štvrtok
+              - generic [ref=e110]: 08:00 – 17:00
+            - listitem [ref=e111]:
+              - text: Piatok
+              - generic [ref=e112]: 08:00 – 17:00
+            - listitem [ref=e113]:
+              - text: Sobota
+              - generic [ref=e114]: Podľa objednávok
+            - listitem [ref=e115]:
+              - text: Nedeľa
+              - generic [ref=e116]: Zavreté
+          - paragraph [ref=e117]: Práve teraz zatvorené
+        - generic [ref=e118]:
+          - generic [ref=e119]:
+            - heading "Rýchle odkazy" [level=3] [ref=e120]
+            - list [ref=e121]:
+              - listitem [ref=e122]:
+                - link "Cenník" [ref=e123] [cursor=pointer]:
+                  - /url: /cennik
+              - listitem [ref=e124]:
+                - link "Blog" [ref=e125] [cursor=pointer]:
+                  - /url: /blog
+              - listitem [ref=e126]:
+                - link "AI Stylista" [ref=e127] [cursor=pointer]:
+                  - /url: /ai-stylista
+              - listitem [ref=e128]:
+                - link "O nás" [ref=e129] [cursor=pointer]:
+                  - /url: /o-nas
+              - listitem [ref=e130]:
+                - link "Kontakt" [ref=e131] [cursor=pointer]:
+                  - /url: /kontakt
+          - generic [ref=e132]:
+            - link "Sledujte nás na Instagrame" [ref=e133] [cursor=pointer]:
+              - /url: https://www.instagram.com/papi_hair_design/
+              - img "Instagram" [ref=e134]
+            - link "Sledujte nás na Facebook" [ref=e135] [cursor=pointer]:
+              - /url: https://www.facebook.com/papihairdesign/
+              - img "Facebook" [ref=e136]
+            - link "Sledujte nás na TikTok" [ref=e137] [cursor=pointer]:
+              - /url: https://www.tiktok.com/@papi_hair_design
+              - img "TikTok" [ref=e138]
+      - generic [ref=e139]:
+        - paragraph [ref=e140]: © 2026 PAPI HAIR DESIGN. All Rights Reserved.
+        - paragraph [ref=e141]:
+          - text: "Rezervácie k Róbertovi Papcunovi \"PAPI\" je potrebná konzultácia, ktorú si viete dohodnúť na tel.č:"
+          - link "+421 949 459 624" [ref=e142] [cursor=pointer]:
+            - /url: tel:+421949459624
+```

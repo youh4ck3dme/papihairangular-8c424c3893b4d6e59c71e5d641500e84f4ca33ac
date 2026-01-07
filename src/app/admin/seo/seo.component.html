@@ -1,0 +1,35 @@
+<div class="max-w-lg mx-auto p-4">
+    <h2 class="text-2xl font-bold mb-4 text-white">SEO‑meta generátor pre blog</h2>
+    <form (ngSubmit)="generate()" class="grid gap-4">
+        <input [(ngModel)]="title" name="title" placeholder="Názov článku"
+            class="border rounded p-2 bg-neutral-800 text-white border-neutral-600 focus:border-gold focus:outline-none"
+            required />
+        <input [(ngModel)]="slug" name="slug" placeholder="Slug (URL časť)"
+            class="border rounded p-2 bg-neutral-800 text-white border-neutral-600 focus:border-gold focus:outline-none"
+            required />
+        <button type="submit" [disabled]="loading"
+            class="bg-gold hover:bg-white text-black py-2 rounded font-semibold disabled:bg-neutral-500 disabled:cursor-not-allowed transition-colors">
+            {{ loading ? 'Generujem...' : 'Generovať meta description' }}
+        </button>
+    </form>
+    @if (result && !loading) {
+    <p class="mt-4 text-gold-400">{{ result }}</p>
+    }
+
+    @if (generatedData) {
+    <div class="mt-4 p-4 bg-neutral-800 rounded border border-neutral-700">
+        <h3 class="font-bold text-white mb-2">Vygenerované dáta:</h3>
+        <div class="mb-2">
+            <span class="block text-neutral-400 text-sm font-semibold">Description:</span>
+            <p class="text-white">{{ generatedData.description }}</p>
+        </div>
+        <div>
+            <span class="block text-neutral-400 text-sm font-semibold">Keywords:</span>
+            <p class="text-white">{{ generatedData.keywords }}</p>
+        </div>
+    </div>
+    }
+    @if (result && result.includes('Prosím')) {
+    <p class="mt-4 text-copper-500">{{ result }}</p>
+    }
+</div>

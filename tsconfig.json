@@ -1,0 +1,46 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "experimentalDecorators": true,
+    "useDefineForClassFields": false,
+    "module": "ESNext",
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "skipLibCheck": true,
+    "types": [
+      "node",
+      "jasmine"
+    ],
+    "moduleResolution": "bundler",
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "allowJs": true,
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules",
+    "fix-readme-mdlint.js",
+    "src/**/*.spec.ts",
+    "src/test.ts",
+    "src/app/features/chatbot/**/*",
+    "src/app/features/virtual-salon/**/*",
+    "src/app/features/virtual-try-on/**/*",
+    "src/app/features/hair-styler/**/*",
+    "src/app/core/services/chat.service.ts",
+    "src/app/core/services/image.service.ts",
+    "src/app/core/services/openai.service.ts"
+  ]
+}

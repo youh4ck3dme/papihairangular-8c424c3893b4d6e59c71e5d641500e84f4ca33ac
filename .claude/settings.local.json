@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cat:*)",
+      "Bash(npx eslint . --format=json)",
+      "Bash(cd /Users/nezadal/Downloads/PAPI HAIR DESIGN/angular-papihairdesign/workspace && npx eslint:*)",
+      "Bash(npx eslint src/app/shared/components/footer/footer.component.html src/app/shared/components/header/header.component.html --format=compact)",
+      "Bash(npx eslint:*)",
+      "Bash(ng lint)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

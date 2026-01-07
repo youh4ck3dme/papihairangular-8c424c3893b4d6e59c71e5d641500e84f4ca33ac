@@ -1,0 +1,53 @@
+/* Google Maps Container */
+.map-container {
+  position: relative;
+  background-color: #1a1a1a;
+}
+
+/* Pulsing marker effect */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.5);
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.pulse-marker {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(212, 175, 55, 0.3);
+  animation: pulse 2s infinite;
+  pointer-events: none;
+}
+
+/* Info window styling */
+.gm-style .gm-style-iw-c {
+  border-radius: 8px;
+  padding: 0;
+}
+
+.gm-style .gm-style-iw-d {
+  overflow: hidden !important;
+}
+
+/* Map controls */
+.gm-style button {
+  background-color: #1a1a1a !important;
+  border: 1px solid #D4AF37 !important;
+}
+
+.gm-style button:hover {
+  background-color: #2a2a2a !important;
+}

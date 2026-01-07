@@ -1,0 +1,79 @@
+<div class="max-w-4xl mx-auto text-center flex-grow flex flex-col justify-center">
+  <h1 class="text-4xl font-bold text-gold mb-2">Kontaktujte Nás</h1>
+  <p class="text-lg text-brand-light/80 mb-8">Nájdete nás v Spoločenskom pavilóne v Košiciach. Tešíme sa na vašu
+    návštevu.</p>
+
+  <div class="bg-black/30 p-8 rounded-lg shadow-lg grid grid-cols-1 md:grid-cols-2 gap-8 text-left mb-12">
+    <div>
+      <h2 class="text-2xl font-semibold text-gold mb-4">Adresa</h2>
+      <p class="text-white">PAPI HAIR DESIGN</p>
+      <p class="text-white">Trieda SNP 61 (Spoločenský pavilon)</p>
+      <p class="text-white">Košice, Slovensko</p>
+      <div class="mt-4">
+        <a href="https://maps.google.com/?q=Papi+Hair+Design+Košice+Trieda+SNP+61" target="_blank"
+          rel="noopener noreferrer" class="text-gold hover:underline">Navigovať &rarr;</a>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-2xl font-semibold text-gold mb-4">Spojte sa s nami</h2>
+      <p class="text-white">Telefón:&nbsp;&nbsp;<a href="tel:+421949459624" class="hover:text-gold">+421 949 459 624</a>
+      </p>
+      <p class="text-white">Email:&nbsp;&nbsp;<a href="mailto:papihairdesign@gmail.com"
+          class="text-gold hover:text-yellow-300">papihairdesign@gmail.com</a></p>
+    </div>
+  </div>
+
+  <!-- Interactive Google Map with Embed -->
+  <div class="mb-12 rounded-lg overflow-hidden shadow-lg border border-gold/20 relative">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2633.8888888888888!2d21.239136315674!3d48.707610379272!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x473ee01f87a2e7b7%3A0x5e5e5e5e5e5e5e5e!2sTrieda%20SNP%2061%2C%20040%2011%20Ko%C5%A1ice!5e0!3m2!1ssk!2ssk!4v1732607000000!5m2!1ssk!2ssk"
+      width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade" class="map-container">
+    </iframe>
+  </div>
+
+  <!-- Contact Form -->
+  <div class="bg-black/30 p-8 rounded-lg shadow-lg text-left">
+    <h2 class="text-2xl font-semibold text-gold mb-6 text-center">Napíšte nám</h2>
+    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="space-y-6">
+      <div>
+        <label for="name" class="block text-sm font-medium text-brand-light/80 mb-2">Meno</label>
+        <input type="text" id="name" formControlName="name"
+          class="w-full bg-brand-dark/50 border border-neutral-600 rounded-md p-3 text-white focus:ring-gold focus:border-gold"
+          placeholder="Vaše meno">
+        @if (contactForm.get('name')?.invalid && contactForm.get('name')?.touched) {
+        <p class="text-copper-500 text-sm mt-1">Meno je povinné.</p>
+        }
+      </div>
+      <div>
+        <label for="email" class="block text-sm font-medium text-brand-light/80 mb-2">Email</label>
+        <input type="email" id="email" formControlName="email"
+          class="w-full bg-brand-dark/50 border border-neutral-600 rounded-md p-3 text-white focus:ring-gold focus:border-gold"
+          placeholder="vas@email.com">
+        @if (contactForm.get('email')?.touched) {
+        @if (contactForm.get('email')?.hasError('required')) {
+        <p class="text-copper-500 text-sm mt-1">Email je povinný.</p>
+        }
+        @if (contactForm.get('email')?.hasError('email')) {
+        <p class="text-red-400 text-sm mt-1">Zadajte platnú emailovú adresu.</p>
+        }
+        }
+      </div>
+      <div>
+        <label for="message" class="block text-sm font-medium text-brand-light/80 mb-2">Správa</label>
+        <textarea id="message" formControlName="message" rows="5"
+          class="w-full bg-brand-dark/50 border border-neutral-600 rounded-md p-3 text-white focus:ring-gold focus:border-gold"
+          placeholder="Ako Vám môžeme pomôcť?"></textarea>
+        @if (contactForm.get('message')?.invalid && contactForm.get('message')?.touched) {
+        <p class="text-copper-500 text-sm mt-1">Správa je povinná.</p>
+        }
+      </div>
+      <div class="text-right">
+        <button type="submit" [disabled]="contactForm.invalid"
+          class="bg-gold text-brand-dark font-bold py-3 px-8 rounded-full hover:bg-yellow-300 transition-all duration-300 shadow-lg shadow-gold/20 disabled:bg-neutral-500 disabled:cursor-not-allowed">
+          Odoslať správu
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

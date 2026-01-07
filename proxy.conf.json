@@ -1,0 +1,17 @@
+{
+    "/proxy": {
+        "target": "https://papihairdesign.sk",
+        "secure": true,
+        "changeOrigin": true,
+        "logLevel": "debug"
+    },
+    "/api/replicate": {
+        "target": "https://api.replicate.com",
+        "secure": true,
+        "changeOrigin": true,
+        "pathRewrite": {
+            "^/api/replicate": ""
+        },
+        "logLevel": "debug"
+    }
+}

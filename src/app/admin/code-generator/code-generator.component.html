@@ -1,0 +1,46 @@
+<div class="p-4 max-w-2xl mx-auto">
+    <h2 class="text-2xl font-bold mb-4 text-white">Generátor CRUD komponentu</h2>
+    <input [(ngModel)]="modelName" placeholder="Názov modelu (napr. Appointment)"
+        class="border rounded p-2 w-full mb-2 bg-neutral-800 text-white border-neutral-600 focus:border-gold focus:outline-none" />
+    <button (click)="generate()" [disabled]="loading || !modelName"
+        class="bg-gold hover:bg-white text-black py-2 px-4 rounded font-semibold disabled:bg-neutral-500 disabled:cursor-not-allowed transition-colors">
+        {{ loading ? 'Generujem...' : 'Generovať' }}
+    </button>
+
+    @if (loading) {
+    <div class="mt-4 text-white">Generujem kód...</div>
+    }
+
+    @if (generated.html) {
+    <div class="mt-4">
+        <h3 class="font-semibold text-white">HTML</h3>
+        <pre class="bg-neutral-800 p-2 rounded text-white overflow-x-auto">{{ generated.html }}</pre>
+        <button (click)="downloadFile('component.html', generated.html)"
+            class="bg-neutral-600 hover:bg-neutral-700 text-white py-1 px-2 rounded mt-1 transition-colors">
+            Stiahnuť HTML
+        </button>
+    </div>
+    }
+
+    @if (generated.ts) {
+    <div class="mt-4">
+        <h3 class="font-semibold text-white">TypeScript</h3>
+        <pre class="bg-neutral-800 p-2 rounded text-white overflow-x-auto">{{ generated.ts }}</pre>
+        <button (click)="downloadFile('component.ts', generated.ts)"
+            class="bg-neutral-600 hover:bg-neutral-700 text-white py-1 px-2 rounded mt-1 transition-colors">
+            Stiahnuť TS
+        </button>
+    </div>
+    }
+
+    @if (generated.css) {
+    <div class="mt-4">
+        <h3 class="font-semibold text-white">CSS</h3>
+        <pre class="bg-neutral-800 p-2 rounded text-white overflow-x-auto">{{ generated.css }}</pre>
+        <button (click)="downloadFile('component.css', generated.css)"
+            class="bg-neutral-600 hover:bg-neutral-700 text-white py-1 px-2 rounded mt-1 transition-colors">
+            Stiahnuť CSS
+        </button>
+    </div>
+    }
+</div>

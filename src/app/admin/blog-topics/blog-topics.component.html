@@ -1,0 +1,15 @@
+<div class="p-4 max-w-lg mx-auto">
+    <h2 class="text-2xl font-bold mb-4 text-white">Návrh blogových tém</h2>
+    <button (click)="fetch()" [disabled]="loading"
+        class="bg-gold hover:bg-white text-black py-2 px-4 rounded font-semibold disabled:bg-neutral-500 disabled:cursor-not-allowed transition-colors">
+        {{ loading ? 'Načítavam...' : 'Získať návrhy' }}
+    </button>
+
+    @if (topics.length) {
+    <ul class="mt-4 list-disc list-inside text-white">
+        @for (t of topics; track t) {
+        <li class="mb-2">{{ t }}</li>
+        }
+    </ul>
+    }
+</div>

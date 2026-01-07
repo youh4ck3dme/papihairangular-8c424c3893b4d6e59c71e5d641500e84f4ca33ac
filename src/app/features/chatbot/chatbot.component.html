@@ -1,0 +1,51 @@
+<div class="chatbot-container" [class.open]="isOpen">
+    <button class="chatbot-toggle" (click)="toggle()">
+        @if (!isOpen) {
+        <img src="/images/new_favicon/apple-touch-icon.png" alt="Chat" class="toggle-icon">
+        }
+        @if (isOpen) {
+        <span class="close-icon">✖</span>
+        <button class="reset-btn" (click)="resetConversation()">←</button>
+        }
+    </button>
+    @if (isOpen) {
+    <div class="chatbot-window" style="scroll-behavior: smooth;">
+        <div class="header">
+            <div class="header-title">
+                <img src="/images/new_favicon/apple-touch-icon.png" alt="PAPI" class="chatbot-logo">
+                <h3>PAPI AI Asistent</h3>
+            </div>
+            <button (click)="toggle()" class="close-btn">✕</button>
+        </div>
+
+        <!-- Welcome Message -->
+        @if (messages.length === 0) {
+        <div class="welcome-section">
+            <p class="welcome-text">{{ welcomeMessage }}</p>
+            <div class="suggestions">
+                @for (suggestion of suggestions; track suggestion.text) {
+                <button (click)="useSuggestion(suggestion.text)" class="suggestion-btn">
+                    <span class="suggestion-icon">{{ suggestion.icon }}</span>
+                    <span class="suggestion-text">{{ suggestion.text }}</span>
+                </button>
+                }
+            </div>
+        </div>
+        }
+
+        <!-- Messages -->
+        <div class="messages" #messagesContainer>
+            @for (msg of messages; track msg.timestamp) {
+            <div [class]="msg.role" [class.pending]="msg.pending">
+                <span class="sender">{{ msg.role === 'user' ? 'Ty' : 'Asistent' }}</span>
+                <span class="text">{{ msg.text }}</span>
+            </div>
+            }
+        </div>
+        <div class="input-area">
+            <input [(ngModel)]="userInput" (keydown.enter)="sendMessage()" placeholder="Napíšte správu..." />
+            <button (click)="sendMessage()" [disabled]="isLoading">{{ isLoading ? '...' : 'Odoslať' }}</button>
+        </div>
+    </div>
+    }
+</div>

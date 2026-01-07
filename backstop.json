@@ -1,0 +1,70 @@
+{
+    "id": "papihair_visual_regression",
+    "viewports": [
+        {
+            "label": "mobile",
+            "width": 375,
+            "height": 812
+        },
+        {
+            "label": "tablet",
+            "width": 768,
+            "height": 1024
+        },
+        {
+            "label": "desktop",
+            "width": 1920,
+            "height": 1080
+        }
+    ],
+    "onBeforeScript": "puppet/onBefore.cjs",
+    "onReadyScript": "puppet/onReady.cjs",
+    "scenarios": [
+        {
+            "label": "Blog List - Main Page",
+            "cookiePath": "",
+            "url": "https://localhost:3002/blog",
+            "referenceUrl": "",
+            "readyEvent": "",
+            "readySelector": "article",
+            "delay": 3000,
+            "hideSelectors": [],
+            "removeSelectors": [],
+            "hoverSelector": "",
+            "clickSelector": "",
+            "postInteractionWait": 0,
+            "selectors": [
+                "document"
+            ],
+            "selectorExpansion": true,
+            "expect": 0,
+            "misMatchThreshold": 0.1,
+            "requireSameDimensions": true
+        }
+    ],
+    "paths": {
+        "bitmaps_reference": "backstop_data/bitmaps_reference",
+        "bitmaps_test": "backstop_data/bitmaps_test",
+        "engine_scripts": "backstop_data/engine_scripts",
+        "html_report": "backstop_data/html_report",
+        "ci_report": "backstop_data/ci_report"
+    },
+    "report": [
+        "browser",
+        "CI"
+    ],
+    "engine": "puppeteer",
+    "engineOptions": {
+        "executablePath": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        "args": [
+            "--no-sandbox",
+            "--ignore-certificate-errors"
+        ],
+        "headless": true
+    },
+    "asyncCaptureLimit": 5,
+    "asyncCompareLimit": 50,
+    "debug": false,
+    "debugWindow": false,
+    "archiveReport": true
+}

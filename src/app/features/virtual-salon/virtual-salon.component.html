@@ -1,0 +1,337 @@
+<div class="min-h-screen bg-brand-dark">
+  <!-- Header Section - WHITE -->
+  <header class="bg-white text-brand-dark py-12 md:py-16 lg:py-20 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gold tracking-wider mb-4">
+        VIRTUAL SALON
+      </h1>
+      <p class="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+        Odfotťe sa cez webcam a nechajte AI <span class="text-gold font-semibold">magicky zmeniť</span> váš účes
+      </p>
+      <div class="h-px w-24 sm:w-32 bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mt-6"></div>
+    </div>
+  </header>
+
+  <!-- Main Content - WHITE background with BLACK camera -->
+  <main class="bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
+
+      <!-- Error Message -->
+      @if (errorMessage()) {
+      <div class="mb-6 bg-red-50 border-l-4 border-red-500 text-red-700 px-4 sm:px-6 py-4 rounded-r-lg" role="alert">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 sm:w-6 sm:h-6 text-red-500 shrink-0" fill="none" stroke="currentColor"
+            viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span class="text-sm sm:text-base">{{ errorMessage() }}</span>
+        </div>
+      </div>
+      }
+
+      <!-- Success Message -->
+      @if (successMessage()) {
+      <div class="mb-6 bg-gold/10 border-l-4 border-gold text-gold-dark px-4 sm:px-6 py-4 rounded-r-lg" role="alert">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 sm:w-6 sm:h-6 text-gold shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span class="text-sm sm:text-base">{{ successMessage() }}</span>
+        </div>
+      </div>
+      }
+
+      <!-- Grid Layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12">
+
+        <!-- LEFT: Camera / Captured Image -->
+        <div class="order-1">
+          <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+            <!-- Card Header -->
+            <div class="px-4 sm:px-6 py-4 border-b border-gray-100 bg-gray-50">
+              <h2 class="text-lg sm:text-xl font-bold text-gray-900 flex items-center gap-2">
+                <div class="w-8 h-8 sm:w-10 sm:h-10 bg-gold/10 rounded-lg flex items-center justify-center">
+                  <svg class="w-4 h-4 sm:w-5 sm:h-5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </div>
+                Virtuálne Zrkadlo
+              </h2>
+            </div>
+
+            <!-- Camera View - BLACK -->
+            <div class="relative aspect-square bg-brand-dark">
+
+              <!-- No Camera State -->
+              @if (!cameraActive() && !capturedImageBase64()) {
+              <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-6 sm:p-8">
+                <div
+                  class="w-20 h-20 sm:w-24 sm:h-24 bg-gold/10 border border-gold/20 rounded-full flex items-center justify-center mb-4 sm:mb-6">
+                  <svg class="w-10 h-10 sm:w-12 sm:h-12 text-gold" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                      d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <h3 class="text-lg sm:text-xl font-bold text-white mb-2">Začnite s kamerou</h3>
+                <p class="text-sm sm:text-base text-brand-light/70 mb-6 max-w-xs">Kliknite na tlačidlo pre aktiváciu
+                  webcam</p>
+                <button (click)="startCamera()"
+                  class="inline-flex items-center gap-2 bg-gold hover:bg-white text-brand-dark px-6 sm:px-8 py-3 rounded-full font-semibold text-sm sm:text-base transition-all duration-300 shadow-lg shadow-gold/25 hover:shadow-gold/40 active:scale-95">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Zapnúť Kameru
+                </button>
+              </div>
+              }
+
+              <!-- Video Element -->
+              <video #videoElement [class.hidden]="!cameraActive()" class="w-full h-full object-cover mirror" autoplay
+                playsinline muted>
+              </video>
+
+              <!-- Captured Image Display -->
+              @if (capturedImageBase64() && !cameraActive()) {
+              <img [src]="capturedImageBase64()" alt="Vaša fotka" class="w-full h-full object-cover">
+              }
+
+              <!-- Camera Active Overlay -->
+              @if (cameraActive()) {
+              <!-- Capture Button -->
+              <div class="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2">
+                <button (click)="capturePhoto()"
+                  class="w-14 h-14 sm:w-16 sm:h-16 bg-gold rounded-full shadow-xl flex items-center justify-center hover:scale-105 transition-transform active:scale-95 ring-4 ring-white/30">
+                  <div class="w-11 h-11 sm:w-13 sm:h-13 bg-brand-dark rounded-full"></div>
+                </button>
+              </div>
+              <!-- Close Button -->
+              <div class="absolute top-3 sm:top-4 right-3 sm:right-4">
+                <button (click)="stopCamera()"
+                  class="w-10 h-10 bg-black/50 backdrop-blur border border-gold/30 rounded-full shadow-lg flex items-center justify-center hover:bg-black/70 transition">
+                  <svg class="w-5 h-5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              <!-- Face Guide -->
+              <div class="absolute inset-0 pointer-events-none flex items-center justify-center">
+                <div
+                  class="w-40 sm:w-48 md:w-56 h-52 sm:h-64 md:h-72 border-2 border-dashed border-gold/40 rounded-[50%]">
+                </div>
+              </div>
+              }
+
+              <!-- Loading Overlay -->
+              @if (isLoading()) {
+              <div class="absolute inset-0 bg-black/90 backdrop-blur-sm flex flex-col items-center justify-center z-20">
+                <div class="relative mb-4">
+                  <div class="w-16 h-16 sm:w-20 sm:h-20 border-4 border-gold/20 rounded-full"></div>
+                  <div
+                    class="absolute inset-0 w-16 h-16 sm:w-20 sm:h-20 border-4 border-transparent border-t-gold rounded-full animate-spin">
+                  </div>
+                </div>
+                <p class="text-gold font-semibold text-sm sm:text-base">AI vytvára váš nový účes...</p>
+                <p class="text-brand-light/60 text-xs sm:text-sm mt-1">Môže to trvať 10-30 sekúnd</p>
+              </div>
+              }
+            </div>
+
+            <!-- Captured Image Actions -->
+            @if (capturedImageBase64() && !cameraActive()) {
+            <div class="px-4 sm:px-6 py-4 border-t border-gray-100 bg-gray-50">
+              <div class="flex gap-3">
+                <button (click)="retakePhoto()"
+                  class="flex-1 py-2.5 sm:py-3 px-4 bg-white hover:bg-gray-100 border border-gray-300 text-gray-700 rounded-xl font-medium text-sm sm:text-base transition flex items-center justify-center gap-2 active:scale-98">
+                  <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                  Nová Fotka
+                </button>
+                <button (click)="resetAll()"
+                  class="py-2.5 sm:py-3 px-4 bg-white hover:bg-red-50 border border-gray-300 hover:border-red-300 text-gray-500 hover:text-red-600 rounded-xl font-medium transition active:scale-95">
+                  <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            }
+          </div>
+
+          <!-- Hidden Canvas -->
+          <canvas #canvasElement class="hidden"></canvas>
+        </div>
+
+        <!-- RIGHT: Controls & Result -->
+        <div class="order-2 space-y-6">
+
+          <!-- Hairstyle Presets Card -->
+          <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+            <!-- Card Header -->
+            <div class="px-4 sm:px-6 py-4 border-b border-gray-100 bg-gray-50">
+              <h2 class="text-lg sm:text-xl font-bold text-gray-900 flex items-center gap-2">
+                <span class="text-xl sm:text-2xl">✨</span>
+                Vyberte si účes
+              </h2>
+            </div>
+
+            <!-- Card Body -->
+            <div class="p-4 sm:p-6">
+              <!-- Presets Grid -->
+              <div class="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 gap-2 sm:gap-3 mb-5">
+                @for (preset of hairstylePresets; track preset.id) {
+                <button (click)="selectPreset(preset)" [class.ring-2]="selectedPreset() === preset.id"
+                  [class.ring-gold]="selectedPreset() === preset.id" [class.bg-gold/5]="selectedPreset() === preset.id"
+                  class="p-2.5 sm:p-3 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-xl text-center transition-all duration-200 active:scale-95">
+                  <span class="text-xl sm:text-2xl block mb-1">{{ preset.icon }}</span>
+                  <span class="text-xs sm:text-sm text-gray-700 font-medium line-clamp-1">{{ preset.name }}</span>
+                </button>
+                }
+              </div>
+
+              <!-- Custom Prompt -->
+              <div class="mb-5">
+                <label for="customPrompt" class="block text-sm font-medium text-gray-700 mb-2">Alebo napíšte vlastný
+                  popis:</label>
+                <textarea id="customPrompt" [(ngModel)]="customPrompt"
+                  placeholder="Napr. 'Change the hair to a purple gradient with highlights'" rows="2"
+                  class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder-gray-400 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-gold resize-none transition">
+                </textarea>
+              </div>
+
+              <!-- AI Badge -->
+              <div class="flex items-center gap-2 mb-5">
+                <span
+                  class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-full text-xs sm:text-sm text-gray-600 font-medium">
+                  <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gold" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                  Powered by GPT Image 1
+                </span>
+              </div>
+
+              <!-- Generate Button -->
+              <button (click)="generateHairstyle()"
+                [disabled]="!capturedImageBase64() || !customPrompt() || isLoading()"
+                class="w-full py-3.5 sm:py-4 bg-gold hover:bg-gold-dark disabled:bg-gray-200 disabled:cursor-not-allowed text-white disabled:text-gray-400 font-bold rounded-xl text-sm sm:text-base transition-all duration-300 shadow-lg shadow-gold/25 hover:shadow-gold/40 disabled:shadow-none flex items-center justify-center gap-2 active:scale-98">
+                @if (isLoading()) {
+                <svg class="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                </svg>
+                Generujem...
+                } @else {
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                Zmeniť Účes s AI
+                }
+              </button>
+            </div>
+          </div>
+
+          <!-- Result Display -->
+          @if (resultImageUrl()) {
+          <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+            <!-- Card Header -->
+            <div class="px-4 sm:px-6 py-4 border-b border-gray-100 bg-gray-50">
+              <h2 class="text-lg sm:text-xl font-bold text-gray-900 flex items-center gap-2">
+                <span class="text-xl sm:text-2xl">🎉</span>
+                Váš nový účes
+              </h2>
+            </div>
+
+            <!-- Result Image -->
+            <div class="relative aspect-square bg-brand-dark">
+              <img [src]="resultImageUrl()" alt="Nový účes" class="w-full h-full object-cover">
+            </div>
+
+            <!-- Actions -->
+            <div class="px-4 sm:px-6 py-4 border-t border-gray-100 bg-gray-50">
+              <div class="flex gap-3">
+                <button (click)="downloadResult()"
+                  class="flex-1 py-2.5 sm:py-3 px-4 bg-gold hover:bg-gold-dark text-white rounded-xl font-medium text-sm sm:text-base transition flex items-center justify-center gap-2 active:scale-98">
+                  <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                  Stiahnuť
+                </button>
+                <button (click)="generateHairstyle()" [disabled]="isLoading()"
+                  class="flex-1 py-2.5 sm:py-3 px-4 bg-white hover:bg-gray-50 border-2 border-gold text-gold hover:text-gold-dark disabled:opacity-50 rounded-xl font-medium text-sm sm:text-base transition flex items-center justify-center gap-2 active:scale-98">
+                  <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                  Znova
+                </button>
+              </div>
+            </div>
+          </div>
+          }
+
+          <!-- How It Works -->
+          <div class="bg-gray-50 rounded-2xl border border-gray-200 p-4 sm:p-6">
+            <h3 class="text-base sm:text-lg font-bold text-gray-900 mb-4">Ako to funguje?</h3>
+            <div class="space-y-3 sm:space-y-4">
+              <div class="flex items-start gap-3 sm:gap-4">
+                <span
+                  class="w-7 h-7 sm:w-8 sm:h-8 bg-gold text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold shrink-0">1</span>
+                <div>
+                  <p class="text-sm sm:text-base text-gray-900 font-medium">Zapnite kameru</p>
+                  <p class="text-xs sm:text-sm text-gray-500">Kliknite na tlačidlo a odfotťe sa</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3 sm:gap-4">
+                <span
+                  class="w-7 h-7 sm:w-8 sm:h-8 bg-gold text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold shrink-0">2</span>
+                <div>
+                  <p class="text-sm sm:text-base text-gray-900 font-medium">Vyberte účes</p>
+                  <p class="text-xs sm:text-sm text-gray-500">Z predvolieb alebo napíšte vlastný popis</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3 sm:gap-4">
+                <span
+                  class="w-7 h-7 sm:w-8 sm:h-8 bg-gold text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold shrink-0">3</span>
+                <div>
+                  <p class="text-sm sm:text-base text-gray-900 font-medium">Generujte</p>
+                  <p class="text-xs sm:text-sm text-gray-500">AI vytvorí váš nový účes za pár sekúnd</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer CTA - BLACK -->
+  <section class="bg-brand-dark text-white py-12 sm:py-16 border-t border-gold/10">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gold mb-4">Páči sa vám výsledok?</h2>
+      <p class="text-base sm:text-lg text-brand-light/80 mb-6 sm:mb-8">Rezervujte si termín a nechajte si účes urobiť
+        naozaj!</p>
+      <a href="https://services.bookio.com/papi-hair-design/widget?lang=sk" target="_blank"
+        class="inline-flex items-center gap-2 bg-gold hover:bg-white text-brand-dark px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold text-sm sm:text-lg transition-all duration-300 shadow-lg shadow-gold/25 hover:shadow-gold/40">
+        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+        REZERVÁCIE ONLINE
+      </a>
+    </div>
+  </section>
+</div>

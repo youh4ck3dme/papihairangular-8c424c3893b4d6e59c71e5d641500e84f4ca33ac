@@ -1,0 +1,116 @@
+<footer
+  class="bg-white dark:bg-black/95 text-brand-dark dark:text-neutral-200 mt-16 border-t border-gold/20 transition-colors duration-300">
+
+  <!-- Instagram Feed Section -->
+
+
+  <div class="container mx-auto px-6 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+
+      <!-- About Section -->
+      <div>
+        <div class="flex justify-center mb-4">
+          <img src="images/logo.png" alt="PAPI HAIR DESIGN Logo" width="180" height="52"
+            class="footer-logo h-12 w-auto">
+        </div>
+        <div class="space-y-1 text-black font-medium dark:text-neutral-600 drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)]">
+          <p>Hair studio & Barber</p>
+          <p>Predaj vlasovej kozmetiky</p>
+          <p class="mt-4">Trieda SNP 61 (Spoločenský pavilon)<br>Košice, Slovensko</p>
+        </div>
+        <a href="tel:+421949459624"
+          class="block mt-2 text-black font-medium dark:text-neutral-600 hover:text-gold dark:hover:text-gold transition-colors drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)]">tel:
+          +421 949 459
+          624</a>
+        <a href="mailto:papihairdesign@gmail.com"
+          class="block text-black font-medium dark:text-neutral-600 hover:text-gold dark:hover:text-gold transition-colors drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)]">papihairdesign@gmail.com</a>
+      </div>
+
+      <!-- Opening Hours -->
+      <div>
+        <h3 class="text-xl font-bold text-gold mb-4 drop-shadow-sm">Otváracie hodiny</h3>
+        <ul class="text-black font-medium dark:text-neutral-300 space-y-2 drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)]">
+          @for(item of openingHours(); track item.dayIndex) {
+          <li [class.text-gold]="item.dayIndex === todayIndex()">
+            <span>{{ item.day }}</span>
+            <span class="ml-2">
+              @if (item.open === 'ZAVRETÉ') {
+              Zavreté
+              } @else if (item.open === 'Podľa objednávok') {
+              Podľa objednávok
+              } @else {
+              {{ item.open }} – {{ item.close }}
+              }
+            </span>
+          </li>
+          }
+        </ul>
+        @if (isBrowser()) {
+        @if (currentStatus().isOpen) {
+        <p class="mt-2 text-green-600 font-bold drop-shadow-sm">Práve teraz otvorené</p>
+        } @else {
+        <p class="mt-2 text-red-600 font-bold drop-shadow-sm">Práve teraz zatvorené</p>
+        }
+        }
+      </div>
+
+      <!-- Quick Links & Social -->
+      <div class="space-y-6">
+        <!-- Quick Links -->
+        <div>
+          <h3 class="text-xl font-bold text-gold mb-4 drop-shadow-sm">Rýchle odkazy</h3>
+          <ul class="text-black font-medium dark:text-neutral-300 space-y-2">
+            <li>
+              <a routerLink="/cennik" class="hover:text-gold transition-colors">Cenník</a>
+            </li>
+            <li>
+              <a routerLink="/blog" class="hover:text-gold transition-colors">Blog</a>
+            </li>
+            <li>
+              <a routerLink="/ai-stylista" class="hover:text-gold transition-colors">AI Stylista</a>
+            </li>
+            <li>
+              <a routerLink="/o-nas" class="hover:text-gold transition-colors">O nás</a>
+            </li>
+            <li>
+              <a routerLink="/kontakt" class="hover:text-gold transition-colors">Kontakt</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Social Links -->
+        <div class="flex space-x-6 justify-center items-center pt-4">
+          <!-- Instagram -->
+          <a [href]="socialLinks.instagram" target="_blank" rel="noopener noreferrer"
+            class="transition-all duration-300 transform hover:scale-110 drop-shadow-sm"
+            aria-label="Sledujte nás na Instagrame">
+            <img src="/images/insta.webp" alt="Instagram" class="w-8 h-8">
+          </a>
+
+          <!-- Facebook -->
+          <a [href]="socialLinks.facebook" target="_blank" rel="noopener noreferrer"
+            class="transition-all duration-300 transform hover:scale-110 drop-shadow-sm"
+            aria-label="Sledujte nás na Facebook">
+            <img src="/images/fb.webp" alt="Facebook" class="w-8 h-8">
+          </a>
+
+          <!-- TikTok -->
+          <a [href]="socialLinks.tiktok" target="_blank" rel="noopener noreferrer"
+            class="transition-all duration-300 transform hover:scale-110 drop-shadow-sm"
+            aria-label="Sledujte nás na TikTok">
+            <img src="/images/tik.webp" alt="TikTok" class="w-8 h-8">
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="text-center border-t border-neutral-200 dark:border-white/10 pt-6 mt-8">
+    <p class="text-neutral-600 dark:text-neutral-500">&copy; {{ currentYear }} PAPI HAIR DESIGN. All Rights Reserved.
+    </p>
+    <p class="text-black dark:text-neutral-300 text-[11px] py-1 text-center font-medium tracking-wide mt-2">
+      Rezervácie k Róbertovi Papcunovi "PAPI" je potrebná konzultácia, ktorú si viete dohodnúť na tel.č: <a
+        href="tel:+421949459624" class="hover:text-gold dark:hover:text-gold transition-colors">+421 949 459 624</a>
+    </p>
+  </div>
+</footer>

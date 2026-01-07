@@ -1,0 +1,16 @@
+# Ignore files for Vercel deployment
+node_modules
+.git
+.angular
+dist
+*.log
+*.backup
+*.zip
+src/proxy
+deploy-*.sh
+test-*.sh
+*.md
+docs
+ssl
+.vscode
+.idea

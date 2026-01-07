@@ -1,0 +1,37 @@
+<div class="cards-container">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto px-4">
+        @for (service of services(); track service.id) {
+        <a #card class="card group" [attr.data-id]="service.id" [routerLink]="service.external ? null : service.link"
+            [href]="service.external ? service.link : null" [target]="service.external ? '_blank' : null"
+            [rel]="service.external ? 'noopener noreferrer' : null">
+            <div class="card-glow" aria-hidden="true"></div>
+            <div class="card-border" aria-hidden="true"></div>
+            <div class="card-content">
+                <div class="card-icon-wrapper">
+                    <img src="images/new_favicon/apple-touch-icon.png" alt="PAPI Logo" class="card-icon-img">
+                </div>
+                <div class="text-content">
+                    <h3 class="card-title font-heading">{{ service.title }}</h3>
+                    <p class="card-subtitle font-primary">{{ service.subtitle }}</p>
+                    <p class="card-description font-primary">{{ service.description }}</p>
+                    <ul class="card-benefits mt-3 space-y-1">
+                        @for (benefit of service.benefits; track benefit) {
+                        <li class="flex items-center gap-2 text-sm text-brand-light/80">
+                            <span class="inline-block h-1.5 w-1.5 rounded-full bg-gold"></span>
+                            {{ benefit }}
+                        </li>
+                        }
+                    </ul>
+                </div>
+                <div class="card-action">
+                    <span class="learn-more font-heading">Viac info</span>
+                    <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </div>
+            </div>
+        </a>
+        }
+    </div>
+</div>

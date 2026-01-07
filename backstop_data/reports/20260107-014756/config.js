@@ -1,0 +1,87 @@
+report({
+  "testSuite": "BackstopJS",
+  "tests": [
+    {
+      "pair": {
+        "reference": "../../bitmaps_reference/papihair_visual_regression_Blog_List_-_Main_Page_0_document_0_mobile.png",
+        "test": "../../bitmaps_test/20260107-014756/papihair_visual_regression_Blog_List_-_Main_Page_0_document_0_mobile.png",
+        "selector": "document",
+        "fileName": "papihair_visual_regression_Blog_List_-_Main_Page_0_document_0_mobile.png",
+        "label": "Blog List - Main Page",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "https://localhost:3002/blog",
+        "referenceUrl": "",
+        "expect": 0,
+        "viewportLabel": "mobile",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "rawMisMatchPercentage": 11.647326203208557,
+          "misMatchPercentage": "11.65",
+          "analysisTime": 13
+        },
+        "diffImage": "../../bitmaps_test/20260107-014756/failed_diff_papihair_visual_regression_Blog_List_-_Main_Page_0_document_0_mobile.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "../../bitmaps_reference/papihair_visual_regression_Blog_List_-_Main_Page_0_document_1_tablet.png",
+        "test": "../../bitmaps_test/20260107-014756/papihair_visual_regression_Blog_List_-_Main_Page_0_document_1_tablet.png",
+        "selector": "document",
+        "fileName": "papihair_visual_regression_Blog_List_-_Main_Page_0_document_1_tablet.png",
+        "label": "Blog List - Main Page",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "https://localhost:3002/blog",
+        "referenceUrl": "",
+        "expect": 0,
+        "viewportLabel": "tablet",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "rawMisMatchPercentage": 13.29663059600863,
+          "misMatchPercentage": "13.30",
+          "analysisTime": 18
+        },
+        "diffImage": "../../bitmaps_test/20260107-014756/failed_diff_papihair_visual_regression_Blog_List_-_Main_Page_0_document_1_tablet.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "../../bitmaps_reference/papihair_visual_regression_Blog_List_-_Main_Page_0_document_2_desktop.png",
+        "test": "../../bitmaps_test/20260107-014756/papihair_visual_regression_Blog_List_-_Main_Page_0_document_2_desktop.png",
+        "selector": "document",
+        "fileName": "papihair_visual_regression_Blog_List_-_Main_Page_0_document_2_desktop.png",
+        "label": "Blog List - Main Page",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0.1,
+        "url": "https://localhost:3002/blog",
+        "referenceUrl": "",
+        "expect": 0,
+        "viewportLabel": "desktop",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "rawMisMatchPercentage": 7.381810897435898,
+          "misMatchPercentage": "7.38",
+          "analysisTime": 30
+        },
+        "diffImage": "../../bitmaps_test/20260107-014756/failed_diff_papihair_visual_regression_Blog_List_-_Main_Page_0_document_2_desktop.png"
+      },
+      "status": "fail"
+    }
+  ],
+  "id": "papihair_visual_regression"
+});

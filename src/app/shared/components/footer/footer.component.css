@@ -1,0 +1,70 @@
+/* Footer component – glass‑morphism and fade‑in */
+
+footer {
+    background: white;
+    animation: fadeIn 0.6s ease forwards;
+    padding: 1rem 0;
+}
+
+/* Logo Breathing Animation */
+.footer-logo {
+    animation: logoBreathing 4s ease-in-out infinite;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    cursor: pointer;
+}
+
+@keyframes logoBreathing {
+
+    0%,
+    100% {
+        transform: scale(1);
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    }
+
+    50% {
+        transform: scale(1.02);
+        filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.12));
+    }
+}
+
+/* Hover Effect - Golden Glow */
+.footer-logo:hover {
+    animation: logoBreathing 4s ease-in-out infinite, logoGlow 2s ease-in-out infinite;
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.4)) drop-shadow(0 0 16px rgba(212, 175, 55, 0.3)) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+}
+
+@keyframes logoGlow {
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.4)) drop-shadow(0 0 16px rgba(212, 175, 55, 0.3)) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.6)) drop-shadow(0 0 24px rgba(212, 175, 55, 0.4)) drop-shadow(0 6px 16px rgba(0, 0, 0, 0.2));
+    }
+}
+
+/* Dark Mode Adjustments */
+:host-context(.dark) .footer-logo {
+    filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.05));
+}
+
+:host-context(.dark) .footer-logo:hover {
+    filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.6)) drop-shadow(0 0 24px rgba(212, 175, 55, 0.5)) drop-shadow(0 6px 16px rgba(255, 255, 255, 0.1));
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

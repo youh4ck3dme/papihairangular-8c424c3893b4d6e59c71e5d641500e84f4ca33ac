@@ -1,0 +1,101 @@
+:host {
+  display: block;
+  background-color: #ffffff;
+  color: #000000;
+  min-height: 100vh;
+}
+
+/* jemná vstupná animácia kariet */
+.card-enter {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: blogFadeIn 0.5s ease forwards;
+}
+
+@keyframes blogFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  background: rgba(212, 175, 55, 0.1);
+  color: #b8860b;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tag:hover {
+  background: rgba(212, 175, 55, 0.2);
+  border-color: #b8860b;
+}
+
+/* Enhanced responsive design */
+@media (max-width: 640px) {
+  .card-enter {
+    animation-delay: 0.1s;
+  }
+
+  article {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .tag {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.5rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  article {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .related-posts-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .related-posts-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Smooth transitions for all interactive elements */
+article,
+.tag,
+.related-post-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Loading state improvements */
+.animate-pulse>div {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}

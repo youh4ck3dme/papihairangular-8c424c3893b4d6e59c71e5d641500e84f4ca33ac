@@ -1,0 +1,160 @@
+/* AI Style Studio - Apple Style Redesign */
+
+:host {
+    display: block;
+    height: 100dvh;
+    width: 100%;
+    overflow: hidden;
+    background: #000;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Main Container - Absolute Static */
+.main-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Slider Wrapper - The Moving Part */
+.slider-wrapper {
+    display: flex;
+    width: 400%;
+    /* 4 steps */
+    height: 100%;
+    will-change: transform;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    /* iOS-like easing */
+}
+
+/* Individual Section */
+.slider-section {
+    width: 25%;
+    /* 1/4 of 400% */
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+/* Dynamic Backgrounds */
+.section-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    /* transition: transform 0.8s ease-out; Parallax effect could be added here */
+}
+
+.section-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    /* Darker overlay for better contrast */
+    backdrop-filter: blur(10px);
+}
+
+/* Background Images */
+.bg-upload {
+    background-image: url('/assets/images/tutorial/upload-bg.png');
+}
+
+/* Luxury Overlay for Hero */
+.bg-upload::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(255, 215, 0, 0.1) 0%, rgba(0, 0, 0, 0.4) 40%, rgba(0, 0, 0, 0.9) 100%);
+    z-index: 1;
+}
+
+/* Polished Typography */
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    background: linear-gradient(to bottom, #fff 0%, #ccc 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.section-subtitle {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    max-width: 80%;
+    margin: 0 auto 2rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+}
+
+/* Revert specific overrides for upload log */
+.slider-section:first-child .section-bg::after {
+    content: "";
+    display: block;
+    /* Restore overlay */
+}
+
+/* Restore upload card opacity */
+.slider-section:first-child .content-card {
+    background: rgba(30, 30, 30, 0.6);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.bg-describe {
+    background-image: url('/assets/images/tutorial/describe-bg.png');
+}
+
+/* ... (middle styles unchanged) ... */
+
+/* Loading Overlay - PHD Logo Background */
+.loading-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 100;
+    background-color: #000;
+    background-image: url('/assets/images/phd_logo_upload.jpg');
+    background-size: cover;
+    background-position: center;
+    /* Darken image slightly to make text readable */
+    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 480px) {
+    .content-card {
+        padding: 1.5rem;
+        width: 95%;
+    }
+
+    .section-title {
+        font-size: 1.75rem;
+    }
+
+    .nav-controls {
+        gap: 24px;
+    }
+}
+
+.border-gold-500 {
+    border-color: #FFD700 !important;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}

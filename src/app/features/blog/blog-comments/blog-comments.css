@@ -1,0 +1,135 @@
+.comments-section {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+.comments-list {
+  /* Additional spacing if needed */
+}
+
+.comment-item {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.comment-item:hover {
+  border-color: #b8860b;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.comment-header {
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 0.5rem;
+}
+
+.comment-meta {
+  flex-grow: 1;
+}
+
+.comment-content {
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  color: #374151;
+}
+
+/* Form styling */
+.add-comment form input,
+.add-comment form textarea {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.add-comment form input:focus,
+.add-comment form textarea:focus {
+  outline: none;
+  border-color: #b8860b;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+}
+
+/* Button styling */
+.add-comment button[type="submit"] {
+  transition: all 0.3s ease;
+}
+
+
+.add-comment button[type="submit"]:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+}
+
+.add-comment button[type="submit"]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Enhanced smooth transitions */
+.comments-section,
+.comment-item,
+.add-comment,
+.comment-header,
+.share-btn {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced hover effects */
+.comment-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.add-comment:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Loading state improvements */
+.add-comment button[type="submit"]:disabled {
+  animation: loading-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes loading-pulse {
+
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .comments-section {
+    margin: 1rem auto;
+    padding: 0 1rem;
+  }
+
+  .comment-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .add-comment {
+    padding: 1rem;
+  }
+
+  .comment-item {
+    padding: 0.75rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .comments-section {
+    max-width: 90%;
+  }
+
+  .add-comment {
+    padding: 1.5rem;
+  }
+}
