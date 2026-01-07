@@ -11,6 +11,7 @@ export default defineConfig({
         baseURL: 'https://localhost:3002',
         trace: 'on-first-retry',
         ignoreHTTPSErrors: true,
+        colorScheme: 'light',
     },
     projects: [
         {

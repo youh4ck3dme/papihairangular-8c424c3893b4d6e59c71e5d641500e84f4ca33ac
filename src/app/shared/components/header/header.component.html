@@ -15,14 +15,14 @@
           link.label }}</a>
         } @else if (link.isDisabled) {
         <span
-          class="text-brand-dark/50 transition-colors duration-300 pb-1 font-medium flex items-center gap-1 cursor-default">
+          class="text-brand-dark/75 transition-colors duration-300 pb-1 font-medium flex items-center gap-1 cursor-default">
           {{ link.label }}
           @if(link.isNew) {
           <span class="bg-gold/50 text-brand-dark text-[10px] font-bold px-1.5 py-0.5 rounded-full">NEW</span>
           }
         </span>
         } @else {
-        <a [routerLink]="link.path" [class.text-gold]="isLinkActive(link)" [class.border-b-2]="isLinkActive(link)"
+        <a [routerLink]="link.path" [class.font-extrabold]="isLinkActive(link)" [class.border-b-2]="isLinkActive(link)"
           [class.border-gold]="isLinkActive(link)" (click)="scrollToSection(link.sectionId, $event)"
           class="text-brand-dark hover:text-gold transition-colors duration-300 pb-1 font-medium cursor-pointer flex items-center gap-1">
           {{ link.label }}

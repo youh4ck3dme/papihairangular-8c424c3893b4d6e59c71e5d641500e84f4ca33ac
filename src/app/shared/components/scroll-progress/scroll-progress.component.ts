@@ -2,10 +2,10 @@ import { Component, HostListener, signal, ChangeDetectionStrategy } from '@angul
 import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'app-scroll-progress',
-    standalone: true,
-    imports: [CommonModule],
-    template: `
+  selector: 'app-scroll-progress',
+  standalone: true,
+  imports: [CommonModule],
+  template: `
     <div class="scroll-progress-container">
       <div 
         class="scroll-progress-bar"
@@ -14,10 +14,11 @@ import { CommonModule } from '@angular/common';
         [attr.aria-valuenow]="scrollProgress()"
         aria-valuemin="0"
         aria-valuemax="100"
+        aria-label="Reading progress"
       ></div>
     </div>
   `,
-    styles: [`
+  styles: [`
     .scroll-progress-container {
       position: fixed;
       top: 0;
@@ -65,31 +66,31 @@ import { CommonModule } from '@angular/common';
                   0 0 25px rgba(212, 175, 55, 0.4);
     }
   `],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ScrollProgressComponent {
-    scrollProgress = signal(0);
+  scrollProgress = signal(0);
 
-    @HostListener('window:scroll', ['$event'])
-    onWindowScroll(): void {
-        this.calculateScrollProgress();
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll(): void {
+    this.calculateScrollProgress();
+  }
+
+  private calculateScrollProgress(): void {
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    // Calculate the maximum scrollable distance
+    const maxScroll = documentHeight - windowHeight;
+
+    if (maxScroll <= 0) {
+      this.scrollProgress.set(0);
+      return;
     }
 
-    private calculateScrollProgress(): void {
-        const windowHeight = window.innerHeight;
-        const documentHeight = document.documentElement.scrollHeight;
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-        // Calculate the maximum scrollable distance
-        const maxScroll = documentHeight - windowHeight;
-
-        if (maxScroll <= 0) {
-            this.scrollProgress.set(0);
-            return;
-        }
-
-        // Calculate percentage (0-100)
-        const progress = Math.min(Math.max((scrollTop / maxScroll) * 100, 0), 100);
-        this.scrollProgress.set(Math.round(progress));
-    }
+    // Calculate percentage (0-100)
+    const progress = Math.min(Math.max((scrollTop / maxScroll) * 100, 0), 100);
+    this.scrollProgress.set(Math.round(progress));
+  }
 }

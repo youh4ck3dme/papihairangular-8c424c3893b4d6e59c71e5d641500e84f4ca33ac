@@ -51,11 +51,20 @@ test.describe('Blog Feature', () => {
 
     test('Accessibility Check (Blog List)', async ({ page }) => {
         await page.goto('/blog');
+
+        // Force light mode and disable animations for reliable contrast check
+        await page.addStyleTag({ content: '*, *::before, *::after { transition: none !important; animation: none !important; }' });
+        await page.evaluate(() => {
+            localStorage.setItem('theme', 'light');
+            document.documentElement.classList.remove('dark');
+        });
+
         // Wait for content
         await expect(page.locator('.animate-pulse')).not.toBeVisible();
+        await page.waitForTimeout(1000); // Allow any renders to settle
 
         const accessibilityScanResults = await new AxeBuilder({ page })
-            .disableRules(['landmark-one-main', 'page-has-heading-one']) // Adjust based on common false positives if necessary
+            .disableRules(['landmark-one-main', 'page-has-heading-one'])
             .analyze();
 
         expect(accessibilityScanResults.violations).toEqual([]);

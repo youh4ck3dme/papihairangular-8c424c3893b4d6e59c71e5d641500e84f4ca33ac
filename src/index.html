@@ -4,8 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <base href="/" />
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>PAPI HAIR DESIGN - Profesionálne kaderníctvo v Košiciach | Strihy, farbenie, styling</title>
   <meta name="description"
     content="Objavte PAPI HAIR DESIGN v Košiciach – kaderníctvo špecializované na dámske a pánske strihy, ombre, balayage, farbenie vlasov a styling. Rezervujte si termín online a získajte profesionálne služby za dostupné ceny.">
@@ -13,6 +12,13 @@
     content="kaderníctvo Košice, barber Košice, ombre Košice, pánske strihy Košice, farbenie vlasov Košice, styling Košice, PAPI HAIR DESIGN">
   <link rel="canonical" href="https://papihairdesign.sk/">
   <meta name="google-site-verification" content="UzqwD1CXQ4CzLBHZfpuLkNqaJOLRdyV-mrYDzgV8Rkg">
+  <script>
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  </script>
 
   <!-- Open Graph meta tags -->
   <meta property="og:title" content="PAPI HAIR DESIGN - Profesionálne kaderníctvo v Košiciach">

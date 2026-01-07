@@ -11,7 +11,7 @@ module.exports = {
                 serif: ['Playfair Display', 'serif'],
             },
             colors: {
-                'gold': '#D4AF37',
+                'gold': '#c59d24', // Slightly darker for better text contrast (orig D4AF37)
                 'gold-light': '#FFD700', /* Brighter gold for gradients */
                 'gold-dark': '#B8860B',  /* Darker gold for gradients */
                 'brand-dark': '#000000',  /* AMOLED Black */
