@@ -1,15 +1,17 @@
 export interface BlogPost {
-  slug: string; // unikátne URL (napr. "trendove-strihy-2025")
-  title: string; // nadpis
-  perex: string; // krátky úvod
-  authorRole?: string; // rola autora
-  subtitle?: string; // podnadpis
-  content: string | ContentBlock[]; // HTML string alebo štruktúrovaný obsah
-  imageUrl: string; // cesta k obrázku v /images/
-  author: string; // meno kaderníka / autora
-  date: string; // ISO dátum
-  readingTime: number; // čas čítania
-  tags: string[]; // tagy
+  id: string;
+  title: string;
+  subtitle?: string;
+  slug: string;
+  perex: string;
+  content: string | ContentBlock[];
+  author: string;
+  authorRole?: string;
+  date: string;
+  readingTime: number;
+  imageUrl: string;
+  tags: string[];
+  faqs?: { question: string; answer: string }[];
 }
 
 export interface ContentBlock {

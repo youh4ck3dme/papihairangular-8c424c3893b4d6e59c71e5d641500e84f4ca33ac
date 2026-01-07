@@ -11,6 +11,12 @@ export interface SeoData {
   keywords?: string;
   ogImage?: string;
   ogType?: string;
+  faqs?: FaqItem[];
+}
+
+export interface FaqItem {
+  question: string;
+  answer: string;
 }
 
 @Injectable({
@@ -170,6 +176,23 @@ export class SeoService {
       }
     };
     this.addJsonLd(jsonLd);
+
+    // Pridanie FAQ Schema ak existujú FAQs
+    if (post.faqs && post.faqs.length > 0) {
+      const faqJsonLd = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": post.faqs.map(faq => ({
+          "@type": "Question",
+          "name": faq.question,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": faq.answer
+          }
+        }))
+      };
+      this.addJsonLd(faqJsonLd);
+    }
   }
 
   /**

@@ -14,6 +14,7 @@ interface CacheItem<T> {
 export class BlogService {
   private posts: BlogPost[] = [
     {
+      id: "1",
       slug: "trendove-ucesy-2026",
       title: "Trendové účesy 2026: Kompletný sprievodca strihmi v Košiciach",
       subtitle: "Hľadáte zmenu? Objavte trendové účesy 2026, ktoré ovládnu ulice. Od Butterfly Cut po Liquid Bob – poradíme vám, čo sa nosí a ako to upraviť doma.",
@@ -149,9 +150,24 @@ export class BlogService {
       authorRole: "Head Stylist",
       date: "2026-01-05",
       readingTime: 6,
-      tags: ["trendové účesy 2026", "butterfly cut", "italian bob", "kaderníctvo košice", "strihy", "scandi hairline", "liquid hair"]
+      tags: ["trendové účesy 2026", "butterfly cut", "italian bob", "kaderníctvo košice", "strihy", "scandi hairline", "liquid hair"],
+      faqs: [
+        {
+          question: "Musím pri trendových účesoch 2026 radikálne meniť dĺžku?",
+          answer: "Vôbec nie! Rok 2026 praje všetkým dĺžkam. Ak milujete svoje dlhé vlasy, zvoľte Butterfly Cut alebo pridajte ofinu (Curtain Bangs)."
+        },
+        {
+          question: "Aká farba vlasov bude v roku 2026 najviac IN?",
+          answer: "Vstupujeme do éry 'drahých' farieb. Hľadajte odtiene ako 'Expensive Brunette', 'Cowboy Copper' alebo 'Buttercream Blonde'. Studené odtiene sú na ústupe."
+        },
+        {
+          question: "Ako si udržať trendový účes doma?",
+          answer: "Základom je správna rutina: spanie na hodvábnej obliečke, používanie termoochrany pri fénovaní a pravidelné olejovanie končekov."
+        }
+      ]
     },
     {
+      id: "2",
       slug: "starostlivost-o-vlasy-v-zime",
       title: "Zimná starostlivosť o vlasy: 7 tipov pre zdravie a lesk",
       subtitle: "Mráz, vietor a ústredné kúrenie ničia vaše vlasy. Naučte sa, ako vyzerá správna zimná starostlivosť o vlasy, aby zostali hydratované, lesklé a bez statickej elektriny.",
@@ -291,9 +307,24 @@ export class BlogService {
       authorRole: "Senior Stylist",
       date: "2026-01-02",
       readingTime: 8,
-      tags: ["zimná starostlivosť o vlasy", "hydratácia vlasov", "poškodené vlasy", "tipy na vlasy", "vlasový olej"]
+      tags: ["zimná starostlivosť o vlasy", "hydratácia vlasov", "poškodené vlasy", "tipy na vlasy", "vlasový olej"],
+      faqs: [
+        {
+          question: "Prečo mi v zime elektrizujú vlasy?",
+          answer: "Statická elektrina vzniká trením v suchom prostredí. Vlasom chýba vlhkosť, preto sa nabíjajú. Pomôže vlasový olej alebo sérum."
+        },
+        {
+          question: "Môžem ísť v zime von s mokrými vlasmi?",
+          answer: "Nikdy. Voda vo vlase zamrzne a roztrhne ho zvnútra, čo vedie k trvalému poškodeniu. Vždy vlasy úplne vysušte."
+        },
+        {
+          question: "Spôsobuje nosenie čiapky vypadávanie vlasov?",
+          answer: "Nie, je to mýtus. Čiapka chráni pred mrazom. Problémom môže byť materiál - zvoľte čiapku podšitú saténom, aby sa vlasy nelámali."
+        }
+      ]
     },
     {
+      id: "3",
       slug: "balayage-vs-ombre-rozdiel",
       title: "Balayage vs Ombre: Definitívny sprievodca rozdielmi",
       subtitle: "Balayage vs Ombre – večná dilema klientiek. Zistite presný rozdiel medzi týmito technikami, ich výhody, ceny a ktorá sa hodí pre váš typ vlasov.",
@@ -405,7 +436,21 @@ export class BlogService {
       authorRole: "Expert Colorist",
       date: "2025-12-28",
       readingTime: 8,
-      tags: ["balayage vs ombre", "zosvetľovanie vlasov", "kaderníctvo košice", "rozdiel balayage ombre", "sombre", "melír"]
+      tags: ["balayage vs ombre", "zosvetľovanie vlasov", "kaderníctvo košice", "rozdiel balayage ombre", "sombre", "melír"],
+      faqs: [
+        {
+          question: "Aký je hlavný rozdiel medzi Balayage a Ombre?",
+          answer: "Balayage je technika 'maľovania' vertikálnych prameňov pre prirodzený efekt. Ombre je štýl s horizontálnym prechodom z tmavej do svetlej farby."
+        },
+        {
+          question: "Ktorá technika je náročnejšia na údržbu?",
+          answer: "Ombre vyžaduje častejšiu údržbu, keďže línia odrastu sa posúva. Balayage má 'neviditeľné' odrasty a stačí ju obnoviť raz za 4-6 mesiacov."
+        },
+        {
+          question: "Je balayage vhodná aj pre krátke vlasy?",
+          answer: "Áno, Balayage vyzerá skvele aj na krátkych strihoch ako Bob alebo Pixie, kde dodáva textúru a hĺbku."
+        }
+      ]
     }
   ];
   private readonly CACHE_EXPIRY = 3600000; // 1 hodina v ms

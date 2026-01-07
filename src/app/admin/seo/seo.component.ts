@@ -52,6 +52,7 @@ export class SeoComponent {
 
             // Preview the SEO settings
             this.seo.setBlogPostSeo({
+                id: 'preview-id',
                 title: this.title,
                 slug: this.slug,
                 perex: parsed.description,
