@@ -149,38 +149,60 @@ export class SeoService {
     };
     this.setSeoData(seoData);
 
-    // Pridanie JSON-LD pre blog príspevok
-    const jsonLd = {
-      "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      "headline": post.title,
-      "description": post.perex,
-      "image": absoluteImageUrl,
-      "author": {
-        "@type": "Person",
-        "name": post.author
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "PAPI HAIR DESIGN",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://papihairdesign.sk/assets/logo.png"
+    // Príprava grafu pre JSON-LD
+    const graph: any[] = [
+      {
+        "@type": "BlogPosting",
+        "headline": post.title,
+        "description": post.perex,
+        "image": absoluteImageUrl,
+        "author": {
+          "@type": "Person",
+          "name": post.author
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "PAPI HAIR DESIGN",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://papihairdesign.sk/assets/logo.png"
+          }
+        },
+        "datePublished": post.date,
+        "dateModified": post.date,
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": `${baseUrl}blog/${post.slug}`
         }
       },
-      "datePublished": post.date,
-      "dateModified": post.date,
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": `https://papihairdesign.sk/blog/${post.slug}`
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Domov",
+            "item": baseUrl
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Blog",
+            "item": `${baseUrl}blog`
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": post.title,
+            "item": `${baseUrl}blog/${post.slug}`
+          }
+        ]
       }
-    };
-    this.addJsonLd(jsonLd);
+    ];
 
     // Pridanie FAQ Schema ak existujú FAQs
     if (post.faqs && post.faqs.length > 0) {
-      const faqJsonLd = {
-        "@context": "https://schema.org",
+      graph.push({
         "@type": "FAQPage",
         "mainEntity": post.faqs.map(faq => ({
           "@type": "Question",
@@ -190,9 +212,13 @@ export class SeoService {
             "text": faq.answer
           }
         }))
-      };
-      this.addJsonLd(faqJsonLd);
+      });
     }
+
+    this.addJsonLd({
+      "@context": "https://schema.org",
+      "@graph": graph
+    });
   }
 
   /**

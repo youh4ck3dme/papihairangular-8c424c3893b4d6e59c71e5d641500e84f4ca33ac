@@ -24,5 +24,28 @@
             "sizes": "512x512",
             "type": "image/png"
         }
+    ],
+    "screenshots": [
+        {
+            "src": "/assets/screenshots/homepage-mobile.png",
+            "sizes": "390x844",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "Domovská obrazovka PAPI HAIR"
+        },
+        {
+            "src": "/assets/screenshots/blog-mobile.png",
+            "sizes": "390x844",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "Najnovšie trendy z nášho blogu"
+        },
+        {
+            "src": "/assets/screenshots/homepage-desktop.png",
+            "sizes": "1280x800",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "PAPI HAIR DESIGN na desktope"
+        }
     ]
 }
