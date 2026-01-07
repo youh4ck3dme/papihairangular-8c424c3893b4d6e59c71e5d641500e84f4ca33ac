@@ -150,7 +150,7 @@ export class SeoService {
     this.setSeoData(seoData);
 
     // Príprava grafu pre JSON-LD
-    const graph: any[] = [
+    const graph: Record<string, unknown>[] = [
       {
         "@type": "BlogPosting",
         "headline": post.title,
