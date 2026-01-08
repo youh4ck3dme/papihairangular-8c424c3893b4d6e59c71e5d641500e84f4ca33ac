@@ -68,24 +68,52 @@ export class VirtualStylistComponent {
 
         try {
             const stream = await navigator.mediaDevices.getUserMedia({
-                video: { facingMode: 'user', width: { ideal: 1280 }, height: { ideal: 720 } }
+                video: {
+                    facingMode: 'user',
+                    width: { ideal: 1280 },
+                    height: { ideal: 720 }
+                }
             });
-            this.handleStream(stream);
-        } catch {
+            await this.handleStream(stream);
+        } catch (err) {
+            console.error('Camera error (primary):', err);
             try {
                 const fallback = await navigator.mediaDevices.getUserMedia({ video: true });
-                this.handleStream(fallback);
-            } catch {
+                await this.handleStream(fallback);
+            } catch (fallbackErr) {
+                console.error('Camera error (fallback):', fallbackErr);
                 this.cameraError.set('Prístup ku kamere bol zamietnutý alebo kamera chýba.');
                 this.isCameraActive.set(false);
             }
         }
     }
 
-    private handleStream(stream: MediaStream) {
-        if (this.videoElement) {
-            this.videoElement.nativeElement.srcObject = stream;
+    private async handleStream(stream: MediaStream) {
+        // Wait for video element to be available (important for mobile)
+        let attempts = 0;
+        while (!this.videoElement && attempts < 10) {
+            await new Promise(resolve => setTimeout(resolve, 100));
+            attempts++;
+        }
+
+        if (!this.videoElement) {
+            console.error('Video element not available after waiting');
+            this.cameraError.set('Chyba pri inicializácii kamery.');
+            return;
+        }
+
+        try {
+            const video = this.videoElement.nativeElement;
+            video.srcObject = stream;
+
+            // Explicitly play the video (required on some mobile browsers)
+            await video.play();
+
             this.isCameraActive.set(true);
+            console.log('Camera stream activated successfully');
+        } catch (err) {
+            console.error('Error playing video stream:', err);
+            this.cameraError.set('Nepodarilo sa spustiť video stream.');
         }
     }
 
