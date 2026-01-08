@@ -93,19 +93,41 @@
                         <p class="text-zinc-500 text-[10px] uppercase tracking-[0.3em]">Vyberte cieľ pre vašu digitálnu
                             premenu</p>
                     </div>
-                    <nav class="flex gap-2 overflow-x-auto pb-4 no-scrollbar">
-                        @for (cat of categories; track cat) {
-                        <button (click)="setCategory(cat)"
-                            class="px-6 py-3 rounded-full text-[10px] uppercase tracking-widest transition-all border shrink-0 font-bold"
-                            [class.bg-[#D4AF37]]="activeCategory() === cat"
-                            [class.text-black]="activeCategory() === cat"
-                            [class.border-[#D4AF37]]="activeCategory() === cat"
-                            [class.border-zinc-800]="activeCategory() !== cat"
-                            [class.text-zinc-500]="activeCategory() !== cat">
-                            {{cat}}
+                    <div class="relative flex items-center gap-2 w-full md:w-auto">
+                        <!-- Left Arrow (Mobile only) -->
+                        <button (click)="scrollCategories('left')"
+                            class="md:hidden flex-shrink-0 w-10 h-10 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-500 hover:text-gold hover:border-gold transition-all"
+                            aria-label="Predchádzajúce kategórie">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 19l-7-7 7-7" />
+                            </svg>
                         </button>
-                        }
-                    </nav>
+
+                        <nav #categoryNav class="flex gap-2 overflow-x-auto pb-4 no-scrollbar w-full">
+                            @for (cat of categories; track cat) {
+                            <button (click)="setCategory(cat)"
+                                class="px-6 py-3 rounded-full text-[10px] uppercase tracking-widest transition-all border shrink-0 font-bold"
+                                [class.bg-[#D4AF37]]="activeCategory() === cat"
+                                [class.text-black]="activeCategory() === cat"
+                                [class.border-[#D4AF37]]="activeCategory() === cat"
+                                [class.border-zinc-800]="activeCategory() !== cat"
+                                [class.text-zinc-500]="activeCategory() !== cat">
+                                {{cat}}
+                            </button>
+                            }
+                        </nav>
+
+                        <!-- Right Arrow (Mobile only) -->
+                        <button (click)="scrollCategories('right')"
+                            class="md:hidden flex-shrink-0 w-10 h-10 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-500 hover:text-gold hover:border-gold transition-all"
+                            aria-label="Ďalšie kategórie">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 5l7 7-7 7" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="grid grid-cols-2 md:grid-cols-5 gap-6">

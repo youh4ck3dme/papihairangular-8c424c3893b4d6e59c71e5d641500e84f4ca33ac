@@ -18,6 +18,7 @@ export class VirtualStylistComponent {
     @ViewChild('videoElement') videoElement!: ElementRef<HTMLVideoElement>;
     @ViewChild('canvasElement') canvasElement!: ElementRef<HTMLCanvasElement>;
     @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+    @ViewChild('categoryNav') categoryNav!: ElementRef<HTMLElement>;
 
     // States
     currentStep = signal<TutorialStep>('welcome');
@@ -46,6 +47,16 @@ export class VirtualStylistComponent {
 
     setCategory(category: StyleCategory) {
         this.activeCategory.set(category);
+    }
+
+    scrollCategories(direction: 'left' | 'right') {
+        if (!this.categoryNav) return;
+        const scrollAmount = 150;
+        const currentScroll = this.categoryNav.nativeElement.scrollLeft;
+        this.categoryNav.nativeElement.scrollTo({
+            left: direction === 'left' ? currentScroll - scrollAmount : currentScroll + scrollAmount,
+            behavior: 'smooth'
+        });
     }
 
     async activateCamera() {
