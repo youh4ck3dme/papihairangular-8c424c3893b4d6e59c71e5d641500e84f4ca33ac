@@ -65,8 +65,7 @@ try {
             'parameters' => [
                 'sampleCount' => 1,
                 'aspectRatio' => '3:4',
-                'safetySetting' => 'block_few',
-                'personGeneration' => 'allow_all'
+                'safetySetting' => 'block_low_and_above'
             ]
         ];
         
