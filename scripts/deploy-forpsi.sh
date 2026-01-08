@@ -68,6 +68,7 @@ mkdir -p "${LOCAL_DIST}/proxy"
 cp src/proxy/chat.php "${LOCAL_DIST}/proxy/"
 cp src/proxy/chat_stream.php "${LOCAL_DIST}/proxy/"
 cp src/proxy/image-job.php "${LOCAL_DIST}/proxy/"
+cp src/proxy/ai-proxy.php "${LOCAL_DIST}/proxy/"
 
 # --- 3. ZÁLOHA NA SERVERI ---
 log_info "3/7) Vytváram zálohu na Forpsi VPS..."

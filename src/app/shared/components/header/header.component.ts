@@ -27,6 +27,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     { path: "/o-nas", label: "O nás", sectionId: "about" },
     { path: "/kontakt", label: "Kontakt", sectionId: "contact" },
     { path: "/blog", label: "Blog", sectionId: "blog", isNew: true },
+    { path: "/ai-studio", label: "AI Studio !", sectionId: "ai-studio", isNew: true },
     { path: "https://services.bookio.com/papi-hair-design/widget?lang=sk", label: "Rezervácia", isExternal: true },
     { path: "http://www.goldhaircare.sk/affiliate/2208", label: "Shop", isExternal: true },
   ];

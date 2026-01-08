@@ -10,6 +10,30 @@ PAPI HAIR DESIGN is a modern, responsive web application built with Angular for 
 
 ## Recent Updates
 
+### Version 2.0.0 - VPS Migration & AI Studio (January 2026)
+
+**Infrastructure Migration:**
+
+- **New VPS**: Migrated from old VPS (57.129.4.22) to FORPSI VPS (194.182.87.6)
+- **SSL Certificates**: Successfully installed Let's Encrypt certificates for:
+  - `papihairdesign.sk` + `www.papihairdesign.sk`
+  - `app.papihairdesign.sk` (testing subdomain)
+- **DNS Management**: Configured via Cloudflare with proper A records
+- **Nginx Optimization**: Implemented default catch-all server to prevent domain conflicts
+
+**AI Studio Feature:**
+
+- **New Route**: `/ai-studio` with redirect from legacy `/ai-stylista`
+- **Components**: 
+  - `VirtualStylistComponent` - Premium UI with camera support and hairstyle preview
+  - `AiVisageService` - Google Gemini AI integration for facial analysis and image generation
+- **Navigation**: Added "AI Studio !" to Header and Footer with `isNew` badge
+- **Backend**: Prepared `ai-proxy.php` for secure API relay (skeleton implementation)
+
+**Content Updates:**
+
+- Renamed "Botox" to "Nová Kúra" across all components and blog posts
+
 ### Version 1.1.0 - Blog SEO & VPS Organization (January 2026)
 
 **Blog Improvements:**
@@ -18,19 +42,6 @@ PAPI HAIR DESIGN is a modern, responsive web application built with Angular for 
 - **Global Background Protection**: Implemented a router-based mechanism in `AppComponent` to force `background-color: #ffffff` on the `body` for all blog routes, preventing dark theme bleed-through.
 - **SEO Heading Hierarchy**: Automated logic to enforce a single `<h1>` per article and a maximum of four `<h2>` tags. Subsequent headings are automatically demoted to `<h3>`.
 - **Typing & Compatibility**: Fixed TypeScript `ContentBlock` typing and resolved `line-clamp` CSS compatibility warnings.
-
-**AI Stylista Status:**
-
-- **Feature Disabled**: The "AI Stylista" (Hair Styler) link in the header is now visible but non-functional.
-- **Visual Feedback**: The link is dimmed and unclickable to indicate temporary unavailability while maintaining UI consistency.
-
-**VPS & Nginx Reorganization (57.129.4.22):**
-
-- **Domain Standardization**: Standardized Nginx configurations for all hosted domains (`papihairdesign.sk`, `pop-mart.cloud`, `stahovanie.website`, `icoatlas.sk`, `h4ck3d.cloud`, etc.).
-- **Security & Routing**:
-  - Implemented HTTP-to-HTTPS redirection for domains with valid SSL.
-  - Configured a `default_server` to drop unmatched connections (Error 444), preventing random domain routing.
-  - Setup reverse proxies for specific applications (e.g., `pop-mart.cloud` to port 3002, `h4ck3d.cloud` to 3001).
 
 ### Version 1.0.1 - Repository Update & TypeScript Fixes (December 2025)
 
@@ -104,17 +115,41 @@ pnpm run build:prod
 
 ## Deployment
 
-The project is deployed using automated scripts that update the VPS server.
+The project is deployed to a **FORPSI VPS** using automated deployment scripts.
+
+### Production Deployment
+
+**Primary Domain**: [https://papihairdesign.sk](https://papihairdesign.sk)  
+**Testing Subdomain**: [https://app.papihairdesign.sk](https://app.papihairdesign.sk)
 
 ```bash
-./deploy.sh
+# Deploy to main domain
+./scripts/deploy-forpsi.sh
+
+# Deploy to app subdomain
+./scripts/deploy-app-subdomain.sh
 ```
 
-**VPS Configuration Highlights (57.129.4.22):**
+### VPS Configuration (194.182.87.6)
 
-- **Nginx Web Root**: `/var/www/papihairdesign.sk`
-- **Reverse Proxies**:
-  - `pop-mart.cloud` -> port 3002
-  - `stahovanie.website` -> port 5005
-  - `h4ck3d.cloud` -> port 3001
-- **Security**: SSL via Certbot, `server_tokens off`, global port redirection.
+**Infrastructure:**
+
+- **Server**: Ubuntu 22.04 LTS on FORPSI VPS
+- **Web Server**: Nginx 1.18.0
+- **PHP**: PHP 8.1-FPM (for proxy endpoints)
+- **SSL**: Let's Encrypt (auto-renewal enabled)
+
+**Hosted Sites:**
+
+- `papihairdesign.sk` + `www` → `/var/www/papihairdesign.sk` (SSL ✓)
+- `app.papihairdesign.sk` → `/var/www/app.papihairdesign.sk` (SSL ✓)
+- `app.h4ck3d.cloud` → CarScraper app on port 5000 (SSL ✓)
+- `pandora.h4ck3d.cloud` → Pandora Browser on port 9090 (SSL ✓)
+
+**DNS Provider**: Cloudflare (Nameservers: `adrian.ns.cloudflare.com`, `wilson.ns.cloudflare.com`)
+
+**Security Features:**
+
+- Default catch-all server returns 404 for unmatched domains
+- HTTPS redirection for all domains
+- Regular automated SSL certificate renewal

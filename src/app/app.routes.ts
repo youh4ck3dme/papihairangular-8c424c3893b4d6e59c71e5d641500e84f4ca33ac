@@ -103,16 +103,20 @@ export const APP_ROUTES: Routes = [
   //   loadComponent: () => import('./features/virtual-salon/virtual-salon.component').then(c => c.VirtualSalonComponent)
   // },
   {
-    path: 'ai-stylista',
-    title: 'AI Stylista - Osobný návrh účesu | PAPI HAIR DESIGN',
+    path: 'ai-studio',
+    title: 'AI Studio - Digitálna Transformácia | PAPI HAIR DESIGN',
     data: {
       seo: {
-        description: 'AI Stylista - Nahrajte fotku a získajte návrhy účesov šité na mieru vašej tvári pomocou umelej inteligencie.',
-        keywords: 'AI účes, návrh účesu, PAPI HAIR DESIGN, kaderník košice, zmena image',
+        description: 'AI Studio - Objavte svoje nové ja. Najmodernejšia neurálna sieť vytvorí digitálnu vizualizáciu vášho vysnívaného štýlu.',
+        keywords: 'AI Studio, virtuálny stylista, zmena účesu, PAPI HAIR DESIGN, kaderníctvo Košice',
         ogImage: 'https://papihairdesign.sk/images/logo.png'
       }
     },
-    loadComponent: () => import('./features/hair-styler/hair-styler').then(c => c.HairStylerComponent)
+    loadComponent: () => import('./features/ai-studio/virtual-stylist.component').then(c => c.VirtualStylistComponent)
+  },
+  {
+    path: 'ai-stylista',
+    redirectTo: 'ai-studio'
   },
   {
     path: 'booking',
