@@ -110,11 +110,13 @@
 
                 <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
                     @for (style of filteredStyles(); track style.id; let i = $index) {
-                    <div (click)="selectStyle(style)" [style.animation-delay]="i * 60 + 'ms'"
+                    <div (click)="selectStyle(style)" (keydown.enter)="selectStyle(style)"
+                        [style.animation-delay]="i * 60 + 'ms'"
                         class="group animate-reveal relative aspect-[3/4] rounded-2xl overflow-hidden cursor-pointer border-2 transition-all duration-500"
                         [class.border-[#D4AF37]]="selectedStyle()?.id === style.id"
-                        [class.border-transparent]="selectedStyle()?.id !== style.id">
-                        <img [src]="style.image"
+                        [class.border-transparent]="selectedStyle()?.id !== style.id" tabindex="0" role="button"
+                        [attr.aria-label]="'Vybrať štýl ' + style.name">
+                        <img [src]="style.image" [alt]="style.name + ' ukážka'"
                             class="absolute inset-0 w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all duration-700">
                         <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
                         <div class="absolute bottom-4 left-4">
@@ -146,7 +148,8 @@
                 <div class="flex flex-col items-center animate-reveal">
                     <div
                         class="relative w-64 aspect-[3/4] mb-12 rounded-[2rem] overflow-hidden border border-[#D4AF37]/20 bg-zinc-950">
-                        <img [src]="userImage()" class="w-full h-full object-cover opacity-20 grayscale blur-[3px]">
+                        <img [src]="userImage()" alt="Používateľská fotografia"
+                            class="w-full h-full object-cover opacity-20 grayscale blur-[3px]">
                         <div class="scanner-line"></div>
                         <div class="absolute inset-0 flex items-center justify-center">
                             <div
@@ -208,9 +211,11 @@
                         <div
                             class="relative aspect-[3/4] overflow-hidden rounded-[3rem] shadow-2xl border border-white/10 bg-zinc-950">
                             @if (showOriginal()) {
-                            <img [src]="userImage()" class="w-full h-full object-cover animate-reveal">
+                            <img [src]="userImage()" alt="Originálna fotografia"
+                                class="w-full h-full object-cover animate-reveal">
                             } @else {
-                            <img [src]="resultImage()" class="w-full h-full object-cover animate-result-reveal">
+                            <img [src]="resultImage()" alt="AI transformovaná fotografia"
+                                class="w-full h-full object-cover animate-result-reveal">
                             }
                         </div>
                         <div
