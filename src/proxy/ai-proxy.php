@@ -152,7 +152,9 @@ try {
             logMessage("Image data validated, size=" . strlen($base64Image) . " chars");
         }
         
-        $url = "https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent?key={$GEMINI_KEY}";
+        // Use Cloudflare Worker Proxy to bypass geo-restrictions
+        // $url = "https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent?key={$GEMINI_KEY}";
+        $url = "https://ai.papihairdesign.sk/generate"; // Route via Worker
         
         // Build content parts for Gemini 2.0 Flash native image generation
         $parts = [];
@@ -170,19 +172,18 @@ try {
             $parts[] = ['text' => "Generate a professional salon photo of: $prompt. The image should be high quality, realistic, and suitable for a professional hair salon website."];
         }
         
+        // Worker expects simplified payload which it transforms
         $payload = [
-            'contents' => [
-                [
-                    'parts' => $parts
-                ]
-            ],
-            'generationConfig' => [
-                'responseModalities' => ['IMAGE', 'TEXT'],
-                'temperature' => 0.9,
-                'topK' => 40,
-                'topP' => 0.95
-            ]
+            'action' => 'generate_image',
+            'prompt' => $prompt,
+            'image' => $base64Image, // Worker handles normalization
+            'model' => $model
         ];
+        
+        // Worker uses secret key, so we don't need to pass it in URL usually, 
+        // BUT our PHP proxy logic expects to sign the request. 
+        // For now, let's keep the PHP proxy generic and let the Worker handle the key.
+        // We will pass the payload to the worker.
         
         $response = makeRequest($url, $payload);
         
