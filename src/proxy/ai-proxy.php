@@ -126,8 +126,8 @@ try {
         echo json_encode($response);
         
     } elseif ($action === 'generate_image') {
-        // Image generation using Imagen 4 (latest 2026 model)
-        $model = 'imagen-4.0-generate-001';
+        // Image generation using Gemini 2.0 Flash with native image generation
+        $model = 'gemini-2.0-flash-exp';
         $prompt = $input['prompt'] ?? '';
         // Accept both 'image' and 'imageData' fields for flexibility
         $base64Image = $input['image'] ?? $input['imageData'] ?? null;
@@ -152,30 +152,37 @@ try {
             logMessage("Image data validated, size=" . strlen($base64Image) . " chars");
         }
         
-        $url = "https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateImages?key={$GEMINI_KEY}";
+        $url = "https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent?key={$GEMINI_KEY}";
         
-        // Imagen 4 uses simplified payload structure
-        $payload = [
-            'prompt' => $prompt,
-            'config' => [
-                'numberOfImages' => 1,
-                'aspectRatio' => '3:4',
-                'safetyFilterLevel' => 'BLOCK_LOW_AND_ABOVE',
-                'personGeneration' => 'ALLOW_ADULT'
-            ]
-        ];
+        // Build content parts for Gemini 2.0 Flash native image generation
+        $parts = [];
         
-        // Add reference image for img2img if provided
+        // Add reference image if provided (for style transfer)
         if ($base64Image) {
-            $payload['referenceImages'] = [
-                [
-                    'referenceImage' => [
-                        'bytesBase64Encoded' => $base64Image
-                    ],
-                    'referenceType' => 'REFERENCE_TYPE_STYLE'
+            $parts[] = [
+                'inlineData' => [
+                    'mimeType' => 'image/jpeg',
+                    'data' => $base64Image
                 ]
             ];
+            $parts[] = ['text' => "Based on the hairstyle in this image, create a similar professional salon photo with the following modifications: $prompt"];
+        } else {
+            $parts[] = ['text' => "Generate a professional salon photo of: $prompt. The image should be high quality, realistic, and suitable for a professional hair salon website."];
         }
+        
+        $payload = [
+            'contents' => [
+                [
+                    'parts' => $parts
+                ]
+            ],
+            'generationConfig' => [
+                'responseModalities' => ['IMAGE', 'TEXT'],
+                'temperature' => 0.9,
+                'topK' => 40,
+                'topP' => 0.95
+            ]
+        ];
         
         $response = makeRequest($url, $payload);
         
