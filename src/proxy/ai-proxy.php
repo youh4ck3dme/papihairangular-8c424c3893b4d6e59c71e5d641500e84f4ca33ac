@@ -126,8 +126,8 @@ try {
         echo json_encode($response);
         
     } elseif ($action === 'generate_image') {
-        // Image generation using Imagen 3.0 (Img2Img support)
-        $model = 'imagen-3.0-generate-002';
+        // Image generation using Imagen 4 (latest 2026 model)
+        $model = 'imagen-4.0-generate-001';
         $prompt = $input['prompt'] ?? '';
         // Accept both 'image' and 'imageData' fields for flexibility
         $base64Image = $input['image'] ?? $input['imageData'] ?? null;
@@ -152,24 +152,30 @@ try {
             logMessage("Image data validated, size=" . strlen($base64Image) . " chars");
         }
         
-        $url = "https://generativelanguage.googleapis.com/v1beta/models/{$model}:predict?key={$GEMINI_KEY}";
+        $url = "https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateImages?key={$GEMINI_KEY}";
         
-        $instance = ['prompt' => $prompt];
-        
-        // If we have an input image, valid Imagen Img2Img payload structure
-        if ($base64Image) {
-             $instance['image'] = ['bytesBase64Encoded' => $base64Image];
-        }
-
+        // Imagen 4 uses simplified payload structure
         $payload = [
-            'instances' => [$instance],
-            'parameters' => [
-                'sampleCount' => 1,
+            'prompt' => $prompt,
+            'config' => [
+                'numberOfImages' => 1,
                 'aspectRatio' => '3:4',
-                'safetySetting' => 'block_low_and_above',
-                'personGeneration' => 'allow_adult'
+                'safetyFilterLevel' => 'BLOCK_LOW_AND_ABOVE',
+                'personGeneration' => 'ALLOW_ADULT'
             ]
         ];
+        
+        // Add reference image for img2img if provided
+        if ($base64Image) {
+            $payload['referenceImages'] = [
+                [
+                    'referenceImage' => [
+                        'bytesBase64Encoded' => $base64Image
+                    ],
+                    'referenceType' => 'REFERENCE_TYPE_STYLE'
+                ]
+            ];
+        }
         
         $response = makeRequest($url, $payload);
         
