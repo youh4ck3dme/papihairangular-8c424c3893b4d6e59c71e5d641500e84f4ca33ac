@@ -26,23 +26,29 @@ log_warn() { echo -e "${YELLOW}[WARN]${NC} $1"; }
 log_error() { echo -e "${RED}[ERROR]${NC} $1"; exit 1; }
 
 # --- KONFIGURÁCIA ---
-VPS_HOST="57.129.4.22"
-VPS_USER="ubuntu"
+VPS_HOST="194.182.87.6"
+VPS_USER="root"
 DOMAIN="papihairdesign.sk"
 REMOTE_ROOT="/var/www"
 REMOTE_DIR="${REMOTE_ROOT}/${DOMAIN}"
 BACKUP_DIR="${REMOTE_ROOT}/${DOMAIN}_backup_$(date +%Y%m%d_%H%M%S)"
 LOCAL_DIST="dist/app/browser" # Cesta k Angular build výstupu
-# OpenAI API Key (z environment variable alebo .env súboru)
-if [ -z "$OPENAI_API_KEY" ]; then
-    if [ -f ".env" ]; then
-        log_info "Načítavam OPENAI_API_KEY z .env súboru..."
-        export $(grep -v '^#' .env | xargs)
-    fi
+
+# Načítanie .env súboru ak existuje
+if [ -f ".env" ]; then
+    log_info "Načítavam premenné z .env súboru..."
+    export $(grep -v '^#' .env | xargs)
 fi
 
-if [ -z "$OPENAI_API_KEY" ] || [ "$OPENAI_API_KEY" == "sk-test-placeholder" ]; then
-    log_error "OPENAI_API_KEY nie je správne nastavený! \n1. Vložte reálny kľúč do .env \n2. Alebo ho exportujte: export OPENAI_API_KEY='sk-...'"
+# Kontrola kľúčov
+if [ -z "$GEMINI_API_KEY" ]; then
+    log_warn "GEMINI_API_KEY nie je nastavený! AI funkcie (analýza tváre) nebudú fungovať."
+else
+    log_info "GEMINI_API_KEY nájdený."
+fi
+
+if [ -z "$OPENAI_API_KEY" ]; then
+    log_warn "OPENAI_API_KEY nie je nastavený. (Voliteľné ak používate len Gemini)"
 fi
 
 
@@ -56,7 +62,7 @@ fi
 
 # Kontrola SSH pripojenia
 log_info "Testujem SSH pripojenie k ${VPS_USER}@${VPS_HOST}..."
-if ! ssh -o BatchMode=yes -o ConnectTimeout=5 "${VPS_USER}@${VPS_HOST}" echo "SSH OK" &> /dev/null; then
+if ! ssh -i ~/.ssh/id_rsa_vps -o BatchMode=yes -o ConnectTimeout=5 "${VPS_USER}@${VPS_HOST}" echo "SSH OK" &> /dev/null; then
     log_error "Nepodarilo sa pripojiť k serveru cez SSH. Skontrolujte kľúče a VPN."
 fi
 log_success "SSH pripojenie funkčné."
@@ -68,6 +74,11 @@ log_info "2/7) Build Angular aplikácie (Production)..."
 rm -rf dist/
 
 # Spustenie buildu
+if [ -n "$GEMINI_API_KEY" ]; then
+    log_info "Injecting GEMINI_API_KEY into environment.ts..."
+    sed -i '' "s|geminiApiKey: .*|geminiApiKey: '$GEMINI_API_KEY',|" src/environments/environment.ts || true
+fi
+
 if pnpm ng build --configuration=production; then
     log_success "Build úspešný."
 else
@@ -91,7 +102,7 @@ rm -f "${LOCAL_DIST}/proxy/config.php"
 # --- 3. ZÁLOHA NA SERVERI ---
 log_info "3/7) Vytváram zálohu na serveri..."
 
-ssh "${VPS_USER}@${VPS_HOST}" << EOF
+ssh -i ~/.ssh/id_rsa_vps "${VPS_USER}@${VPS_HOST}" << EOF
     if [ -d "${REMOTE_DIR}" ]; then
         echo "Zálohujem existujúcu verziu do ${BACKUP_DIR}..."
         cp -r "${REMOTE_DIR}" "${BACKUP_DIR}"
@@ -99,8 +110,8 @@ ssh "${VPS_USER}@${VPS_HOST}" << EOF
         ls -dt ${REMOTE_ROOT}/${DOMAIN}_backup_* | tail -n +6 | xargs rm -rf 2>/dev/null || true
     else
         echo "Prvé nasadenie, záloha sa preskakuje."
-        sudo mkdir -p "${REMOTE_DIR}"
-        sudo chown -R ${VPS_USER}:${VPS_USER} "${REMOTE_DIR}"
+        mkdir -p "${REMOTE_DIR}"
+        chown -R ${VPS_USER}:${VPS_USER} "${REMOTE_DIR}"
     fi
 EOF
 
@@ -108,65 +119,26 @@ EOF
 log_info "4/7) Nahrávam súbory na server..."
 
 # Používame rsync pre rýchly a efektívny prenos (len zmenené súbory)
-if rsync -avz --delete --exclude='.*' "${LOCAL_DIST}/" "${VPS_USER}@${VPS_HOST}:${REMOTE_DIR}/"; then
+if rsync -avz --delete --exclude='.*' -e "ssh -i ~/.ssh/id_rsa_vps" "${LOCAL_DIST}/" "${VPS_USER}@${VPS_HOST}:${REMOTE_DIR}/"; then
     log_success "Súbory úspešne nahraté."
 else
     log_error "Rsync zlyhal. Skontrolujte pripojenie."
 fi
 
 # --- 5. KONFIGURÁCIA SERVERA (NGINX & PHP) ---
-log_info "5/7) Konfigurujem Nginx a PHP..."
+log_info "5/7) Generujem a nahrávam konfiguráciu..."
 
-ssh "${VPS_USER}@${VPS_HOST}" << EOF
-    set -e
-    
-    # Nastavenie oprávnení
-    sudo chmod -R 755 "${REMOTE_DIR}"
-    sudo find "${REMOTE_DIR}" -type f -exec chmod 644 {} +
+# 5.1 Generovanie Nginx configu LOKÁLNE
+# Pozor: Premenné $host, $request_uri, $uri musia byť escapované (\$host),
+# aby sa vyhodnotili až v Nginx (alebo ich zapíšeme ako string).
+# Premenné ${DOMAIN}, ${GEMINI_API_KEY} sa vyhodnotia teraz (local bash).
 
-    # Inštalácia Nginx a PHP ak chýbajú
-    if ! command -v nginx &> /dev/null; then
-        echo "Inštalujem Nginx..."
-        sudo apt update && sudo apt install -y nginx
-    fi
-    
-    if ! command -v php &> /dev/null; then
-        echo "Inštalujem PHP a rozšírenia..."
-        sudo apt update && sudo apt install -y php-fpm php-curl php-json
-    fi
-
-    # Inštalácia Certbot pre SSL
-    if ! command -v certbot &> /dev/null; then
-        echo "Inštalujem Certbot..."
-        sudo apt update && sudo apt install -y certbot python3-certbot-nginx
-    fi
-
-    # Vytvorenie config.php pre Proxy
-    echo "Vytváram secure config pre Proxy..."
-    cat > "${REMOTE_DIR}/proxy/config.php" << PHP_CONFIG
-<?php
-return [
-    'openai_key' => '${OPENAI_API_KEY}'
-];
-PHP_CONFIG
-    
-    # Príprava súboru pre rate limiting
-    touch "${REMOTE_DIR}/proxy/rate-limit.json"
-    
-    # Nastavenie oprávnení pre PHP (zápis pre rate-limit.json)
-    sudo chown -R www-data:www-data "${REMOTE_DIR}/proxy"
-    sudo chmod -R 775 "${REMOTE_DIR}/proxy"
-
-    # Generovanie Nginx konfigurácie - BEZPEČNÁ VERZIA s SSL
-    echo "Aktualizujem Nginx config pre ${DOMAIN}..."
-    sudo tee /etc/nginx/sites-available/${DOMAIN} > /dev/null << 'NGINX_CONF'
+cat > dist/nginx.conf << NGINX_CONF
 # HTTP server - presmerovanie na HTTPS
 server {
     listen 80;
     server_name ${DOMAIN} www.${DOMAIN};
-
-    # Presmerovanie na HTTPS
-    return 301 https://\$server_name\$request_uri;
+    return 301 https://\$host\$request_uri;
 }
 
 # HTTPS server
@@ -176,24 +148,20 @@ server {
     root ${REMOTE_DIR};
     index index.html;
 
-    # SSL konfigurácia (Certbot)
+    # SSL konfigurácia
     ssl_certificate /etc/letsencrypt/live/${DOMAIN}/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/${DOMAIN}/privkey.pem;
     include /etc/letsencrypt/options-ssl-nginx.conf;
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 
-    # Gzip kompresia
+    # Gzip
     gzip on;
-    gzip_vary on;
-    gzip_min_length 1024;
-    gzip_proxied expired no-cache no-store private auth;
-    gzip_types text/plain text/css text/xml text/javascript application/x-javascript application/xml application/json;
+    gzip_types text/plain text/css text/javascript application/json application/xml;
 
-    # Bezpečnostné hlavičky
+    # Security
     add_header X-Frame-Options "SAMEORIGIN";
     add_header X-XSS-Protection "1; mode=block";
     add_header X-Content-Type-Options "nosniff";
-    add_header Referrer-Policy "strict-origin-when-cross-origin";
     add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
 
     location / {
@@ -201,68 +169,54 @@ server {
     }
 
     # PHP Proxy
-    location ~ ^/proxy/(.+\.php)$ {
+    location ~ ^/proxy/(.+\.php)\$ {
         include snippets/fastcgi-php.conf;
-        fastcgi_pass unix:/var/run/php/php8.2-fpm.sock; # Updated to match server version
-        # Fallback pre staršie verzie PHP ak 8.3 neexistuje (toto je len príklad, v realite treba zistiť verziu)
-        # fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
+        fastcgi_param GEMINI_API_KEY "${GEMINI_API_KEY}";
+        # Používame systémový alias, ktorý sme videli na serveri
+        fastcgi_pass unix:/var/run/php/php-fpm.sock; 
     }
 
-    # Zakázať prístup k config.php a iným citlivým súborom
-    location ~ /proxy/config\.php {
-        deny all;
-        return 404;
-    }
+    # Zakázať prístup ku configom
+    location ~ /proxy/config\.php { deny all; return 404; }
 
-    # Cache pre statické súbory (1 rok)
-    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|webp|woff|woff2|ttf|eot)$ {
+    # Cache assets
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|webp)\$ {
         expires 1y;
         add_header Cache-Control "public, no-transform";
-    }
-
-    # Cache pre Service Worker (nikdy necacheovať)
-    location = /ngsw-worker.js {
-        expires -1;
-        add_header Cache-Control "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0";
     }
 }
 NGINX_CONF
 
-    # Detekcia PHP verzie pre socket
-    PHP_SOCKET=$(sudo ls /var/run/php/php*-fpm.sock 2>/dev/null | head -n 1)
-    if [ ! -z "$PHP_SOCKET" ]; then
-        echo "Detegovaný PHP socket: $PHP_SOCKET"
-        sudo sed -i "s|fastcgi_pass unix:.*-fpm.sock;|fastcgi_pass unix:$PHP_SOCKET;|" /etc/nginx/sites-available/${DOMAIN}
-    else
-        echo "VAROVANIE: Nenašiel som PHP-FPM socket! Skontrolujte inštaláciu PHP a status php-fpm servisu."
-    fi
+# 5.2 Generovanie PHP configu LOKÁLNE
+cat > dist/config.php << PHP_CONFIG
+<?php
+return [
+    'openai_key' => '${OPENAI_API_KEY}'
+];
+PHP_CONFIG
 
-    # Aktivácia stránky (len ak link ešte neexistuje)
-    if [ ! -L /etc/nginx/sites-enabled/${DOMAIN} ]; then
-        echo "Aktivujem stránku ${DOMAIN}..."
-        sudo ln -s /etc/nginx/sites-available/${DOMAIN} /etc/nginx/sites-enabled/
-    else
-        echo "Stránka ${DOMAIN} už je aktívna."
-    fi
+# 5.3 Nahrávanie configov
+log_info "Nahrávam konfiguračné súbory..."
+rsync -avz -e "ssh -i ~/.ssh/id_rsa_vps" dist/nginx.conf "${VPS_USER}@${VPS_HOST}:/tmp/${DOMAIN}.nginx.conf"
+rsync -avz -e "ssh -i ~/.ssh/id_rsa_vps" dist/config.php "${VPS_USER}@${VPS_HOST}:${REMOTE_DIR}/proxy/config.php"
 
-    # Test a reštart Nginx
-    if sudo nginx -t; then
-        sudo systemctl reload nginx
-        echo "Nginx reštartovaný."
-    else
-        echo "Chyba v Nginx konfigurácii! Obnovujem zálohu..."
-        # Tu by mohol byť rollback skript
-        exit 1
-    fi
-
-    # Spustenie Certbot pre SSL certifikát
-    echo "Konfigurujem SSL s Certbot..."
-    sudo certbot --nginx -d ${DOMAIN} -d www.${DOMAIN} --non-interactive --agree-tos --email admin@${DOMAIN} || echo "Certbot zlyhal (možno cert už existuje alebo chyba DNS). Skontrolujte manuálne."
+# 5.4 Aplikácia a reštart
+log_info "Aplikujem konfiguráciu a reštartujem Nginx..."
+ssh -i ~/.ssh/id_rsa_vps "${VPS_USER}@${VPS_HOST}" << EOF
+    set -e
+    
+    # Presun a aktivácia Nginx configu
+    mv /tmp/${DOMAIN}.nginx.conf /etc/nginx/sites-available/${DOMAIN}
+    ln -sf /etc/nginx/sites-available/${DOMAIN} /etc/nginx/sites-enabled/${DOMAIN}
+    
+    # Oprávnenia
+    chown -R www-data:www-data "${REMOTE_DIR}/proxy"
+    chmod -R 775 "${REMOTE_DIR}/proxy"
+    chmod 644 "${REMOTE_DIR}/proxy/config.php" # Secure config
+    
+    # Reštart Nginx
+    nginx -t && systemctl restart nginx
+    echo "Nginx úspešne reštartovaný."
 EOF
 
-# --- 6. DOKONČENIE ---
-log_success "========================================================"
-log_success "✅ DEPLOY DOKONČENÝ: https://${DOMAIN}"
-log_success "========================================================"
-log_info "Záloha vytvorená v: ${BACKUP_DIR}"
-
+log_success "✅ DEPLOY COMPLETE: https://${DOMAIN}"

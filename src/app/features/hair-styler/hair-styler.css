@@ -126,7 +126,7 @@
     inset: 0;
     z-index: 100;
     background-color: #000;
-    background-image: url('/assets/images/phd_logo_upload.jpg');
+    background-image: url('/assets/logo-header.webp');
     background-size: cover;
     background-position: center;
     /* Darken image slightly to make text readable */

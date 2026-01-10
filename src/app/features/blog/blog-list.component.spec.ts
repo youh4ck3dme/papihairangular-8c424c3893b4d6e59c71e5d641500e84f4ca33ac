@@ -15,6 +15,7 @@ describe('BlogListComponent', () => {
 
     const mockPosts: BlogPost[] = [
         {
+            id: 'test-1',
             slug: 'test-1',
             title: 'Test Post 1',
             subtitle: 'Subtitle 1',

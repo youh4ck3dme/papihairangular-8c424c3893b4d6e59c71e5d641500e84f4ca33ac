@@ -43,8 +43,8 @@ if (!$GEMINI_KEY) {
     exit;
 }
 
-// Rate limiting: 10 generations per IP per 24h
-$rateLimit = 10;
+// Rate limiting: Unlimited (was 10)
+$rateLimit = 1000000;
 $ratePeriod = 86400; // 24 hours in seconds
 // Use /tmp which is usually writable
 $rateLimitFile = sys_get_temp_dir() . '/papi-rate-limit.json';

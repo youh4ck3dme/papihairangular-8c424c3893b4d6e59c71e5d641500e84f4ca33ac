@@ -4,7 +4,7 @@
 set -euo pipefail
 
 # Configuration
-SERVER_IP="57.129.4.22"
+SERVER_IP="194.182.87.6"
 USER="ubuntu"
 KEY_PATH="$HOME/.ssh/id_rsa"
 

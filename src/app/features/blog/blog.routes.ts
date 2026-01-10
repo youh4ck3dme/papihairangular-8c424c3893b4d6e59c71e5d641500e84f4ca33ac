@@ -1,6 +1,19 @@
 import { Routes } from '@angular/router';
 
 export const BLOG_ROUTES: Routes = [
+  // Sticky Featured Story - Always first
+  {
+    path: 'pribeh-znacky',
+    title: 'Príbeh značky | PAPI HAIR DESIGN - From Streets to World Stages',
+    data: {
+      seo: {
+        description: 'Príbeh Róberta Papcuna – od košického sídliska po svetové módne prehliadky. Zakladateľ PAPI HAIR DESIGN.',
+        keywords: 'PAPI HAIR DESIGN, Róbert Papcun, príbeh, kaderníctvo, Košice, barbering, fashion week, zakladateľ',
+        ogImage: 'https://papihairdesign.sk/assets/papi.webp'
+      }
+    },
+    loadComponent: () => import('./pribeh-znacky/pribeh-znacky.component').then(c => c.PribehZnackyComponent)
+  },
   {
     path: '',
     title: 'Blog | PAPI HAIR DESIGN - Trendy, tipy a novinky',

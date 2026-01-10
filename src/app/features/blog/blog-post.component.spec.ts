@@ -13,6 +13,7 @@ describe('BlogPostComponent', () => {
     let blogServiceSpy: jasmine.SpyObj<BlogService>;
 
     const mockPost: BlogPost = {
+        id: 'test-id',
         slug: 'test-post',
         title: 'Test Post',
         subtitle: 'Test Subtitle',

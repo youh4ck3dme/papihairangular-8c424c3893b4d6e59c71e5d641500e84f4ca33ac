@@ -1,8 +1,7 @@
-
 import { Component, signal, ViewChild, ElementRef, inject, computed, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HAIRSTYLES, Hairstyle, TutorialStep, STYLE_CATEGORIES, StyleCategory } from '../../core/models/stylist.models';
-import { AiVisageService } from '../../core/services/ai-visage.service';
+import { AiVisageService, FaceAnalysis } from '../../core/services/ai-visage.service';
 
 @Component({
     selector: 'app-virtual-stylist',
@@ -29,6 +28,9 @@ export class VirtualStylistComponent {
     isCameraActive = signal<boolean>(false);
     showOriginal = signal<boolean>(false);
 
+    // New Analysis State
+    analysis = signal<FaceAnalysis | undefined>(undefined);
+
     // Feedback
     generationTime = signal<number | null>(null);
     cameraError = signal<string | null>(null);
@@ -42,7 +44,10 @@ export class VirtualStylistComponent {
     );
 
     start() {
-        this.currentStep.set('upload');
+        // Only transition to 'upload' from the initial 'welcome' step
+        if (this.currentStep() === 'welcome') {
+            this.currentStep.set('upload');
+        }
     }
 
     setCategory(category: StyleCategory) {
@@ -61,13 +66,21 @@ export class VirtualStylistComponent {
 
     async activateCamera() {
         this.cameraError.set(null);
-        if (!navigator.mediaDevices?.getUserMedia) {
+        // Guard against environments where navigator.mediaDevices may throw when accessed
+        let mediaDevices: MediaDevices | null = null;
+        try {
+            mediaDevices = navigator.mediaDevices;
+        } catch {
+            this.cameraError.set('Zariadenie nepodporuje kameru.');
+            return;
+        }
+        if (!mediaDevices?.getUserMedia) {
             this.cameraError.set('Zariadenie nepodporuje kameru.');
             return;
         }
 
         try {
-            const stream = await navigator.mediaDevices.getUserMedia({
+            const stream = await mediaDevices.getUserMedia({
                 video: {
                     facingMode: 'user',
                     width: { ideal: 1280 },
@@ -78,7 +91,7 @@ export class VirtualStylistComponent {
         } catch (err) {
             console.error('Camera error (primary):', err);
             try {
-                const fallback = await navigator.mediaDevices.getUserMedia({ video: true });
+                const fallback = await mediaDevices.getUserMedia({ video: true });
                 await this.handleStream(fallback);
             } catch (fallbackErr) {
                 console.error('Camera error (fallback):', fallbackErr);
@@ -118,19 +131,34 @@ export class VirtualStylistComponent {
     }
 
     capturePhoto() {
-        const video = this.videoElement.nativeElement;
-        const canvas = this.canvasElement.nativeElement;
-        canvas.width = video.videoWidth || 640;
-        canvas.height = video.videoHeight || 480;
-        const ctx = canvas.getContext('2d');
-        if (ctx) {
-            ctx.translate(canvas.width, 0);
-            ctx.scale(-1, 1);
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-            this.userImage.set(canvas.toDataURL('image/jpeg', 0.95));
-            this.stopCamera();
-            this.currentStep.set('selection');
+        const canvas = this.canvasElement?.nativeElement;
+        if (!canvas) {
+            return;
         }
+        const ctx = canvas.getContext('2d');
+        // Guard against missing canvas context methods
+        if (!ctx) {
+            return;
+        }
+        // If video element is present, use its dimensions; otherwise fall back to defaults
+        const video = this.videoElement?.nativeElement;
+        const width = video?.videoWidth || 640;
+        const height = video?.videoHeight || 480;
+        canvas.width = width;
+        canvas.height = height;
+        // Ensure translate and scale exist before using them
+        if (typeof ctx.translate === 'function') {
+            ctx.translate(canvas.width, 0);
+        }
+        if (typeof ctx.scale === 'function') {
+            ctx.scale(-1, 1);
+        }
+        if (video && typeof ctx.drawImage === 'function') {
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        }
+        this.userImage.set(canvas.toDataURL('image/jpeg', 0.95));
+        this.stopCamera();
+        this.currentStep.set('selection');
     }
 
     stopCamera() {
@@ -159,13 +187,28 @@ export class VirtualStylistComponent {
     async generateMagic() {
         const style = this.selectedStyle();
         if (!style) return;
+        // Ensure we have a user image before invoking AI service
+        if (!this.userImage()) {
+            // No image to process – do not call AI service
+            return;
+        }
 
         this.isProcessing.set(true);
+        this.analysis.set(undefined); // Reset previous analysis
+
         try {
-            const result = await this.aiService.generateLook(style.prompt, this.userImage() || undefined);
-            this.resultImage.set(result.imageUrl);
-            this.generationTime.set(result.analysisTime);
-            this.currentStep.set('finished');
+            const result = await this.aiService.generateLook(style.prompt, this.userImage()!);
+            if (result && result.imageUrl) {
+                this.resultImage.set(result.imageUrl);
+                this.generationTime.set(result.analysisTime);
+                if (result.analysis) {
+                    this.analysis.set(result.analysis);
+                }
+                this.currentStep.set('finished');
+            } else {
+                // Gracefully handle missing result
+                this.resultImage.set(null);
+            }
         } catch {
             alert('Digitálna analýza zlyhala. Skúste to neskôr.');
         } finally {
@@ -187,5 +230,10 @@ export class VirtualStylistComponent {
         this.selectedStyle.set(null);
         this.resultImage.set(null);
         this.currentStep.set('welcome');
+        this.analysis.set(undefined);
+        // Clear additional state used in tests
+        this.isProcessing.set(false);
+        this.cameraError.set('');
+        this.activeCategory.set('Klasika');
     }
 }

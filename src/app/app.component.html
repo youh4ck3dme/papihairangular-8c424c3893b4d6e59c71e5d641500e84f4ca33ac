@@ -2,10 +2,14 @@
   <app-scroll-progress></app-scroll-progress>
 </aside>
 <div class="flex flex-col min-h-screen bg-brand-dark">
+  @if (showLayout()) {
   <app-header></app-header>
+  }
   <main class="flex-grow container mx-auto px-4 py-8 flex flex-col">
     <router-outlet></router-outlet>
   </main>
+  @if (showLayout()) {
   <app-footer></app-footer>
+  }
   <app-notification></app-notification>
 </div>

@@ -1,0 +1,179 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - complementary "Reading progress":
+    - generic [ref=e3]:
+      - progressbar "Reading progress"
+  - main [ref=e5]:
+    - generic [ref=e8]:
+      - navigation [ref=e9]:
+        - link "PAPI HAIR DESIGN" [ref=e10] [cursor=pointer]:
+          - /url: /
+          - img "PAPI HAIR DESIGN" [ref=e11]
+        - generic [ref=e12]:
+          - link "Blog" [ref=e13] [cursor=pointer]:
+            - /url: /blog
+          - link "Služby" [ref=e14] [cursor=pointer]:
+            - /url: /sluzby
+          - link "Galéria" [ref=e15] [cursor=pointer]:
+            - /url: /galeria
+          - link "Rezervácia" [ref=e16] [cursor=pointer]:
+            - /url: /kontakt
+        - text: 
+      - generic [ref=e17]:
+        - img "PAPI HAIR DESIGN Background" [ref=e18]
+        - generic [ref=e20]:
+          - generic [ref=e23]: ZAKLADATEĽ & KREATÍVNY RIADITEĽ
+          - heading "Z ULICE na svetové pódiá" [level=1] [ref=e25]:
+            - text: Z ULICE
+            - generic [ref=e26]: na svetové pódiá
+          - paragraph [ref=e27]: Príbeh chlapca z košického sídliska, ktorý vymenil ulicu za svetové móla a vybudoval značku na vášni a odhodlaní.
+        - generic [ref=e29] [cursor=pointer]: 
+      - generic [ref=e30]:
+        - generic [ref=e31]: "\""
+        - generic [ref=e33]:
+          - heading "\"Fascinovalo ma, ako sa ľudia menia pred mojimi očami. Nielen výzorom, ale aj sebavedomím.\"" [level=2] [ref=e34]
+          - generic [ref=e35]:
+            - text: Volám sa
+            - strong [ref=e36]: Róbert Papcun
+            - text: ", pochádzam z Košíc a dnes mám 35 rokov. Moja cesta ku kaderníctvu sa začala už v detstve – rád som sledoval, ako strihajú mojich rodičov. Ako tínedžer som chodil s kamarátmi do salónov, čakal ich a sledoval, ako ich farbia a strihajú. Už vtedy som vedel, že tento svet ma priťahuje."
+          - paragraph [ref=e37]: Po večeroch som sa často modlil, aby som bol stále lepší a rástol v tom, čo milujem.
+      - generic [ref=e44]:
+        - generic [ref=e46]:
+          - generic [ref=e47]:
+            - generic [ref=e48]: "2007"
+            - heading "Začiatky & Improvisation" [level=3] [ref=e49]
+            - heading "Kočikáreň & Ulica" [level=2] [ref=e50]
+          - generic [ref=e51]:
+            - paragraph [ref=e52]:
+              - text: "Amatérsky som strihal rodičov a kamarátov – v kočikárni, v blokoch a dokonca aj pod bránami na ulici. Tam som sa učil to najdôležitejšie:"
+              - strong [ref=e53]: improvizovať
+              - text: .
+            - paragraph [ref=e54]:
+              - text: V roku
+              - strong [ref=e55]: "2009"
+              - text: "som nastúpil do prvého salónu. Z kurzu som si veľa neodniesol, tak som improvizoval. Naučil som sa však lekciu života:"
+              - emphasis [ref=e56]: úsmev a komunikácia sú rovnako ostré zbrane ako nožnice.
+            - paragraph [ref=e57]:
+              - strong [ref=e58]: "2010 — Barbering Focus:"
+              - text: Stal som sa najmladším kaderníkom v lepšom salóne. Keďže dámske mi ešte nešli, vrhol som sa na pánske účesy a barbering.
+        - generic [ref=e62]:
+          - generic [ref=e64] [cursor=pointer]:
+            - img "Talianska skúsenosť" [ref=e65]
+            - generic [ref=e67]: 
+            - generic [ref=e68]: ARCHÍV 2011
+          - generic [ref=e69]:
+            - generic [ref=e70]:
+              - heading "La Dolce Vita" [level=2] [ref=e71]
+              - paragraph [ref=e72]: TALIANSKO & NÁVRAT DOMOV
+            - paragraph [ref=e74]:
+              - text: Odišiel som do Talianska splniť si sen. Prácu som nenašiel, ale tých 10 mesiacov ma naučilo
+              - strong [ref=e75]: húževnatosti
+              - text: ". Vrátil som sa domov s jasným plánom: dostať sa do najlepšieho salónu v meste."
+            - generic [ref=e76]:
+              - generic [ref=e77]: 
+              - paragraph [ref=e78]: "\"Na pohovor som vošiel sebavedome, s 'talianskym prízvukom', aby som pôsobil svetovo. Šéf ma posadil k prvému klientovi... a prijali ma hneď v ten deň.\""
+        - generic [ref=e79]:
+          - generic [ref=e80]:
+            - generic [ref=e81]: "2014"
+            - heading "Fashion Week & Tvrdá práca" [level=2] [ref=e82]:
+              - text: Fashion Week &
+              - text: Tvrdá práca
+            - generic [ref=e83]:
+              - paragraph [ref=e84]:
+                - strong [ref=e85]: "2012 — Štúdium:"
+                - text: V najprestížnejšom salóne v Košiciach som pochopil, že talent nestačí. Investoval som čas a vlastné peniaze do kurzov po celej Európe.
+              - paragraph [ref=e86]:
+                - strong [ref=e87]: "2014 — The Stage:"
+                - text: Začal som česať módne prehliadky – od Košice Fashion Week až po
+                - strong [ref=e88]: Praha Fashion Week
+                - text: . Mal som vlastné minúty na pódiu, kde som prezentoval trendy.
+              - paragraph [ref=e89]:
+                - strong [ref=e90]: "2015 — The Dream:"
+                - text: Mal som veľkú klientelu a sen o vlastnom priestore. Prestal som míňať, šetril som každý cent a sústredil sa iba na cieľ – otvoriť si raz svoj salón.
+          - img "Fashion Shows" [ref=e93]
+        - generic [ref=e95]:
+          - generic [ref=e96]:
+            - generic [ref=e97]: Míľnik
+            - heading "PAPI HAIR DESIGN Est. 2018" [level=2] [ref=e98]:
+              - text: PAPI HAIR DESIGN
+              - generic [ref=e99]: Est. 2018
+            - paragraph [ref=e100]: Otvoril som bez investorov. Bez finančnej pomoci. Iba z našetrených peňazí a s čistou víziou. Miesto, kde sa nielen strihá, ale aj inšpiruje.
+          - generic [ref=e101]:
+            - generic [ref=e102]:
+              - img "Interiér PAPI HAIR DESIGN salónu" [ref=e103]
+              - generic [ref=e104]:
+                - heading "Interiér" [level=3] [ref=e105]
+                - paragraph [ref=e106]: Dizajn, ktorý dýcha atmosférou
+            - generic [ref=e107]:
+              - generic [ref=e108]: 
+              - heading "Budovanie Tímu" [level=3] [ref=e109]
+              - paragraph [ref=e110]: 2019 — Začínam sa venovať rozvoju tímu. Lokálne eventy, festivaly a budovanie reputácie značky.
+        - generic [ref=e112]:
+          - generic: GOLD
+          - generic [ref=e113]:
+            - generic [ref=e114]:
+              - img "Róbert Papcun - Global Ambassador" [ref=e116]
+              - generic [ref=e117]:
+                - paragraph [ref=e118]: "2022"
+                - paragraph [ref=e119]: "\"Vystupujem na pódiu na Malorke. Jeden z mojich najväčších životných momentov.\""
+            - generic [ref=e120]:
+              - heading "2020 — 2023" [level=4] [ref=e121]
+              - heading "Global Ambassador" [level=2] [ref=e122]:
+                - text: Global
+                - text: Ambassador
+              - paragraph [ref=e123]:
+                - text: Reprezentujem značku
+                - strong [ref=e124]: GOLD HAIR CARE
+                - text: po celom svete.
+              - generic [ref=e125]:
+                - paragraph [ref=e126]:
+                  - strong [ref=e127]: "2021:"
+                  - text: Učím mladé talenty v bratislavskej akadémii a odovzdávam skúsenosti, tak ako to robili moji mentori pre mňa.
+                - paragraph [ref=e128]:
+                  - strong [ref=e129]: "2023:"
+                  - text: Tvoríme vlasové trendy a fotíme kolekcie v európskych metropolách. Salón dostáva nový, reprezentatívny vizuál hodný ambasádora.
+        - generic [ref=e130]:
+          - generic [ref=e131]: 
+          - heading "Odkaz pre ďalšiu generáciu" [level=2] [ref=e132]
+          - generic [ref=e133]:
+            - paragraph [ref=e134]:
+              - text: "\"Do salónu som prijal mladého chalana, ktorý"
+              - strong [ref=e135]: nikdy nedržal nožnice v ruke
+              - text: . Učil som ho všetko od nuly. Sledoval som ho každý deň. Do roka sa z neho stal plnohodnotný barber. Toto je pre mňa úspech – vidieť rásť iných."
+            - paragraph [ref=e136]: "— 2024: Rok rastu a odovzdávania remesla"
+      - generic [ref=e137]:
+        - img
+        - generic [ref=e138]:
+          - generic [ref=e139]:
+            - generic [ref=e140]: Súčasnosť
+            - heading "Líder, Mentor & Inšpirácia" [level=2] [ref=e141]:
+              - text: Líder, Mentor &
+              - text: Inšpirácia
+          - paragraph [ref=e142]:
+            - text: Dnes vediem silný tím a mám radosť z toho, že viacerí ľudia, ktorí u mňa začínali, majú dnes vlastné salóny. Viem, že ich môj príbeh inšpiroval.
+            - text: Motivujem mladých, školím po celom Česku a Slovensku. Rodina je môj pevný základ – zdroj energie na nové výzvy.
+          - paragraph [ref=e144]: "\"Sny sa neplnia tým, že čakáš. Plnia sa tým, že vezmeš nožnice do ruky a začneš strihať svoj vlastný osud.\""
+          - img "Róbert Papcun" [ref=e146]
+          - link " Späť na blog" [ref=e147] [cursor=pointer]:
+            - /url: /blog
+            - generic [ref=e148]: 
+            - generic [ref=e149]: Späť na blog
+      - generic [ref=e150]:
+        - generic [ref=e151]:
+          - generic [ref=e152]:
+            - heading "PAPI HAIR DESIGN" [level=3] [ref=e153]
+            - paragraph [ref=e154]: Prémiový vlasový salón v srdci Košíc. Kde sa štýl stretáva s osobnosťou.
+          - generic [ref=e155]:
+            - link "" [ref=e156] [cursor=pointer]:
+              - /url: https://www.instagram.com/papihairdesign/
+              - generic [ref=e157]: 
+            - link "" [ref=e158] [cursor=pointer]:
+              - /url: https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flocalhost%3A3002%2Fblog%2Fpribeh-znacky
+              - generic [ref=e159]: 
+            - link "" [ref=e160] [cursor=pointer]:
+              - /url: https://www.tiktok.com/@papihairdesign
+              - generic [ref=e161]: 
+        - generic [ref=e162]: © 2025 PAPI HAIR DESIGN. All rights reserved.
+```

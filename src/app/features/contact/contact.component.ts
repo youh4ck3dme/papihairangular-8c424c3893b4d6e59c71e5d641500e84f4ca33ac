@@ -38,8 +38,16 @@ export class ContactComponent implements OnInit {
       return;
     }
 
+    const { name, email, message } = this.contactForm.value;
+    const subject = `Správa z webu od ${name}`;
+    const body = `${message}\n\nOdosielateľ: ${name}\nEmail: ${email}`;
 
-    this.notificationService.show('Vaša správa bola úspešne odoslaná!', 'success');
+    const mailtoLink = `mailto:papihairdesign@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    // Open default mail client
+    window.location.href = mailtoLink;
+
+    this.notificationService.show('Otváram váš emailový klient...', 'info');
     this.contactForm.reset();
   }
 }

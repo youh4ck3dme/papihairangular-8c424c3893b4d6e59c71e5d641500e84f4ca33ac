@@ -20,11 +20,9 @@
 }
 
 .glass-panel {
-  background: linear-gradient(165deg, rgba(24, 24, 27, 0.96) 0%, rgba(9, 9, 11, 0.99) 100%);
-  backdrop-filter: blur(40px);
-  -webkit-backdrop-filter: blur(40px);
-  border: 1px solid rgba(212, 175, 55, 0.3);
-  box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.9);
+  background: transparent;
+  border: none;
+  box-shadow: none;
   width: 100%;
 }
 

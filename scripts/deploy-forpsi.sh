@@ -29,9 +29,14 @@ log_success() { echo -e "${GREEN}[SUCCESS]${NC} $1"; }
 log_warn() { echo -e "${YELLOW}[WARN]${NC} $1"; }
 log_error() { echo -e "${RED}[ERROR]${NC} $1"; exit 1; }
 
-# OpenAI API Key (z environment variable - NIKDY neukladajte do Git!)
-if [ -z "$OPENAI_API_KEY" ]; then
-    log_warn "OPENAI_API_KEY nie je nastavený! AI funkcie nebudú fungovať. Dodajte ho neskôr do /etc/environment."
+# Načítanie .env súboru
+if [ -f .env ]; then
+    export $(grep -v '^#' .env | xargs)
+fi
+
+# Gemini API Key (z environment variable - NIKDY neukladajte do Git!)
+if [ -z "$GEMINI_API_KEY" ]; then
+    log_warn "GEMINI_API_KEY nie je nastavený! AI funkcie nebudú fungovať. Dodajte ho neskôr do /etc/environment."
 fi
 
 # --- 1. KONTROLA PROSTREDIA ---
@@ -97,7 +102,7 @@ fi
 # --- 5. KONFIGURÁCIA SERVERA (NGINX & PHP) ---
 log_info "5/7) Konfigurujem Nginx a PHP na Forpsi VPS..."
 
-ssh "${VPS_USER}@${VPS_HOST}" << 'FORPSI_CONFIG'
+ssh "${VPS_USER}@${VPS_HOST}" << FORPSI_CONFIG
     set -e
     
     # Nastavenie oprávnení
@@ -120,18 +125,18 @@ ssh "${VPS_USER}@${VPS_HOST}" << 'FORPSI_CONFIG'
     cat > "${REMOTE_DIR}/proxy/config.php" << 'PHP_CONFIG'
 <?php
 return [
-    'openai_key' => getenv('OPENAI_API_KEY') ?: 'YOUR_OPENAI_API_KEY_HERE'
+    'openai_key' => ''
 ];
 PHP_CONFIG
     
-    # Detekcia PHP verzie
-    PHP_VERSION=$(ls /var/run/php/php*-fpm.sock 2>/dev/null | head -n 1 | sed 's/.*php\(.*\)-fpm.sock/\1/')
-    if [ -z "$PHP_VERSION" ]; then
+    # Detekcia PHP verzie (escaped $ so it runs on server)
+    PHP_VERSION=\$(ls /var/run/php/php*-fpm.sock 2>/dev/null | head -n 1 | sed 's/.*php\(.*\)-fpm.sock/\1/')
+    if [ -z "\$PHP_VERSION" ]; then
         PHP_VERSION="8.1"  # Fallback
     fi
-    echo "Používam PHP verziu: $PHP_VERSION"
+    echo "Používam PHP verziu: \$PHP_VERSION"
 
-    # Generovanie Nginx konfigurácie
+    # Generovanie Nginx konfigurácie s environment variables
     echo "Aktualizujem Nginx config pre ${DOMAIN}..."
     sudo tee /etc/nginx/sites-available/${DOMAIN} > /dev/null << NGINX_CONF
 # HTTP server - presmerovanie na HTTPS
@@ -140,7 +145,7 @@ server {
     server_name ${DOMAIN} www.${DOMAIN};
 
     # Presmerovanie na HTTPS
-    return 301 https://\$server_name\$request_uri;
+    return 301 https://\\\$server_name\\\$request_uri;
 }
 
 # HTTPS server
@@ -150,11 +155,11 @@ server {
     root ${REMOTE_DIR};
     index index.html;
 
-    # SSL konfigurácia (Certbot alebo vlastný certifikát)
-    # ssl_certificate /etc/letsencrypt/live/${DOMAIN}/fullchain.pem;
-    # ssl_certificate_key /etc/letsencrypt/live/${DOMAIN}/privkey.pem;
-    # include /etc/letsencrypt/options-ssl-nginx.conf;
-    # ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+    # SSL konfigurácia
+    ssl_certificate /etc/letsencrypt/live/${DOMAIN}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/${DOMAIN}/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 
     # Gzip kompresia
     gzip on;
@@ -168,31 +173,54 @@ server {
     add_header X-Content-Type-Options "nosniff";
 
     location / {
-        try_files \$uri \$uri/ /index.html;
+        try_files \\\$uri \\\$uri/ /index.html;
     }
 
     # PHP Proxy - Chat JSON
     location ~ ^/proxy/chat\.php$ {
         include snippets/fastcgi-php.conf;
-        fastcgi_pass unix:/var/run/php/php${PHP_VERSION}-fpm.sock;
+        fastcgi_pass unix:/var/run/php/php$PHP_VERSION-fpm.sock;
         fastcgi_read_timeout 20s;
+        
+        # Injection of Secrets
+        fastcgi_param GEMINI_API_KEY "${GEMINI_API_KEY}";
+
     }
 
     # PHP Proxy - Chat Stream (disable buffering)
     location ~ ^/proxy/chat_stream\.php$ {
         include snippets/fastcgi-php.conf;
-        fastcgi_pass unix:/var/run/php/php${PHP_VERSION}-fpm.sock;
+        fastcgi_pass unix:/var/run/php/php$PHP_VERSION-fpm.sock;
         proxy_buffering off;
         gzip off;
         fastcgi_read_timeout 20s;
         add_header X-Accel-Buffering no;
+        
+        # Injection of Secrets
+        fastcgi_param GEMINI_API_KEY "${GEMINI_API_KEY}";
+
     }
 
     # PHP Proxy - Image Job
     location ~ ^/proxy/image-job\.php$ {
         include snippets/fastcgi-php.conf;
-        fastcgi_pass unix:/var/run/php/php${PHP_VERSION}-fpm.sock;
+        fastcgi_pass unix:/var/run/php/php$PHP_VERSION-fpm.sock;
         fastcgi_read_timeout 60s;
+        
+        # Injection of Secrets
+        fastcgi_param GEMINI_API_KEY "${GEMINI_API_KEY}";
+
+    }
+
+    # PHP Proxy - AI Proxy
+    location ~ ^/proxy/ai-proxy\.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php$PHP_VERSION-fpm.sock;
+        fastcgi_read_timeout 60s;
+        
+        # Injection of Secrets
+        fastcgi_param GEMINI_API_KEY "${GEMINI_API_KEY}";
+
     }
 
     # Zakázať prístup k config.php
@@ -231,13 +259,25 @@ NGINX_CONF
     fi
 FORPSI_CONFIG
 
-# --- 6. NASTAVENIE ENVIRONMENT VARIABLES ---
-log_info "6/7) Nastavujem environment variables na Forpsi VPS..."
+# --- 6. ČISTENIE STARÝCH KĽÚČOV ---
+log_info "6/7) Odstraňujem environment variables z /etc/environment (cleanup)..."
 
 ssh "${VPS_USER}@${VPS_HOST}" << EOF
-    # Pridanie OPENAI_API_KEY do PHP-FPM environment
-    # (pre Forpsi možno potrebuješ upraviť php-fpm.conf)
-    echo "OPENAI_API_KEY=${OPENAI_API_KEY}" | sudo tee -a /etc/environment > /dev/null
+    # Odstránenie starých kľúčov z /etc/environment pre lepšiu bezpečnosť
+    sudo sed -i '/GEMINI_API_KEY/d' /etc/environment
+    sudo sed -i '/OPENAI_API_KEY/d' /etc/environment
+    
+    # Detekcia PHP verzie pre reštart
+    PHP_VERSION=\$(ls /var/run/php/php*-fpm.sock 2>/dev/null | head -n 1 | sed 's/.*php\(.*\)-fpm.sock/\1/')
+    if [ -z "\$PHP_VERSION" ]; then
+        PHP_VERSION="8.1"
+    fi
+    
+    # Reštart PHP-FPM
+    if systemctl is-active --quiet "php\${PHP_VERSION}-fpm"; then
+        sudo systemctl restart "php\${PHP_VERSION}-fpm"
+        echo "PHP-FPM reštartované."
+    fi
 EOF
 
 # --- 7. DOKONČENIE ---
@@ -251,4 +291,3 @@ log_info "📝 Ďalšie kroky:"
 log_info "1. Skontroluj SSL certifikát (ak ešte nie je nastavený)"
 log_info "2. Testuj endpointy: ./test-main-features.sh https://${DOMAIN}"
 log_info "3. Skontroluj PHP-FPM logs ak sú problémy"
-

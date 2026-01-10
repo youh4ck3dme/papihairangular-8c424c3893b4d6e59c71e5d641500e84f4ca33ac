@@ -14,6 +14,21 @@ interface CacheItem<T> {
 export class BlogService {
   private posts: BlogPost[] = [
     {
+      id: "0",
+      slug: "pribeh-znacky",
+      title: "From Streets to World Stages: Príbeh Róberta Papcuna",
+      subtitle: "Príbeh chlapca z košického sídliska, ktorý vybudoval svetovú značku na vášni a odhodlaní.",
+      perex: "Volám sa Róbert Papcun a toto je môj príbeh. Od strihania kamarátov v kočikárni až po pódiá na svetových Fashion Weekoch v Prahe a Taliansku. Zistite, ako vzniklo PAPI HAIR DESIGN a prečo verím, že sny sa plnia len vtedy, keď vezmete nožnice do ruky.",
+      content: [], // Content is handled by a dedicated component for this special story
+      imageUrl: "assets/papi.webp",
+      author: "Róbert Papcun",
+      authorRole: "Founder & Creative Director",
+      date: "2026-01-09",
+      readingTime: 10,
+      tags: ["príbeh značky", "Róbert Papcun", "história", "PAPI HAIR DESIGN", "úspech"],
+      faqs: []
+    },
+    {
       id: "1",
       slug: "trendove-ucesy-2026",
       title: "Trendové účesy 2026: Kompletný sprievodca strihmi v Košiciach",

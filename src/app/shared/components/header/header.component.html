@@ -2,8 +2,8 @@
   <nav class="container mx-auto px-6 py-2 md:py-3">
     <div class="flex items-center justify-between">
       <a routerLink="/" class="flex items-center">
-        <img src="assets/logo.png" alt="PAPI HAIR DESIGN Logo" width="180" height="52" priority
-          class="h-16 w-auto object-contain max-h-12 md:max-h-none">
+        <img src="assets/logo-header.webp" alt="PAPI HAIR DESIGN" width="180" height="52" priority
+          class="h-16 w-auto object-contain max-h-12 md:max-h-none rounded-sm">
       </a>
 
       <!-- Desktop Menu -->
@@ -24,6 +24,7 @@
         } @else {
         <a [routerLink]="link.path" [class.font-extrabold]="isLinkActive(link)" [class.border-b-2]="isLinkActive(link)"
           [class.border-gold]="isLinkActive(link)" (click)="scrollToSection(link.sectionId, $event)"
+          [class.ai-studio-glow]="link.path === '/ai-studio'"
           class="text-brand-dark hover:text-gold transition-colors duration-300 pb-1 font-medium cursor-pointer flex items-center gap-1">
           {{ link.label }}
           @if(link.isNew) {
@@ -63,7 +64,7 @@
         <a [href]="link.path" target="_blank" rel="noopener noreferrer" (click)="closeMenu()"
           class="text-xl text-brand-dark hover:text-gold transition-colors duration-300 font-medium">{{ link.label
           }}</a>
-        } @if (link.isDisabled) {
+        } @else if (link.isDisabled) {
         <span
           class="text-xl text-brand-dark/50 transition-colors duration-300 font-medium flex items-center justify-end gap-2 cursor-default">
           {{ link.label }}
@@ -75,6 +76,7 @@
         <a [routerLink]="link.path" (click)="closeMenu(); scrollToSection(link.sectionId, $event)"
           [class.text-gold]="isLinkActive(link)" [class.border-r-4]="isLinkActive(link)"
           [class.border-gold]="isLinkActive(link)" [class.pr-2]="isLinkActive(link)"
+          [class.ai-studio-glow]="link.path === '/ai-studio'"
           class="text-xl text-brand-dark hover:text-gold transition-colors duration-300 font-medium cursor-pointer flex items-center justify-end gap-2">
           {{ link.label }}
           @if(link.isNew) {

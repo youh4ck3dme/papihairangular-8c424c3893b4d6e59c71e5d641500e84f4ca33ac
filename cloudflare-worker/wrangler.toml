@@ -1,0 +1,10 @@
+name = "gemini-proxy-v2"
+main = "gemini-proxy.js"
+compatibility_date = "2024-03-20"
+
+[vars]
+# API Key will be set via secret, not here for security
+
+[[routes]]
+pattern = "ai.papihairdesign.sk/*"
+custom_domain = true

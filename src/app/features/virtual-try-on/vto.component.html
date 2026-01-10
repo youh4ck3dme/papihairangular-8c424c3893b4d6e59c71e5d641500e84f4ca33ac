@@ -93,8 +93,7 @@
                 <div class="flex mb-4 lg:hidden border-b border-neutral-200 dark:border-neutral-700">
                     <button (click)="activeSection.set('analysis')" class="flex-1 pb-2 text-center font-medium"
                         [ngClass]="{'text-primary-600 border-b-2 border-primary-600': activeSection() === 'analysis', 'text-neutral-500': activeSection() !== 'analysis'}">Analýza</button>
-                    <button (click)="activeSection.set('chat')" class="flex-1 pb-2 text-center font-medium"
-                        [ngClass]="{'text-primary-600 border-b-2 border-primary-600': activeSection() === 'chat', 'text-neutral-500': activeSection() !== 'chat'}">Konzultácia</button>
+
                 </div>
 
                 <!-- Canvas Area -->
@@ -249,61 +248,7 @@
             <!-- RIGHT COLUMN: Chat & Trends (Idea 2 & 3) -->
             <div class="lg:col-span-1 flex flex-col gap-8">
 
-                <!-- IDEA 2: Virtuálna Konzultácia Chat -->
-                <div class="bg-white dark:bg-neutral-800 rounded-2xl shadow-xl p-6 flex flex-col h-[500px]"
-                    [class.hidden]="activeSection() !== 'chat' && activeSection() !== 'analysis'">
-                    <h3 class="text-xl font-semibold text-neutral-800 dark:text-white mb-4 flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-primary-500" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                        </svg>
-                        Konzultácia so Stylistom
-                    </h3>
 
-                    <!-- Chat Messages Area -->
-                    <div #chatContainer class="flex-grow overflow-y-auto mb-4 space-y-4 pr-2 scrollbar-thin">
-                        @for (msg of chatMessages(); track msg.timestamp) {
-                        <div class="flex"
-                            [ngClass]="{'justify-end': msg.sender === 'user', 'justify-start': msg.sender === 'ai'}">
-                            <div class="max-w-[85%] rounded-2xl px-4 py-3 chat-bubble shadow-sm"
-                                [ngClass]="{'bg-primary-600 text-white rounded-br-none': msg.sender === 'user', 'bg-neutral-100 dark:bg-neutral-700 text-neutral-800 dark:text-neutral-200 rounded-bl-none': msg.sender === 'ai'}">
-                                <p class="text-sm">{{ msg.text }}</p>
-                                <span class="text-xs opacity-70 block text-right mt-1">{{ msg.timestamp |
-                                    date:'shortTime' }}</span>
-                            </div>
-                        </div>
-                        }
-                        @if(isLoading() && activeSection() !== 'analysis') {
-                        <div class="flex justify-start fade-in">
-                            <div class="bg-neutral-100 dark:bg-neutral-700 rounded-2xl rounded-bl-none px-4 py-3">
-                                <div class="flex space-x-2">
-                                    <div class="w-2 h-2 bg-neutral-400 rounded-full animate-bounce"></div>
-                                    <div class="w-2 h-2 bg-neutral-400 rounded-full animate-bounce"
-                                        style="animation-delay: 0.2s"></div>
-                                    <div class="w-2 h-2 bg-neutral-400 rounded-full animate-bounce"
-                                        style="animation-delay: 0.4s"></div>
-                                </div>
-                            </div>
-                        </div>
-                        }
-                    </div>
-
-                    <!-- Chat Input Area -->
-                    <div class="flex gap-2 border-t border-neutral-200 dark:border-neutral-700 pt-4">
-                        <input type="text" [(ngModel)]="userChatInput" (keyup.enter)="sendMessage()"
-                            placeholder="Opýtaj sa na účes..." [disabled]="isLoading()"
-                            class="flex-grow px-4 py-2 rounded-full border border-neutral-300 dark:border-neutral-600 dark:bg-neutral-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 disabled:opacity-50">
-                        <button (click)="sendMessage()" [disabled]="isLoading() || !userChatInput().trim()"
-                            class="btn-primary rounded-full p-3 disabled:opacity-50 disabled:cursor-not-allowed">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 rotate-90" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
 
 
                 <!-- IDEA 3: Trendové Predpovede & Inšpirácie -->

@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, inject, signal, effect, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, ViewChild, inject, signal, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { GeminiService } from '../../core/services/gemini.service';
@@ -15,11 +15,7 @@ interface HairStyleRecommendation {
     tags: string[];
 }
 
-interface ChatMessage {
-    sender: 'user' | 'ai';
-    text: string;
-    timestamp: Date;
-}
+
 
 interface TrendInspiration {
     title: string;
@@ -44,12 +40,12 @@ export class VtoComponent implements AfterViewInit {
 
     // --- View Children ---
     @ViewChild('canvasPreview', { static: false }) canvasRef!: ElementRef<HTMLCanvasElement>;
-    @ViewChild('chatContainer') chatContainerRef!: ElementRef<HTMLDivElement>;
+
 
     // --- State Signals ---
     isLoading = signal<boolean>(false);
     errorMessage = signal<string | null>(null);
-    activeSection = signal<'analysis' | 'chat' | 'trends'>('analysis');
+    activeSection = signal<'analysis' | 'trends'>('analysis');
 
     // Image Analysis State
     uploadedImageBase64 = signal<string | null>(null);
@@ -58,8 +54,7 @@ export class VtoComponent implements AfterViewInit {
     generatedImageUrl = signal<string | null>(null); // URL vygenerovaného obrázka z Replicate
 
     // Chat State
-    chatMessages = signal<ChatMessage[]>([]);
-    userChatInput = signal<string>('');
+
 
     // Trends State
     trendInspirations = signal<TrendInspiration[]>([]);
@@ -76,19 +71,11 @@ export class VtoComponent implements AfterViewInit {
 
 
     constructor() {
-        // Efekt pre automatické scrollovanie chatu
-        effect(() => {
-            if (this.chatMessages().length > 0 && this.chatContainerRef) {
-                setTimeout(() => {
-                    this.chatContainerRef.nativeElement.scrollTop = this.chatContainerRef.nativeElement.scrollHeight;
-                }, 100);
-            }
-        });
+
 
         // Načítanie úvodných trendov pri štarte
         this.loadTrends('current season');
-        // Načítanie uvítacej správy chatu
-        this.chatMessages.set([{ sender: 'ai', text: 'Ahoj! Som tvoj virtuálny PAPI stylista. Nahraj fotku pre analýzu, alebo sa ma spýtaj čokoľvek o vlasoch.', timestamp: new Date() }]);
+
 
         // Initialize countdown timer
         this.updateRemainingTime();
@@ -254,39 +241,7 @@ export class VtoComponent implements AfterViewInit {
     }
 
 
-    // ==========================================
-    // IDEA 2: Virtuálna Konzultácia (Chat)
-    // ==========================================
 
-    sendMessage(): void {
-        const msgText = this.userChatInput().trim();
-        if (!msgText || this.isLoading()) return;
-
-        // Pridaj správu používateľa
-        this.chatMessages.update(msgs => [...msgs, { sender: 'user', text: msgText, timestamp: new Date() }]);
-        this.userChatInput.set('');
-        this.isLoading.set(true);
-
-        // Vytvor kontext pre Gemini (história chatu)
-        let promptContext = "You are an expert hair stylist consultant at PAPI HAIR DESIGN. Provide brief, professional, and trendy advice about hair. ";
-        if (this.uploadedImageBase64()) {
-            promptContext += "The user is currently analyzing a photo of themselves in the other tab. ";
-        }
-        promptContext += "Current conversation history:\n";
-        this.chatMessages().slice(-5).forEach(m => promptContext += `${m.sender}: ${m.text}\n`);
-        promptContext += `AI Response:`;
-
-        this.geminiService.generateText(promptContext)
-            .pipe(finalize(() => this.isLoading.set(false)))
-            .subscribe({
-                next: (responseTxt: string) => {
-                    this.chatMessages.update(msgs => [...msgs, { sender: 'ai', text: responseTxt, timestamp: new Date() }]);
-                },
-                error: () => {
-                    this.showError("Chyba pri komunikácii so stylistom.");
-                }
-            });
-    }
 
 
     // ==========================================

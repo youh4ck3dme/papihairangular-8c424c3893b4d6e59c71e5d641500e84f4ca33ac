@@ -93,3 +93,15 @@
     height: 3rem; /* 48px */
   }
 }
+
+@keyframes gold-pulse {
+  0% { text-shadow: 0 0 0px rgba(212, 175, 55, 0); }
+  50% { text-shadow: 0 0 10px rgba(212, 175, 55, 0.5); }
+  100% { text-shadow: 0 0 0px rgba(212, 175, 55, 0); }
+}
+
+.ai-studio-glow {
+  animation: gold-pulse 2s infinite ease-in-out;
+  color: #D4AF37 !important;
+  font-weight: 800 !important;
+}

@@ -1,0 +1,385 @@
+<!-- Reading Progress Bar -->
+<div class="fixed top-0 left-0 w-full h-1 z-[100] bg-transparent">
+    <div class="h-full bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] transition-all duration-150"
+        [style.width.%]="readingProgress()"></div>
+</div>
+
+<div
+    class="font-montserrat bg-black text-off-white overflow-x-hidden selection:bg-yellow-600 selection:text-white min-h-screen">
+
+    <!-- Navigation -->
+    <nav
+        class="fixed top-0 left-0 w-full z-[100] transition-all duration-300 px-6 py-4 flex justify-between items-center bg-black/95 backdrop-blur-md border-b border-white/5">
+        <a routerLink="/" class="h-10 w-auto">
+            <img src="/assets/logo-header.webp" alt="PAPI HAIR DESIGN"
+                class="h-full object-contain filter invert brightness-0 opacity-0 hover:opacity-0 transition-opacity" />
+        </a>
+        <div class="hidden md:flex gap-6 text-xs tracking-[0.2em] uppercase font-medium text-gray-400">
+            <a routerLink="/" class="hover:text-gold transition-colors">Domov</a>
+            <a routerLink="/cennik" class="hover:text-gold transition-colors">Cenník</a>
+            <a routerLink="/o-nas" class="hover:text-gold transition-colors">O nás</a>
+            <a routerLink="/kontakt" class="hover:text-gold transition-colors">Kontakt</a>
+            <a routerLink="/blog" class="hover:text-gold transition-colors flex items-center gap-2">
+                Blog 
+                <span class="bg-gold text-black text-[8px] px-1.5 py-0.5 rounded font-bold tracking-normal">NEW</span>
+            </a>
+            <a href="https://services.bookio.com/papi-hair-design/widget?lang=sk" target="_blank" rel="noopener" class="text-white border-b border-gold pb-1 hover:text-gold transition-colors">Rezervácia</a>
+            <a href="http://www.goldhaircare.sk/affiliate/2208" target="_blank" rel="noopener" class="hover:text-gold transition-colors">Shop</a>
+        </div>
+        <a routerLink="/blog" class="md:hidden text-xl text-gold">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+    </nav>
+
+    <!-- Hero Section -->
+    <header
+        class="relative h-screen min-h-[600px] md:min-h-[800px] overflow-hidden header-trigger">
+        <img src="/images/DBB9AE05-73B8-44A5-9776-13B1FE68F777_4_5005_c.jpeg" alt="PAPI HAIR DESIGN Background"
+            class="absolute inset-0 w-full h-full object-cover z-0 opacity-60 filter contrast-110">
+
+        <div class="relative z-10 text-center px-4 max-w-6xl mx-auto pt-40 md:pt-48">
+            <div class="inline-block bg-black/80 backdrop-blur-sm p-8 md:p-12 border border-gold/30 rounded-sm">
+                <div class="inline-flex items-center gap-2 md:gap-4 mb-4 md:mb-6 fade-in opacity-0 translate-y-8">
+                    <span class="h-[1px] w-8 md:w-12 bg-gold"></span>
+                    <span class="text-gold tracking-[0.2em] md:tracking-[0.3em] text-[10px] md:text-xs uppercase">
+                        ZAKLADATEĽ & KREATÍVNY RIADITEĽ
+                    </span>
+                    <span class="h-[1px] w-8 md:w-12 bg-gold"></span>
+                </div>
+                <h1
+                    class="text-4xl md:text-8xl lg:text-[9rem] font-bold leading-tight md:leading-[0.9] mb-6 md:mb-8 fade-in opacity-0 translate-y-8 serif-font text-white break-words">
+                    Z ULICE <br><span class="italic font-light text-white/80 block mt-2">na svetové pódiá</span>
+                </h1>
+                <p
+                    class="text-gray-300 max-w-xl mx-auto text-sm md:text-lg font-light fade-in opacity-0 translate-y-8 leading-relaxed px-4 md:px-0">
+                    Príbeh chlapca z košického sídliska, ktorý vymenil ulicu za svetové móla a vybudoval značku na vášni a
+                    odhodlaní.
+                </p>
+            </div>
+        </div>
+
+        <div
+            class="absolute bottom-12 left-1/2 transform -translate-x-1/2 animate-bounce text-gold/50 text-xl cursor-pointer">
+            <i class="fas fa-arrow-down"></i>
+        </div>
+    </header>
+
+    <!-- Intro Text -->
+    <section class="py-16 md:py-32 px-6 md:px-12 bg-black relative">
+        <span class="quote-mark">"</span>
+
+        <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 items-start">
+            <div class="md:col-span-7 z-10">
+                <h2 class="text-3xl md:text-5xl serif-font mb-6 md:mb-10 leading-tight text-white">
+                    "Fascinovalo ma, ako sa ľudia menia pred mojimi očami. <span class="text-gold italic">Nielen
+                        výzorom, ale aj sebavedomím."</span>
+                </h2>
+                <div class="drop-cap text-gray-400 text-lg leading-relaxed text-justify">
+                    Volám sa <strong>Róbert Papcun</strong>, pochádzam z Košíc a dnes mám 35 rokov. Moja cesta ku
+                    kaderníctvu sa začala už v detstve – rád som sledoval, ako strihajú mojich rodičov. Ako tínedžer som
+                    chodil s kamarátmi do salónov, čakal ich a sledoval, ako ich farbia a strihajú. Už vtedy som vedel,
+                    že tento svet ma priťahuje.
+                </div>
+                <p class="text-gray-500 mt-6 leading-relaxed italic border-l border-white/10 pl-4">
+                    Po večeroch som sa často modlil, aby som bol stále lepší a rástol v tom, čo milujem.
+                </p>
+            </div>
+            <div class="md:col-span-5 relative mt-10 md:mt-0">
+                <div class="image-container rounded-sm aspect-[3/4] relative z-10 overflow-hidden">
+                    <video autoplay loop [muted]="true" playsinline class="w-full h-full object-cover">
+                        <source src="/assets/papivideo.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="absolute -bottom-6 -right-6 w-full h-full border border-gold/30 z-0"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Journey -->
+    <section class="py-20 relative overflow-hidden bg-black">
+        <!-- Vertical Line -->
+        <div
+            class="absolute left-1/2 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-gold to-transparent opacity-20 transform -translate-x-1/2 hidden md:block">
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 relative z-10 space-y-40">
+
+            <!-- 2007-2010: The Beginnings -->
+            <div class="timeline-block grid grid-cols-1 md:grid-cols-2 gap-16 items-center opacity-0 translate-y-12">
+                <div class="text-right md:order-1 order-2 space-y-8">
+                    <div class="relative inline-block">
+                        <span
+                            class="text-8xl font-bold text-white/5 serif-font absolute -top-14 right-0 z-0">2007</span>
+                        <h3 class="text-gold text-sm tracking-widest uppercase mb-2 relative z-10">Začiatky &
+                            Improvisation</h3>
+                        <h2 class="text-4xl text-white serif-font relative z-10">Kočikáreň & Ulica</h2>
+                    </div>
+
+                    <div class="space-y-4 text-gray-400">
+                        <p>
+                            Amatérsky som strihal rodičov a kamarátov – v kočikárni, v blokoch a dokonca aj pod bránami
+                            na ulici. Tam som sa učil to najdôležitejšie: <strong>improvizovať</strong>.
+                        </p>
+                        <p>
+                            V roku <strong>2009</strong> som nastúpil do prvého salónu. Z kurzu som si veľa neodniesol,
+                            tak som improvizoval. Naučil som sa však lekciu života: <em>úsmev a komunikácia sú rovnako
+                                ostré zbrane ako nožnice.</em>
+                        </p>
+                        <p class="text-white/80 border-t border-white/10 pt-4 mt-4">
+                            <strong>2010 — Barbering Focus:</strong> Stal som sa najmladším kaderníkom v lepšom salóne.
+                            Keďže dámske mi ešte nešli, vrhol som sa na pánske účesy a barbering.
+                        </p>
+                    </div>
+                </div>
+                <div class="md:order-2 order-1 pl-0 md:pl-10">
+
+                </div>
+            </div>
+
+            <!-- 2011: Italy Story -->
+            <div class="timeline-block opacity-0 translate-y-12">
+                <div class="bg-[#1a1a1a] p-8 md:p-20 rounded-sm relative overflow-hidden group border border-white/5">
+                    <div
+                        class="absolute top-0 right-0 w-64 h-64 bg-gold/5 rounded-full filter blur-3xl group-hover:bg-gold/10 transition-colors">
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+                        <div class="lg:col-span-5">
+                            <div
+                                class="relative w-full aspect-video bg-black overflow-hidden rounded-sm shadow-2xl border border-white/5 cursor-pointer">
+                                <img src="assets/italian_flag_artistic.png" alt="Talianska skúsenosť"
+                                    class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-1000" />
+                                <div
+                                    class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-gold/90 rounded-full flex items-center justify-center play-btn shadow-lg shadow-gold/30">
+                                    <i class="fas fa-play text-white ml-1 text-2xl"></i>
+                                </div>
+                                <div
+                                    class="absolute top-4 right-4 text-xs font-mono text-gold bg-black/50 px-2 py-1 backdrop-blur-md">
+                                    ARCHÍV 2011</div>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-7 space-y-8">
+                            <div>
+                                <h2 class="text-5xl md:text-6xl text-white serif-font mb-2">La Dolce Vita</h2>
+                                <p class="text-gold font-mono text-lg tracking-widest">TALIANSKO & NÁVRAT DOMOV</p>
+                            </div>
+
+                            <div class="text-gray-300 space-y-4 text-lg font-light">
+                                <p>
+                                    Odišiel som do Talianska splniť si sen. Prácu som nenašiel, ale tých 10 mesiacov ma
+                                    naučilo <strong>húževnatosti</strong>. Vrátil som sa domov s jasným plánom: dostať
+                                    sa do najlepšieho salónu v meste.
+                                </p>
+                            </div>
+
+                            <div class="bg-black/30 border-l-4 border-gold p-6 relative">
+                                <i class="fas fa-quote-left text-gold/20 text-4xl absolute top-4 left-4"></i>
+                                <p class="italic text-gray-200 pl-4 relative z-10">
+                                    "Na pohovor som vošiel sebavedome, s 'talianskym prízvukom', aby som pôsobil
+                                    svetovo. Šéf ma posadil k prvému klientovi... a prijali ma hneď v ten deň."
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2012-2016: The Rise -->
+            <div class="timeline-block grid grid-cols-1 md:grid-cols-2 gap-16 items-center opacity-0 translate-y-12">
+                <div class="space-y-8 relative z-10">
+                    <span class="text-8xl font-bold text-white/5 serif-font absolute -top-10 -left-10 z-0">2014</span>
+
+                    <h2 class="text-4xl text-white serif-font relative z-10">Fashion Week & <br><span
+                            class="text-gold italic">Tvrdá práca</span></h2>
+
+                    <div class="space-y-6 text-gray-400 leading-relaxed">
+                        <p>
+                            <strong>2012 — Štúdium:</strong> V najprestížnejšom salóne v Košiciach som pochopil, že
+                            talent nestačí. Investoval som čas a vlastné peniaze do kurzov po celej Európe.
+                        </p>
+                        <p>
+                            <strong>2014 — The Stage:</strong> Začal som česať módne prehliadky – od Košice Fashion Week
+                            až po <strong>Praha Fashion Week</strong>. Mal som vlastné minúty na pódiu, kde som
+                            prezentoval trendy.
+                        </p>
+                        <p>
+                            <strong>2015 — The Dream:</strong> Mal som veľkú klientelu a sen o vlastnom priestore.
+                            Prestal som míňať, šetril som každý cent a sústredil sa iba na cieľ – otvoriť si raz svoj
+                            salón.
+                        </p>
+                    </div>
+                </div>
+                <div class="relative pl-8 md:pl-0">
+                    <div
+                        class="image-container relative z-20 shadow-2xl border-b-4 border-gold overflow-hidden rounded-sm">
+                        <img [src]="images.team" alt="Fashion Shows" class="w-full h-auto object-cover" />
+                    </div>
+                    <div class="absolute -top-6 -right-6 w-2/3 h-full border border-white/10 z-10"></div>
+                </div>
+            </div>
+
+            <!-- 2018: The Big Milestone -->
+            <div class="timeline-block py-10 opacity-0 translate-y-12">
+                <div class="text-center max-w-4xl mx-auto mb-16">
+                    <div
+                        class="inline-block px-4 py-1 border border-gold rounded-full text-gold text-xs tracking-widest uppercase mb-6">
+                        Míľnik</div>
+                    <h2 class="text-6xl md:text-8xl serif-font text-white mb-6">PAPI HAIR DESIGN <br><span
+                            class="text-gold text-4xl md:text-5xl italic font-light block mt-2">Est. 2018</span></h2>
+                    <p class="text-xl text-gray-300 leading-relaxed">
+                        Otvoril som bez investorov. Bez finančnej pomoci. Iba z našetrených peňazí a s čistou víziou.
+                        Miesto, kde sa nielen strihá, ale aj inšpiruje.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 h-auto md:h-[600px]">
+                    <div class="md:col-span-2 h-[400px] md:h-full overflow-hidden relative group rounded-sm">
+                        <img [src]="images.interior" alt="Interiér PAPI HAIR DESIGN salónu"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter brightness-75 group-hover:brightness-100" />
+                        <div class="absolute bottom-6 left-6 text-white">
+                            <h3 class="text-2xl serif-font">Interiér</h3>
+                            <p class="text-sm text-gray-300">Dizajn, ktorý dýcha atmosférou</p>
+                        </div>
+                    </div>
+                    <div
+                        class="h-[300px] md:h-full bg-[#1a1a1a] flex flex-col justify-center p-8 text-center border border-white/5 space-y-6 rounded-sm">
+                        <i class="fas fa-crown text-4xl text-gold mb-4"></i>
+                        <h3 class="text-xl text-white font-bold uppercase tracking-widest">Budovanie Tímu</h3>
+                        <p class="text-gray-400 text-sm">
+                            2019 — Začínam sa venovať rozvoju tímu. Lokálne eventy, festivaly a budovanie reputácie
+                            značky.
+                        </p>
+                        <div class="w-10 h-[1px] bg-gold mx-auto"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2020-2023: Global Ambassador Era -->
+            <div
+                class="timeline-block bg-white text-black relative -mx-4 md:-mx-20 px-4 md:px-20 py-24 opacity-0 translate-y-12">
+                <span
+                    class="absolute top-0 right-0 text-9xl font-bold text-gray-100 serif-font opacity-50 select-none pointer-events-none transform translate-x-1/3 -translate-y-1/4">GOLD</span>
+
+                <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-20 items-center relative z-10">
+                    <div class="order-2 md:order-1 relative">
+                        <div class="image-container overflow-hidden rounded-sm shadow-xl h-[400px] md:h-[600px]">
+                            <img [src]="images.hero" alt="Róbert Papcun - Global Ambassador"
+                                class="w-full h-full object-cover object-top grayscale hover:grayscale-0 transition-all duration-700" />
+                        </div>
+                        <div
+                            class="absolute -bottom-10 -left-10 bg-black text-white p-8 max-w-xs shadow-2xl hidden md:block">
+                            <p class="text-gold font-bold text-4xl mb-2">2022</p>
+                            <p class="text-sm leading-relaxed">"Vystupujem na pódiu na Malorke. Jeden z mojich
+                                najväčších životných momentov."</p>
+                        </div>
+                    </div>
+                    <div class="order-1 md:order-2 space-y-8">
+                        <h4 class="text-sm font-bold tracking-[0.3em] uppercase text-gray-400">2020 — 2023</h4>
+                        <h2 class="text-5xl md:text-7xl font-bold serif-font leading-none text-black">Global <br>
+                            Ambassador</h2>
+                        <p class="text-xl text-gray-800 font-medium">
+                            Reprezentujem značku <strong>GOLD HAIR CARE</strong> po celom svete.
+                        </p>
+                        <div class="space-y-4 text-gray-600 leading-relaxed border-l-2 border-gold pl-6">
+                            <p>
+                                <strong>2021:</strong> Učím mladé talenty v bratislavskej akadémii a odovzdávam
+                                skúsenosti, tak ako to robili moji mentori pre mňa.
+                            </p>
+                            <p>
+                                <strong>2023:</strong> Tvoríme vlasové trendy a fotíme kolekcie v európskych
+                                metropolách. Salón dostáva nový, reprezentatívny vizuál hodný ambasádora.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2024: The New Generation -->
+            <div class="timeline-block max-w-5xl mx-auto text-center py-10 opacity-0 translate-y-12">
+                <i class="fas fa-users text-gold text-5xl mb-8"></i>
+                <h2 class="text-4xl md:text-5xl serif-font text-white mb-8">Odkaz pre ďalšiu generáciu</h2>
+                <div class="bg-[#1a1a1a] p-10 border border-white/5 relative rounded-sm">
+                    <p class="text-gray-300 text-lg leading-relaxed italic">
+                        "Do salónu som prijal mladého chalana, ktorý <strong>nikdy nedržal nožnice v ruke</strong>. Učil
+                        som ho všetko od nuly. Sledoval som ho každý deň. Do roka sa z neho stal plnohodnotný barber.
+                        Toto je pre mňa úspech – vidieť rásť iných."
+                    </p>
+                    <p class="text-gold mt-6 text-sm uppercase tracking-widest font-bold">— 2024: Rok rastu a
+                        odovzdávania remesla</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 2025: Conclusion & Legacy -->
+    <section class="py-32 px-6 text-center bg-[#111] relative overflow-hidden">
+        <img [src]="images.logo" alt=""
+            class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] opacity-5 pointer-events-none filter invert"
+            aria-hidden="true" />
+
+        <div class="max-w-4xl mx-auto relative z-10 space-y-12">
+            <div>
+                <span class="text-gold tracking-[0.5em] text-sm uppercase block mb-4">Súčasnosť</span>
+                <h2 class="text-5xl md:text-7xl serif-font text-white">Líder, Mentor & <br> <span
+                        class="italic text-gray-500">Inšpirácia</span></h2>
+            </div>
+
+            <p class="text-gray-400 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
+                Dnes vediem silný tím a mám radosť z toho, že viacerí ľudia, ktorí u mňa začínali, majú dnes vlastné
+                salóny. Viem, že ich môj príbeh inšpiroval.
+                <br><br>
+                Motivujem mladých, školím po celom Česku a Slovensku. Rodina je môj pevný základ – zdroj energie na nové
+                výzvy.
+            </p>
+
+            <div class="py-10">
+                <p class="text-3xl md:text-4xl serif-font text-gold italic">
+                    "Sny sa neplnia tým, že čakáš. Plnia sa tým, že vezmeš nožnice do ruky a začneš strihať svoj vlastný
+                    osud."
+                </p>
+            </div>
+
+            <div class="flex flex-col items-center gap-4">
+                <img [src]="images.hero" alt="Róbert Papcun"
+                    class="w-24 h-24 rounded-full object-cover border-2 border-gold p-1 shadow-lg shadow-gold/20" />
+            </div>
+
+            <!-- Back to Blog -->
+            <a routerLink="/blog"
+                class="inline-flex items-center gap-3 text-gold hover:text-white transition-colors mt-8 group">
+                <i class="fas fa-arrow-left group-hover:-translate-x-1 transition-transform"></i>
+                <span class="text-sm uppercase tracking-widest">Späť na blog</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-16 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-10">
+            <div class="text-center md:text-left space-y-4">
+                <h3 class="serif-font text-2xl">PAPI HAIR DESIGN</h3>
+                <p class="text-gray-500 text-sm max-w-xs">Prémiový vlasový salón v srdci Košíc. Kde sa štýl stretáva s
+                    osobnosťou.</p>
+            </div>
+
+            <div class="flex gap-8">
+                <a [href]="getInstagramUrl()" target="_blank" rel="noopener"
+                    class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-gold hover:text-black transition-all duration-300">
+                    <i class="fab fa-instagram text-xl"></i>
+                </a>
+                <a [href]="getFacebookShareUrl()" target="_blank" rel="noopener"
+                    class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-gold hover:text-black transition-all duration-300">
+                    <i class="fab fa-facebook-f text-xl"></i>
+                </a>
+                <a [href]="getTikTokUrl()" target="_blank" rel="noopener"
+                    class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-gold hover:text-black transition-all duration-300">
+                    <i class="fab fa-tiktok text-xl"></i>
+                </a>
+            </div>
+        </div>
+        <div class="text-center mt-16 text-xs text-gray-700 uppercase tracking-widest">
+            © 2025 PAPI HAIR DESIGN. All rights reserved.
+        </div>
+    </footer>
+</div>

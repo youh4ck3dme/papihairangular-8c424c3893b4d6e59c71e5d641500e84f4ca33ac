@@ -20,7 +20,7 @@ export const HAIRSTYLES: Hairstyle[] = [
         name: 'Parížske Mikádo',
         description: 'Nadčasový strih s jemným blond nádychom.',
         category: 'Klasika',
-        image: 'https://picsum.photos/id/64/400/500',
+        image: '/assets/logo-header.webp',
         prompt: 'Elegant sharp blonde bob hairstyle, luxury fashion photography, platinum tones'
     },
     {
@@ -28,7 +28,7 @@ export const HAIRSTYLES: Hairstyle[] = [
         name: 'Platinový Pixie',
         description: 'Odvážna textúra pre modernú ženu.',
         category: 'Moderné',
-        image: 'https://picsum.photos/id/103/400/500',
+        image: '/assets/logo-header.webp',
         prompt: 'Bold short pixie cut, edgy textured modern look, silver blonde'
     },
     {
@@ -36,7 +36,7 @@ export const HAIRSTYLES: Hairstyle[] = [
         name: 'Karamelový Balayage',
         description: 'Prirodzené plážové vlny plné života.',
         category: 'Vlny',
-        image: 'https://picsum.photos/id/119/400/500',
+        image: '/assets/logo-header.webp',
         prompt: 'Caramel balayage long wavy hair, sun-kissed look, voluminous beach waves'
     },
     {
@@ -44,7 +44,7 @@ export const HAIRSTYLES: Hairstyle[] = [
         name: 'Kráľovský Výčes',
         description: 'Zložitý upletený štýl pre výnimočné noci.',
         category: 'Spoločenské',
-        image: 'https://picsum.photos/id/180/400/500',
+        image: '/assets/logo-header.webp',
         prompt: 'Intricate royal updo hairstyle, elegant braids, red carpet look'
     },
     {
@@ -52,7 +52,7 @@ export const HAIRSTYLES: Hairstyle[] = [
         name: 'Futuristický Shag',
         description: 'Experiment s farbou a geometriou.',
         category: 'Avantgarda',
-        image: 'https://picsum.photos/id/200/400/500',
+        image: '/assets/logo-header.webp',
         prompt: 'Futuristic avant-garde shag haircut, multi-tonal highlights, geometric precision'
     }
 ];

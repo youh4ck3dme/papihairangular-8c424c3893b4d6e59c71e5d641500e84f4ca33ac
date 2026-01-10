@@ -1,0 +1,100 @@
+// Premenné pre konzistenciu (ak nemáš globálne, použi tieto)
+$primary-color: #1a1a1a;
+$text-muted: #666;
+$gap: 1.5rem;
+
+// Globálne nastavenie obrázkov v rámci komponentu
+img {
+  max-width: 100%;
+  height: auto;
+  display: block; // Odstraňuje spodnú medzeru pri inline prvkoch
+  border-radius: 8px; // Jemný moderný look
+}
+
+figure {
+  margin: 0; // Reset default browser marginu
+  position: relative;
+
+  figcaption {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: $text-muted;
+    text-align: center;
+    font-style: italic;
+  }
+}
+
+// 1. HERO SECTION
+.story-hero {
+  width: 100%;
+  margin-bottom: 3rem;
+
+  .hero-img {
+    width: 100%;
+    object-fit: cover;
+    max-height: 80vh; // Aby nezabral príliš veľa na veľkých monitoroch
+
+    // Na mobile môže byť vyšší
+    @media (max-width: 768px) {
+      max-height: 50vh;
+    }
+  }
+}
+
+// 2. GRID LAYOUT
+.story-grid-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $gap;
+  padding: 0 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  // Tablet a Desktop layout
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr); // 2 stĺpce
+
+    // Interiér (Panoráma) cez celú šírku
+    .interior {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    // Asymetrický grid pre zaujímavejší vizuál
+    grid-template-columns: repeat(3, 1fr);
+
+    .location {
+      grid-column: span 1;
+    }
+
+    .interior {
+      grid-column: span 3;
+    }
+
+    // Full width
+    .team {
+      grid-column: span 2;
+    }
+
+    .products {
+      grid-column: span 1;
+    }
+
+    .history {
+      grid-column: span 1;
+    }
+  }
+}
+
+// 3. SPECIAL EFFECTS
+.vintage-filter {
+  // Aplikácia ČB/Sépia filtra podľa požiadavky
+  filter: sepia(0.4) grayscale(0.6) contrast(1.1);
+  transition: filter 0.3s ease;
+
+  &:hover {
+    // Pri hoveri odhalíme farbu (interaktivita)
+    filter: sepia(0) grayscale(0);
+  }
+}
