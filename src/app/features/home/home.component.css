@@ -43,11 +43,20 @@
   margin-right: -50vw;
 
   /* Background Image Styling */
-  background-image: url("/assets/salon-interior.webp");
+  /* Background Image Styling */
+  background-image: url("/assets/salon-interior-small.webp");
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
-  /* Parallax effect */
+  background-attachment: scroll;
+  /* Better for mobile performance */
+}
+
+@media (min-width: 768px) {
+  .hero-section {
+    background-image: url("/assets/salon-interior.webp");
+    background-attachment: fixed;
+    /* Parallax only on desktop */
+  }
 }
 
 /* Add a dark overlay for better text readability */

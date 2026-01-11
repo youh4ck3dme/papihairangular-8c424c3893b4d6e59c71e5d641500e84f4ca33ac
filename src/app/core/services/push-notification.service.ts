@@ -25,7 +25,7 @@ export class PushNotificationService {
      */
     requestSubscription(): Observable<PushSubscription | null> {
         if (!this.swPush.isEnabled) {
-            console.warn('Service Worker Push is not enabled.');
+            // console.warn('Service Worker Push is not enabled.');
             return of(null);
         }
 

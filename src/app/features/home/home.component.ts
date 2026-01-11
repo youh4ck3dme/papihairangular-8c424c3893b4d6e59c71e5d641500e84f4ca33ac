@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, inject, OnInit } from "@angular/core";
-import { CommonModule, NgOptimizedImage } from "@angular/common";
+import { CommonModule } from "@angular/common";
 import { RouterLink } from "@angular/router";
 import { SeoService } from "../../core/services/seo.service";
 
@@ -12,7 +12,7 @@ import { BeforeAfterSliderComponent } from "../../shared/components/before-after
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.css"],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, RouterLink, ServiceCardsComponent, NgOptimizedImage, BeforeAfterSliderComponent],
+  imports: [CommonModule, RouterLink, ServiceCardsComponent, BeforeAfterSliderComponent],
 })
 export class HomeComponent implements OnInit {
   private seoService = inject(SeoService);

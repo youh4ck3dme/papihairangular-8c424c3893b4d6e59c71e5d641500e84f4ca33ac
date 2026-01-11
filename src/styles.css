@@ -593,3 +593,47 @@ html.dark ::-webkit-scrollbar-track {
 html.dark ::-webkit-scrollbar-thumb {
   border-color: #0a0a0a;
 }
+
+/* ============================================
+   MEGA PROMPT RESPONSIVENESS (Safe Areas & Touch)
+   ============================================ */
+
+/* Safe Area Utilities (for notched phones) */
+.pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
+
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.pl-safe {
+  padding-left: env(safe-area-inset-left);
+}
+
+.pr-safe {
+  padding-right: env(safe-area-inset-right);
+}
+
+.mt-safe {
+  margin-top: env(safe-area-inset-top);
+}
+
+.mb-safe {
+  margin-bottom: env(safe-area-inset-bottom);
+}
+
+/* Touch Target Enforcement (Apple/Google Standards) */
+.touch-target-min {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Container Query Setup */
+.container-query-root {
+  container-type: inline-size;
+  container-name: card;
+}

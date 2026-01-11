@@ -2,13 +2,13 @@ import { Component, Input, signal, ElementRef, AfterViewInit, OnDestroy, inject 
 import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'app-before-after-slider',
-    standalone: true,
-    imports: [CommonModule],
-    template: `
+  selector: 'app-before-after-slider',
+  standalone: true,
+  imports: [CommonModule],
+  template: `
     <div class="relative w-full overflow-hidden select-none group rounded-2xl shadow-2xl border border-white/10"
+         #sliderContainer
          [class.h-64]="!isLarge" [class.h-[500px]]="isLarge"
-         (mousemove)="onMove($event)" (touchmove)="onMove($event)"
          (mouseenter)="showLabel.set(true)" (mouseleave)="showLabel.set(false)">
 
       <!-- Image Container -->
@@ -53,55 +53,68 @@ import { CommonModule } from '@angular/common';
 
     </div>
   `,
-    styles: [`
+  styles: [`
     :host { display: block; }
   `]
 })
 export class BeforeAfterSliderComponent implements AfterViewInit, OnDestroy {
-    @Input() beforeImage!: string;
-    @Input() afterImage!: string;
-    @Input() title?: string;
-    @Input() isLarge = false;
+  @Input() beforeImage!: string;
+  @Input() afterImage!: string;
+  @Input() title?: string;
+  @Input() isLarge = false;
 
-    position = signal(50);
-    width = signal(0);
-    showLabel = signal(false);
+  position = signal(50);
+  width = signal(0);
+  showLabel = signal(false);
 
-    private el = inject(ElementRef);
-    private resizeObserver: ResizeObserver | null = null;
+  private el = inject(ElementRef);
+  private resizeObserver: ResizeObserver | null = null;
+  private onMoveBound = this.onMove.bind(this);
 
-    ngAfterViewInit() {
-        this.updateWidth();
+  ngAfterViewInit() {
+    this.updateWidth();
 
-        this.resizeObserver = new ResizeObserver(() => {
-            this.updateWidth();
-        });
-        this.resizeObserver.observe(this.el.nativeElement);
+    this.resizeObserver = new ResizeObserver(() => {
+      this.updateWidth();
+    });
+    this.resizeObserver.observe(this.el.nativeElement);
+
+    // Add passive event listeners to avoid scroll blocking violations
+    const element = this.el.nativeElement.querySelector('.group'); // Target the container div
+    if (element) {
+      element.addEventListener('mousemove', this.onMoveBound, { passive: true });
+      element.addEventListener('touchmove', this.onMoveBound, { passive: true });
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+    }
+    const element = this.el.nativeElement.querySelector('.group');
+    if (element) {
+      element.removeEventListener('mousemove', this.onMoveBound);
+      element.removeEventListener('touchmove', this.onMoveBound);
+    }
+  }
+
+  updateWidth() {
+    this.width.set(this.el.nativeElement.offsetWidth);
+  }
+
+  onMove(event: MouseEvent | TouchEvent) {
+    const rect = this.el.nativeElement.getBoundingClientRect();
+    let clientX: number;
+
+    if (event instanceof MouseEvent) {
+      clientX = event.clientX;
+    } else {
+      clientX = event.touches[0].clientX;
     }
 
-    ngOnDestroy() {
-        if (this.resizeObserver) {
-            this.resizeObserver.disconnect();
-        }
-    }
+    const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
+    const percentage = (x / rect.width) * 100;
 
-    updateWidth() {
-        this.width.set(this.el.nativeElement.offsetWidth);
-    }
-
-    onMove(event: MouseEvent | TouchEvent) {
-        const rect = this.el.nativeElement.getBoundingClientRect();
-        let clientX: number;
-
-        if (event instanceof MouseEvent) {
-            clientX = event.clientX;
-        } else {
-            clientX = event.touches[0].clientX;
-        }
-
-        const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
-        const percentage = (x / rect.width) * 100;
-
-        this.position.set(percentage);
-    }
+    this.position.set(percentage);
+  }
 }
