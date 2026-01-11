@@ -28,8 +28,47 @@ export class SalonDataService {
   }
 
   private loadDataFromLocalStorage() {
-    this._stylists.set(this.getParsedData('salon_stylists', []));
+    const loadedStylists = this.getParsedData('salon_stylists', []);
+    if (loadedStylists.length === 0) {
+      this.seedInitialData();
+    } else {
+      this._stylists.set(loadedStylists);
+    }
     this._services.set(this.getParsedData('salon_services', []));
+  }
+
+  private seedInitialData() {
+    const initialStylists: Stylist[] = [
+      {
+        id: 'papi',
+        name: 'Róbert "Papi" Papcun',
+        title: 'Founder & Creative Director',
+        imageUrl: '/images/papi.webp',
+        services: [],
+        description: 'Zakladateľ značky a vizionár s viac ako 10-ročnou praxou. Špecializuje sa na kompletné premeny, precízne geometrické strihy a kreatívne farbenie. Jeho vášňou je posúvať hranice klasického kaderníctva a vzdelávať novú generáciu stylistov.',
+        skills: ['Kreatívne strihy', 'Coloristika', 'Vzdelávanie', 'Premeny']
+      },
+      {
+        id: 'mato',
+        name: 'Maťo',
+        title: 'Master Barber',
+        imageUrl: '/images/mato.webp',
+        services: [],
+        description: 'Expert na pánsky styling a precíznosť. Od dokonalých fadeov až po klasické úpravy brady s rituálom horúceho uteráka. Maťo prináša do salónu atmosféru a kvalitu pravého gentleman\'s barberingu.',
+        skills: ['Fade strihy', 'Úprava brady', 'Hot Towel', 'Pánsky styling']
+      },
+      {
+        id: 'miska',
+        name: 'Miška',
+        title: 'Senior Stylist',
+        imageUrl: '/images/miska.webp',
+        services: [],
+        description: 'Odborníčka na techniky balayage a starostlivosť o dlhé vlasy. Jej cit pre detail a jemné prechody farieb zaručuje prirodzený a zdravý vzhľad. Miluje vytváranie svadobných a spoločenských účesov.',
+        skills: ['Balayage & Melír', 'Spoločenské účesy', 'Starostlivosť o vlasy', 'Dámske strihy']
+      }
+    ];
+    this._stylists.set(initialStylists);
+    this.saveDataToLocalStorage('salon_stylists', initialStylists);
   }
 
   private getParsedData<T>(key: string, defaultData: T, dateFields: string[] = []): T {

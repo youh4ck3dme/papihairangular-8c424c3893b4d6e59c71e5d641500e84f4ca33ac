@@ -57,7 +57,8 @@
       <!-- Featured Image -->
       <a [routerLink]="['/blog', post.slug]" class="block overflow-hidden relative aspect-video">
         <img [ngSrc]="post.imageUrl" [alt]="post.title" [title]="post.title" fill
-          class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105">
+          class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+          [style.object-position]="i === 0 ? 'center 30%' : 'center center'">
       </a>
 
       <!-- Content -->

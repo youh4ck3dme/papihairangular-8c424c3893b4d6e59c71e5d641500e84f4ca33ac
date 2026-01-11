@@ -14,7 +14,7 @@
             class="footer-logo h-12 w-auto">
         </div>
         <div class="space-y-1 text-black font-medium dark:text-neutral-200 drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)]">
-          <p>Hair studio & Barber</p>
+          <p class="text-gold font-serif text-lg tracking-wide uppercase font-bold">Hair studio & Barber</p>
           <p>Predaj vlasovej kozmetiky</p>
           <p class="mt-4">Trieda SNP 61 (Spoločenský pavilon)<br>Košice, Slovensko</p>
         </div>
@@ -27,7 +27,11 @@
 
       <!-- Opening Hours -->
       <div>
-        <h3 class="text-xl font-bold text-black dark:text-gold mb-4 drop-shadow-sm">Otváracie hodiny</h3>
+        <h3
+          class="text-xl font-serif font-bold text-gold mb-6 drop-shadow-sm tracking-widest uppercase relative inline-block">
+          Otváracie hodiny
+          <span class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-12 h-0.5 bg-gold/30"></span>
+        </h3>
         <ul class="text-black font-medium dark:text-neutral-200 space-y-2 drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)]">
           @for(item of openingHours(); track item.dayIndex) {
           <li [class.text-black]="item.dayIndex === todayIndex()"
@@ -59,23 +63,28 @@
       <div class="space-y-6">
         <!-- Quick Links -->
         <div>
-          <h3 class="text-xl font-bold text-black dark:text-gold mb-4 drop-shadow-sm">Rýchle odkazy</h3>
+          <h3
+            class="text-xl font-serif font-bold text-gold mb-6 drop-shadow-sm tracking-widest uppercase relative inline-block">
+            Rýchle odkazy
+            <span class="absolute -bottom-2 left-0 w-8 h-0.5 bg-gold/30"></span>
+          </h3>
           <ul class="text-black font-medium dark:text-neutral-200 space-y-2">
             <li>
               <a routerLink="/cennik"
-                class="!text-black !dark:text-neutral-200 hover:text-gold transition-colors">Cenník</a>
+                class="link-underline !text-black !dark:text-neutral-200 hover:text-gold transition-colors pb-1">Cenník</a>
             </li>
             <li>
               <a routerLink="/blog"
-                class="!text-black !dark:text-neutral-200 hover:text-gold transition-colors">Blog</a>
+                class="link-underline !text-black !dark:text-neutral-200 hover:text-gold transition-colors pb-1">Blog</a>
             </li>
             <li>
-              <a routerLink="/o-nas" class="!text-black !dark:text-neutral-200 hover:text-gold transition-colors">O
+              <a routerLink="/o-nas"
+                class="link-underline !text-black !dark:text-neutral-200 hover:text-gold transition-colors pb-1">O
                 nás</a>
             </li>
             <li>
               <a routerLink="/kontakt"
-                class="!text-black !dark:text-neutral-200 hover:text-gold transition-colors">Kontakt</a>
+                class="link-underline !text-black !dark:text-neutral-200 hover:text-gold transition-colors pb-1">Kontakt</a>
             </li>
           </ul>
         </div>
@@ -84,21 +93,21 @@
         <div class="flex space-x-6 justify-center items-center pt-4">
           <!-- Instagram -->
           <a [href]="socialLinks.instagram" target="_blank" rel="noopener noreferrer"
-            class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-gold hover:text-black transition-all duration-300 transform hover:scale-110 drop-shadow-sm"
+            class="social-icon w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-black dark:text-white hover:bg-gold hover:text-black transition-all duration-300 drop-shadow-sm border border-black/5 dark:border-white/10"
             aria-label="Sledujte nás na Instagrame">
             <i class="fab fa-instagram text-xl"></i>
           </a>
 
           <!-- Facebook -->
           <a [href]="socialLinks.facebook" target="_blank" rel="noopener noreferrer"
-            class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-gold hover:text-black transition-all duration-300 transform hover:scale-110 drop-shadow-sm"
+            class="social-icon w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-black dark:text-white hover:bg-gold hover:text-black transition-all duration-300 drop-shadow-sm border border-black/5 dark:border-white/10"
             aria-label="Sledujte nás na Facebook">
             <i class="fab fa-facebook-f text-xl"></i>
           </a>
 
           <!-- TikTok -->
           <a [href]="socialLinks.tiktok" target="_blank" rel="noopener noreferrer"
-            class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-gold hover:text-black transition-all duration-300 transform hover:scale-110 drop-shadow-sm"
+            class="social-icon w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-black dark:text-white hover:bg-gold hover:text-black transition-all duration-300 drop-shadow-sm border border-black/5 dark:border-white/10"
             aria-label="Sledujte nás na TikTok">
             <i class="fab fa-tiktok text-xl"></i>
           </a>

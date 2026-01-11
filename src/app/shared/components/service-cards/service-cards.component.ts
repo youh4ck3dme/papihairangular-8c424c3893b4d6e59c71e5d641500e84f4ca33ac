@@ -61,7 +61,7 @@ export class ServiceCardsComponent implements AfterViewInit {
             title: 'Vlasové Kúry',
             subtitle: 'Regenerácia',
             description: 'Hĺbková regenerácia pre poškodené vlasy. Keratín, Nová Kúra a hydratačné kúry pre okamžitý efekt.',
-            benefits: ['Keratínová kúra', 'Nová Kúra na vlasy', 'Okamžitý efekt'],
+            benefits: ['Keratínová kúra', 'Proteínová kúra', 'Hydratačná kúra'],
             link: '/damske-strihy',
             external: false
         },

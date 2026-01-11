@@ -12,8 +12,10 @@
           class="hero-logo-center h-auto w-auto max-h-[46vh] md:max-h-[18.4cm] max-w-full -mb-32 md:-mb-32 animate-fade-in object-contain" />
 
         <h1
-          class="text-4xl md:text-6xl font-bold tracking-wider text-white drop-shadow-lg mb-4 hero-headline-shadow text-center">
-          Profesionálne Kaderníctvo<br><span class="text-gold">Košice</span> - PAPI HAIR DESIGN
+          class="text-4xl md:text-6xl font-bold tracking-wider text-white drop-shadow-lg mb-4 hero-headline-shadow text-center flex flex-col gap-1">
+          <span class="block">Profesionálne</span>
+          <span class="block">Kaderníctvo Košice</span>
+          <span class="block parallax-3d-text mt-4">PAPI HAIR DESIGN</span>
         </h1>
 
         <!-- Action Buttons -->
@@ -37,6 +39,33 @@
       <p class="text-base md:text-lg text-brand-light/80 max-w-2xl mb-8 hero-perex-shadow">
         Viac ako 10 rokov skúseností • Prémiové produkty Gold Haircare • Individuálny prístup • Rezervácie 24/7
       </p>
+    </div>
+  </section>
+
+  <!-- Hair Diagnosis CTA -->
+  <section
+    class="py-12 bg-gradient-to-r from-brand-dark to-black text-white border-b border-gold/10 relative overflow-hidden">
+    <!-- Background Glow -->
+    <div class="absolute top-0 right-0 w-64 h-64 bg-gold/5 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none">
+    </div>
+
+    <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+      <div class="text-center md:text-left">
+        <div class="flex items-center justify-center md:justify-start gap-3 mb-2">
+          <span class="text-2xl">✨</span>
+          <h2 class="text-2xl md:text-3xl font-serif text-gold">Neviete akú službu si vybrať?</h2>
+        </div>
+        <p class="text-brand-light/80 text-lg">Skúste našu online diagnostiku a získajte odporúčanie na mieru za 30
+          sekúnd.</p>
+      </div>
+      <a routerLink="/diagnostika"
+        class="px-8 py-4 bg-white/5 border border-gold/50 text-gold hover:bg-gold hover:text-black font-bold uppercase tracking-widest rounded-xl transition-all transform hover:scale-105 shadow-lg flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+        </svg>
+        Spustiť Diagnostiku
+      </a>
     </div>
   </section>
 
@@ -68,6 +97,59 @@
       <p class="text-2xl md:text-3xl font-serif text-gold italic mt-8">
         "PAPI HAIR DESIGN vás osloví pozitívnou atmosférou a príjemným prostredím, v ktorom si určite oddýchnete."
       </p>
+    </div>
+  </section>
+
+  <!-- Real Transformations Section -->
+  <section class="py-20 bg-black text-white border-t border-gold/10">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-5xl font-bold text-gold mb-4 tracking-wider">SKUTOČNÉ PREMENY</h2>
+        <p class="text-lg text-brand-light/80 max-w-2xl mx-auto">
+          Pozrite sa, čo dokáže správny strih a farba. Posúvajte slider a objavte zmenu.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+
+        <!-- Transformation 1: Blonde -->
+        <div class="space-y-4">
+          <app-before-after-slider beforeImage="assets/images/transformations/blonde-before.png"
+            afterImage="assets/images/transformations/blonde-after.png" title="Ice Blonde Correction">
+          </app-before-after-slider>
+          <p class="text-sm text-center text-brand-light/60 italic">
+            "Z mosazných tónov na dokonalú platinovú blond s hĺbkou pri korienkoch."
+          </p>
+        </div>
+
+        <!-- Transformation 2: Brunette -->
+        <div class="space-y-4">
+          <app-before-after-slider beforeImage="assets/images/transformations/brunette-before.png"
+            afterImage="assets/images/transformations/brunette-after.png" title="Caramel Melt">
+          </app-before-after-slider>
+          <p class="text-sm text-center text-brand-light/60 italic">
+            "Dodanie života a dimenzie matným hnedým vlasom pomocou techniky balayage."
+          </p>
+        </div>
+
+        <!-- Transformation 3: Copper -->
+        <div class="space-y-4">
+          <app-before-after-slider beforeImage="assets/images/transformations/copper-before.png"
+            afterImage="assets/images/transformations/copper-after.png" title="Vibrant Copper">
+          </app-before-after-slider>
+          <p class="text-sm text-center text-brand-light/60 italic">
+            "Výrazná zmena na žiarivú medenú, ktorá rozžiari celú tvár."
+          </p>
+        </div>
+
+      </div>
+
+      <div class="mt-16 text-center">
+        <a routerLink="/cennik"
+          class="inline-block text-gold hover:text-white border-b border-gold hover:border-white transition-colors pb-1">
+          Pozrieť celý cenník premien &rarr;
+        </a>
+      </div>
     </div>
   </section>
 

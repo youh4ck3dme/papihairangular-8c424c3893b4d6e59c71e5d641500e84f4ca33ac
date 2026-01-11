@@ -5,6 +5,7 @@ import { CommonModule } from "@angular/common";
 import { HeaderComponent } from "./shared/components/header/header.component";
 import { FooterComponent } from "./shared/components/footer/footer.component";
 import { NotificationComponent } from "./shared/components/notification/notification.component";
+import { ScrollToTopComponent } from "./shared/components/scroll-to-top/scroll-to-top.component";
 import { ScrollProgressComponent } from "./shared/components/scroll-progress/scroll-progress.component";
 import { SeoService } from "./core/services/seo.service";
 import { ThemeService } from "./core/services/theme.service";
@@ -23,6 +24,7 @@ import { PushNotificationService } from "./core/services/push-notification.servi
     FooterComponent,
     NotificationComponent,
     ScrollProgressComponent,
+    ScrollToTopComponent
   ],
 })
 export class AppComponent {

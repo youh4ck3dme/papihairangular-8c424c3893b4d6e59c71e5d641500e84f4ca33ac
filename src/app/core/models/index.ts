@@ -17,6 +17,10 @@ export interface SalonService {
   duration: number; // in minutes
   price: number;
   category: "Dámske" | "Pánske" | "Farbenie" | "Ostatné";
+  description?: string;
+  breakdown?: { name: string; price?: string | number; included: boolean }[];
+  isLookbook?: boolean;
+  imageUrl?: string;
 }
 
 // Appointment interface is kept for now as it's still referenced by mock-appointments.ts (which is being deleted, then this can be removed too)
