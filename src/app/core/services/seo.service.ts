@@ -165,7 +165,7 @@ export class SeoService {
           "name": "PAPI HAIR DESIGN",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://papihairdesign.sk/assets/logo.png"
+            "url": "https://papihairdesign.sk/assets/logo.webp"
           }
         },
         "datePublished": post.date,

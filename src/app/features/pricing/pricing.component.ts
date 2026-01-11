@@ -45,7 +45,7 @@ export class PricingComponent {
       price: 230,
       duration: 240,
       badge: 'HIT SEZÓNY',
-      image: 'assets/images/lookbook/pearl-blonde.png',
+      image: 'assets/images/lookbook/pearl-blonde.webp',
       description: 'Luxusná perleťová blond, ktorá rozžiari vašu tvár. Ideálna pre klientky, ktoré túžia po studených, no žiarivých odtieňoch s prirodzeným prechodom.',
       breakdown: [
         { name: 'Balayage Komplet', price: '150 €', included: true },
@@ -59,7 +59,7 @@ export class PricingComponent {
       price: 185,
       duration: 180,
       badge: 'BESTSELLER',
-      image: 'assets/images/lookbook/caramel-melt.png',
+      image: 'assets/images/lookbook/caramel-melt.webp',
       description: 'Hrejivé karamelové tóny pre brunetky, ktoré chcú presvetliť svoj účes bez radikálnej zmeny. Dodá vlasom optický objem a pohyb.',
       breakdown: [
         { name: 'Foilayage / Melír', price: '120 €', included: true },
@@ -73,7 +73,7 @@ export class PricingComponent {
       price: 160,
       duration: 150,
       badge: 'NOVINKA',
-      image: 'assets/images/lookbook/copper-glow-pro-v2.png',
+      image: 'assets/images/lookbook/copper-glow-pro-v2.webp',
       description: 'Výrazná medená farba plná života. Tento look je o odvahe a elegancii. Perfektný pre jesenné a zimné mesiace.',
       breakdown: [
         { name: 'Kompletné farbenie', price: '70 €', included: true },

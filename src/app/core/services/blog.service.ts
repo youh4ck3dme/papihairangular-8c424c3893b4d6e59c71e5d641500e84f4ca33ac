@@ -160,7 +160,7 @@ export class BlogService {
           text: 'Chcete zmenu, ktorá bude nielen trendová, ale aj prispôsobená vašej tvári, typu vlasov a životnému štýlu? <a href="/kontakt" class="text-gold font-semibold hover:underline">Rezervujte si termín v PAPI HAIR DESIGN</a> ešte dnes. Naši stylisti sú pravidelne školení v najnovších technikách strihu aj farbenia pre <strong>trendové účesy 2026</strong> a radi vám poradia.'
         }
       ],
-      imageUrl: "assets/images/blog/trendove-ucesy-2026.png",
+      imageUrl: "assets/images/blog/trendove-ucesy-2026.webp",
       author: "Róbert Papcun",
       authorRole: "Head Stylist",
       date: "2026-01-05",
@@ -317,7 +317,7 @@ export class BlogService {
           text: 'Dáva vašim vlasom zima zabrať viac, než zvládnete doma? Cítite, že sú ako slama? <a href="https://services.bookio.com/papi-hair-design/widget?lang=sk" target="_blank" class="text-gold font-semibold hover:underline">Rezervujte si termín na profesionálnu kúru v PAPI HAIR DESIGN</a>. Naše hĺbkové regeneračné procedúry (Olaplex, Keratín) vrátia vašim vlasom život a silu za pár minút.'
         }
       ],
-      imageUrl: "assets/images/blog/zimna-starostlivost.png",
+      imageUrl: "assets/images/blog/zimna-starostlivost.webp",
       author: "Michaela Kováčová",
       authorRole: "Senior Stylist",
       date: "2026-01-02",
@@ -446,7 +446,7 @@ export class BlogService {
           text: 'Dúfame, že sme vám dilemu <strong>Balayage vs Ombre</strong> pomohli definitívne vyriešiť. Nezabudnite, že zosvetlené vlasy vyžadujú špeciálnu starostlivosť – <a href="/blog/starostlivost-o-vlasy-v-zime" class="text-gold font-semibold hover:underline">prečítajte si našich 7 tipov na zimnú starostlivosť o vlasy</a>. Ak si stále nie ste istá, ktorá technika sa hodí k vašej pleti a typu tváre, v PAPI HAIR DESIGN sme tu pre vás. <a href="/kontakt" class="text-gold font-semibold hover:underline">Objednajte sa na bezplatnú konzultáciu</a> a my posúdime kvalitu vašich vlasov a navrhneme riešenie na mieru.'
         }
       ],
-      imageUrl: "assets/images/blog/balayage-vs-ombre.png",
+      imageUrl: "assets/images/blog/balayage-vs-ombre.webp",
       author: "Róbert Papcun",
       authorRole: "Expert Colorist",
       date: "2025-12-28",

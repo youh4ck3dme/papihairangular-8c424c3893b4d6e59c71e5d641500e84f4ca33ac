@@ -194,9 +194,9 @@ export class VtoComponent implements AfterViewInit {
                             name: rec.name,
                             description: rec.description,
                             // MOCK URLs - Nahraďte skutočnými cestami k transparentným PNG
-                            imageUrl: index === 0 ? 'assets/mock/hair-overlay-short.png' :
-                                index === 1 ? 'assets/mock/hair-overlay-medium.png' :
-                                    'assets/mock/hair-overlay-long.png',
+                            imageUrl: index === 0 ? 'assets/mock/hair-overlay-short.webp' :
+                                index === 1 ? 'assets/mock/hair-overlay-medium.webp' :
+                                    'assets/mock/hair-overlay-long.webp',
                             tags: rec.tags || []
                         }));
                         this.recommendations.set(mappedRecs);
