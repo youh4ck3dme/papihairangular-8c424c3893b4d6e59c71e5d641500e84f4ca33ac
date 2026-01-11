@@ -3,6 +3,16 @@ import { CommonModule } from '@angular/common';
 import { ServiceInfoModalComponent } from '../../shared/components/service-info-modal/service-info-modal.component';
 import { SalonService } from '../../core/models';
 
+interface Look {
+  name: string;
+  price: number;
+  duration: number;
+  badge?: string;
+  image: string;
+  description: string;
+  breakdown: { name: string; price: string | number; included: boolean }[];
+}
+
 @Component({
   selector: 'app-pricing',
   standalone: true,
@@ -25,7 +35,9 @@ export class PricingComponent {
     });
   }
 
-  openLookbook(look: any) {
+
+
+  openLookbook(look: Look) {
     this.selectedService.set({
       id: 'look-' + look.name,
       name: look.name,
