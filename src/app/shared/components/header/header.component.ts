@@ -24,7 +24,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   navLinks = [
     { path: "/", label: "Domov", sectionId: "home" },
     { path: "/cennik", label: "Cenník", sectionId: "pricing" },
-    { path: "/diagnostika", label: "Diagnostika", sectionId: "quiz", isNew: true },
+    // { path: "/diagnostika", label: "Diagnostika", sectionId: "quiz", isNew: true },
     { path: "/o-nas", label: "O nás", sectionId: "about" },
     { path: "/kontakt", label: "Kontakt", sectionId: "contact" },
     { path: "/blog", label: "Blog", sectionId: "blog" },
