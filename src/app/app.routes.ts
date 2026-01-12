@@ -160,18 +160,18 @@ export const APP_ROUTES: Routes = [
     },
     loadComponent: () => import('./features/services/ombre/ombre.component').then(m => m.OmbreComponent)
   },
-  {
-    path: 'diagnostika',
-    title: 'Vlasová Diagnostika | PAPI HAIR DESIGN',
-    data: {
-      seo: {
-        description: 'Online diagnostika vlasov. Zistite, čo vaše vlasy potrebujú a získajte odporúčanie na mieru od PAPI HAIR DESIGN.',
-        keywords: 'diagnostika vlasov, vlasový kvíz, starostlivosť o vlasy Košice',
-        ogImage: 'https://papihairdesign.sk/images/logo.png'
-      }
-    },
-    loadComponent: () => import('./features/quiz/hair-diagnosis-wizard.component').then(c => c.HairDiagnosisWizardComponent)
-  },
+  // {
+  //   path: 'diagnostika',
+  //   title: 'Vlasová Diagnostika | PAPI HAIR DESIGN',
+  //   data: {
+  //     seo: {
+  //       description: 'Online diagnostika vlasov. Zistite, čo vaše vlasy potrebujú a získajte odporúčanie na mieru od PAPI HAIR DESIGN.',
+  //       keywords: 'diagnostika vlasov, vlasový kvíz, starostlivosť o vlasy Košice',
+  //       ogImage: 'https://papihairdesign.sk/images/logo.png'
+  //     }
+  //   },
+  //   loadComponent: () => import('./features/quiz/hair-diagnosis-wizard.component').then(c => c.HairDiagnosisWizardComponent)
+  // },
   {
     path: '**',
     redirectTo: ''
