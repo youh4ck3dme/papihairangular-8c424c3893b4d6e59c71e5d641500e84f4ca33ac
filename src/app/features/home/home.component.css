@@ -41,21 +41,32 @@
   right: 50%;
   margin-left: -50vw;
   margin-right: -50vw;
-
-  /* Background Image Styling */
-  /* Background Image Styling */
-  background-image: url("/assets/salon-interior-small.webp");
-  background-size: cover;
-  background-position: center;
-  background-attachment: scroll;
-  /* Better for mobile performance */
+  overflow: hidden; /* Ensure animation doesn't cause scrollbars */
 }
 
-@media (min-width: 768px) {
-  .hero-section {
-    background-image: url("/assets/salon-interior.webp");
-    background-attachment: fixed;
-    /* Parallax only on desktop */
+/* Background Image with Ken Burns Effect */
+.hero-section::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("/assets/salon-interior.webp");
+  background-size: cover;
+  background-position: center;
+  z-index: 0; /* Behind content but same level as overlay */
+  
+  /* Micro-animation: Slow Zoom (Ken Burns) */
+  animation: ken-burns 20s ease-in-out infinite alternate;
+}
+
+@keyframes ken-burns {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
   }
 }
 
