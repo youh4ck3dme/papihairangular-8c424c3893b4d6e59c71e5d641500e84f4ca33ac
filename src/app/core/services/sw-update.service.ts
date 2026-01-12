@@ -125,7 +125,9 @@ export class ServiceWorkerUpdateService {
     notification.className = 'sw-update-notification';
     notification.innerHTML = `
       <div class="sw-update-content">
-        <div class="sw-update-icon">🔄</div>
+        <div class="sw-update-icon">
+          <img src="assets/logo-icon.webp" alt="PAPI Logo" style="width: 40px; height: 40px; border-radius: 50%;">
+        </div>
         <div class="sw-update-text">
           <h4>Nová verzia je dostupná!</h4>
           <p>Kliknite pre aktualizáciu aplikácie.</p>
@@ -175,8 +177,10 @@ export class ServiceWorkerUpdateService {
       }
 
       .sw-update-icon {
-        font-size: 2rem;
-        animation: spin 2s linear infinite;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: spin 3s linear infinite;
       }
 
       @keyframes spin {
