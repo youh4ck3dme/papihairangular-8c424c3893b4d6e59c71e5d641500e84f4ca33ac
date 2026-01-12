@@ -37,8 +37,8 @@ export class AppComponent {
   showLayout = signal(true);
 
   constructor() {
-    // Auto-request push subscription on app load
-    this.pushService.requestSubscription().subscribe();
+    // Auto-request removed to prevent crash on invalid VAPID key
+    // this.pushService.requestSubscription().subscribe();
 
     // Listen to route changes to handle scrolling, theme and layout visibility
     this.router.events.pipe(

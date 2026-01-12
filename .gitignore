@@ -49,3 +49,4 @@ src/proxy/rate-limit.json
 # .env.local
 # .env.production
 # .env.development
+.env*.local
