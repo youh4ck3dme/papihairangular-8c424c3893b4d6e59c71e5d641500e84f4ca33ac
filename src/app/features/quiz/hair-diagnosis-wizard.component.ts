@@ -83,7 +83,7 @@ interface QuizState {
         }
 
         <!-- STEP 3: Goal -->
-        @if (step() === 3) {
+        @if (step() === 3 && !isGenerating()) {
         <div class="animate-fadeIn">
             <button (click)="step.set(2)" class="text-sm text-gold/60 hover:text-gold mb-6 flex items-center gap-2">
                 &larr; Späť
@@ -107,6 +107,29 @@ interface QuizState {
                     </div>
                 </button>
                 }
+            </div>
+        </div>
+        }
+
+        <!-- LOADING STEP -->
+        @if (isGenerating()) {
+        <div class="flex flex-col items-center justify-center py-12 animate-fadeIn">
+            <div class="relative w-32 h-32 mb-8">
+                <div class="absolute inset-0 border-4 border-gold/20 rounded-full animate-pulse"></div>
+                <!-- Spinning Black Logo (icon) -->
+                <img src="assets/logo-icon.webp" alt="PAPI" 
+                     class="w-full h-full object-contain animate-spin-slow">
+            </div>
+            
+            <div class="text-center">
+                <p class="text-gold font-mono text-sm uppercase tracking-[0.3em] mb-4 animate-pulse">Generujeme analýzu</p>
+                <h3 class="text-2xl font-serif text-white h-8 overflow-hidden">
+                    <span class="block animate-slideUp">{{ generationMessages[generationStep()] }}</span>
+                </h3>
+                
+                <div class="w-48 h-1 bg-white/5 rounded-full mx-auto mt-8 overflow-hidden">
+                    <div class="h-full bg-gold animate-progress"></div>
+                </div>
             </div>
         </div>
         }
@@ -173,14 +196,39 @@ interface QuizState {
         from { opacity: 0; transform: scale(0.9); }
         to { opacity: 1; transform: scale(1); }
     }
+    @keyframes slideUp {
+        0% { transform: translateY(100%); opacity: 0; }
+        10% { transform: translateY(0); opacity: 1; }
+        90% { transform: translateY(0); opacity: 1; }
+        100% { transform: translateY(-100%); opacity: 0; }
+    }
+    @keyframes progress {
+        0% { width: 0; }
+        100% { width: 100%; }
+    }
+    @keyframes spin-slow {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
     .animate-fadeIn { animation: fadeIn 0.6s ease-out forwards; }
     .animate-scaleIn { animation: scaleIn 0.5s ease-out forwards; }
+    .animate-slideUp { animation: slideUp 1s ease-in-out forwards; }
+    .animate-progress { animation: progress 3s linear forwards; }
+    .animate-spin-slow { animation: spin-slow 8s linear infinite; }
   `],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HairDiagnosisWizardComponent {
     step = signal(1);
     state = signal<QuizState>({ problem: null, length: null, goal: null });
+    isGenerating = signal(false);
+    generationStep = signal(0);
+
+    generationMessages = [
+        'Analyzujeme textúru vašich vlasov...',
+        'Prepočítavame optimálne ošetrenie...',
+        'Pripravujeme váš personalizovaný plán...'
+    ];
 
     problems = [
         { id: 'dry', label: 'Suché a zničené', desc: 'Vlasy sú matné, lámu sa a chýba im život.', emoji: '🍂' },
@@ -264,7 +312,22 @@ export class HairDiagnosisWizardComponent {
 
     selectGoal(id: string) {
         this.state.update(s => ({ ...s, goal: id }));
-        this.step.set(4);
+
+        // Start simulated generation
+        this.isGenerating.set(true);
+
+        // Cycle messages
+        let count = 0;
+        const interval = setInterval(() => {
+            count++;
+            if (count < 3) {
+                this.generationStep.set(count);
+            } else {
+                clearInterval(interval);
+                this.isGenerating.set(false);
+                this.step.set(4);
+            }
+        }, 1000);
     }
 
     restart() {
