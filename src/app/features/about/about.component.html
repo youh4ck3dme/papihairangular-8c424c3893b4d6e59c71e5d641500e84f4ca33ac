@@ -74,10 +74,10 @@
           <div class="card-back">
             <div class="p-6 text-left">
               <h3 class="text-xl font-bold text-gold mb-1">{{ member.name }}</h3>
-              <p class="text-xs text-brand-light/70 mb-3">{{ member.title }}</p>
-              <p class="text-xs text-brand-light/90 mb-4 leading-relaxed">{{ member.description }}</p>
-              <h4 class="text-sm font-semibold text-gold mb-2">Špecializácia:</h4>
-              <ul class="mt-1 space-y-1 text-xs" role="list">
+              <p class="text-sm text-brand-light/70 mb-3">{{ member.title }}</p>
+              <p class="text-sm text-brand-light/90 mb-4 leading-relaxed">{{ member.description }}</p>
+              <h4 class="text-base font-semibold text-gold mb-2">Špecializácia:</h4>
+              <ul class="mt-1 space-y-1 text-sm" role="list">
                 @for (skill of member.skills; track skill) {
                 <li class="flex items-center gap-2" role="listitem">
                   <span class="inline-block h-1.5 w-1.5 rounded-full bg-gold"></span>
