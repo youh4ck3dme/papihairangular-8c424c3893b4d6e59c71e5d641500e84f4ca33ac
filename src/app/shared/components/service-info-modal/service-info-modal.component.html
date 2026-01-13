@@ -43,7 +43,8 @@
                             d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
-                <h2 [id]="'modal-title-' + service.id" class="text-3xl font-bold text-gold tracking-tight pr-8">
+                <h2 [id]="'modal-title-' + service.id"
+                    class="text-3xl md:text-4xl font-serif font-bold text-gold tracking-wide text-center pr-8 w-full drop-shadow-lg">
                     {{ service.name }}
                 </h2>
             </div>
@@ -51,7 +52,7 @@
             <!-- Title under image if image exists -->
             <div class="px-6 pb-2 -mt-4 relative z-10">
                 <h2 [id]="'modal-title-' + service.id"
-                    class="text-3xl font-bold text-gold tracking-tight drop-shadow-md">
+                    class="text-3xl md:text-4xl font-serif font-bold text-gold tracking-wide drop-shadow-lg text-center">
                     {{ service.name }}
                 </h2>
             </div>
@@ -60,8 +61,9 @@
             <!-- Content Body -->
             <div class="p-6 pt-2 space-y-6">
                 <!-- Meta Info (Duration & Category) -->
-                <div class="flex items-center gap-4 text-brand-light/60 text-sm font-medium">
-                    <span class="flex items-center gap-1.5 bg-white/5 px-3 py-1 rounded-full border border-white/5">
+                <div class="flex items-center justify-center gap-4 text-brand-light/80 text-sm font-medium">
+                    <span
+                        class="flex items-center gap-1.5 bg-white/5 px-4 py-1.5 rounded-full border border-gold/10 backdrop-blur-sm shadow-md">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gold" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -69,13 +71,14 @@
                         </svg>
                         {{ service.duration }} min
                     </span>
-                    <span class="flex items-center gap-1.5 bg-white/5 px-3 py-1 rounded-full border border-white/5">
+                    <span
+                        class="flex items-center gap-1.5 bg-white/5 px-4 py-1.5 rounded-full border border-gold/10 backdrop-blur-sm shadow-md">
                         {{ service.category }}
                     </span>
                 </div>
 
                 <!-- Price Highlight -->
-                <div class="flex justify-start items-baseline gap-2">
+                <div class="flex justify-center items-center gap-3">
                     <span class="text-sm text-brand-light/50 font-mono uppercase tracking-widest">Cena:</span>
                     <span class="text-3xl font-mono font-bold text-white tracking-tight">
                         {{ service.price | number:'1.2-2' }} €
@@ -118,7 +121,7 @@
                     }
 
                     <!-- Text Description -->
-                    <p class="text-justify">
+                    <p class="text-center text-white/90 font-sans text-base leading-relaxed tracking-wide">
                         {{ service.description || 'Pre túto službu pripravujeme detailnejší popis.' }}
                     </p>
                 </div>
