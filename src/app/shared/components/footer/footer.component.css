@@ -33,9 +33,18 @@
 
 @media (min-width: 768px) {
     .footer-grid {
-        grid-template-columns: 1.3fr 1fr 1fr;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 3rem;
     }
+}
+
+/* Všetko v pätičke je centrované na každom zariadení */
+.footer-grid > section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-width: 0;
 }
 
 .footer-heading {
@@ -50,12 +59,15 @@
 .footer-address {
     font-style: normal;
     display: grid;
+    justify-items: center;
     gap: 0.25rem;
 }
 
 .footer-row {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     gap: 0.75rem;
     min-height: 44px;
     padding: 0.5rem 0;
@@ -71,7 +83,6 @@
 .footer-row-icon {
     width: 1.25rem;
     height: 1.25rem;
-    margin-top: 0.125rem;
     flex-shrink: 0;
     color: var(--f-accent);
 }
@@ -119,7 +130,9 @@
 .hours {
     display: grid;
     gap: 0.125rem;
+    width: 100%;
     max-width: 18rem;
+    margin: 0 auto;
 }
 
 .hours-row {
@@ -149,6 +162,7 @@
 /* ---- Links ---- */
 .footer-links {
     display: grid;
+    justify-items: center;
     gap: 0.125rem;
 }
 
@@ -170,6 +184,7 @@
 
 .social {
     display: flex;
+    justify-content: center;
     gap: 0.75rem;
     margin-top: 1.5rem;
 }
@@ -228,3 +243,4 @@ a:focus-visible {
 .site-footer {
     scroll-snap-align: end;
 }
+

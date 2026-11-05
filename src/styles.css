@@ -54,6 +54,11 @@ html:has(app-home) {
   body:has(app-home) app-scroll-to-top {
     display: none !important;
   }
+
+  /* …a fixná CTA lišta nesmie zakryť spodok pätičky */
+  body:has(app-home) app-footer .site-footer {
+    padding-bottom: calc(var(--cta-h) + env(safe-area-inset-bottom));
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
