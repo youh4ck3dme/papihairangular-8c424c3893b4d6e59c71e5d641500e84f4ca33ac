@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "npm run build:prod",
+  "buildCommand": "node scripts/ensure-env.mjs && pnpm run build:prod",
   "outputDirectory": "dist/app/browser",
   "headers": [
     {
