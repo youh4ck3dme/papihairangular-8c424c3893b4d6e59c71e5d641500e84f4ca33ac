@@ -1,6 +1,10 @@
 // Vytvorí src/environments/environment*.ts, ak chýbajú (sú v .gitignore).
-// Hodnoty berie z premenných prostredia (Vercel → Settings → Environment Variables).
 // Existujúce lokálne súbory nikdy neprepíše.
+//
+// BEZPEČNOSŤ: environment.ts sa kompiluje do VEREJNÉHO JS bundlu.
+// Preto sem nikdy nedávame tajné kľúče (OpenAI, Gemini…). Tie patria iba
+// do serverových funkcií v /api (process.env na Verceli). Z env sa sem berie
+// len VAPID_PUBLIC_KEY, ktorý je verejný z princípu.
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 
 const dir = 'src/environments';
@@ -8,8 +12,9 @@ mkdirSync(dir, { recursive: true });
 
 const body = (production) => `export const environment = {
   production: ${production},
-  geminiApiKey: ${JSON.stringify(process.env.GEMINI_API_KEY ?? '')},
-  openaiApiKey: ${JSON.stringify(process.env.OPENAI_API_KEY ?? '')},
+  // Tajné kľúče sú zámerne prázdne – AI volania idú cez /api proxy.
+  geminiApiKey: '',
+  openaiApiKey: '',
   vapidPublicKey: ${JSON.stringify(process.env.VAPID_PUBLIC_KEY ?? '')},
 };
 `;
