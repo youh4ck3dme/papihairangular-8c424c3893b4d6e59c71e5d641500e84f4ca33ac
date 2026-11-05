@@ -1,97 +1,78 @@
-<div class="max-w-7xl mx-auto flex-grow flex flex-col">
-  <div class="text-center max-w-4xl mx-auto">
-    <h1 class="text-4xl font-bold text-gold mb-2">O Nás</h1>
+<div class="page-bleed">
+  <app-page-header eyebrow="O nás" title="Viac než len kaderníctvo"
+    lead="PAPI HAIR DESIGN je miesto, kde sa spája vášeň, remeslo a komunita. Salón v Spoločenskom pavilóne na Triede SNP 61 v Košiciach založil v roku 2017 Róbert Papcun."
+    image="/images/salon-interior.webp" imageAlt="Interiér salónu PAPI HAIR DESIGN v Košiciach" />
 
-    <img src="/images/salon-interior.webp" alt="Interiér salónu PAPI HAIR DESIGN" width="800" height="800" priority
-      class="my-8 rounded-lg shadow-xl w-full max-w-2xl mx-auto" />
-
-    <p class="text-2xl md:text-3xl font-serif text-gold italic mt-8">
-      "PAPI HAIR DESIGN vás osloví pozitívnou atmosférou a príjemným prostredím, v ktorom si určite oddýchnete."
-    </p>
-
-    <div class="mt-8">
-      <a routerLink="/blog"
-        class="text-gold hover:text-white transition-colors underline decoration-gold/50 hover:decoration-white">
-        Prečítajte si náš príbeh &rarr;
-      </a>
-    </div>
-    <h2 class="text-3xl font-bold text-gold mb-4">PAPI HAIR DESIGN</h2>
-    <p class="text-lg text-brand-light/80 mb-8 max-w-3xl mx-auto">je viac než len kaderníctvo. Je to miesto, kde sa
-      spája vášeň, umenie a komunita. Náš príbeh je príbehom odvahy a odhodlania priniesť svetovú kvalitu do Košíc.</p>
-
-    <div class="bg-black/20 p-8 rounded-lg text-left my-12 shadow-lg border border-gold/10">
-      <h2 class="text-3xl font-bold text-gold mb-6 text-center">Naša filozofia</h2>
-      <div class="space-y-4 text-brand-light/90">
-        <p>Po rokoch skúseností a pôsobenia ako školiteľ pre komerčné značky sme sa v roku 2021 rozhodli pre vegánsku
-          značku Gold Hair Care Professional, ktorá dokonale vystihuje našu filozofiu – kvalitu, udržateľnosť a úprimný
-          prístup k vlasom aj prírode.</p>
-        <p>V PAPI HAIR DESIGN sa venujeme všetkým vlasovým výzvam – od precízneho strihania, farbenia, ošetrení, až po
-          moderné techniky ako highlights, balayage či kreatívne premeny. Naším cieľom je, aby každý z vás od nás
-          odchádzal s vlasmi, ktoré si zaslúžia to najlepšie.</p>
+  <!-- Zakladateľ -->
+  <section class="page-section" aria-labelledby="founder-title">
+    <div class="container-site founder">
+      <img class="founder-photo" src="/images/papi.webp" alt="Róbert Papcun – zakladateľ PAPI HAIR DESIGN"
+        width="640" height="960" loading="lazy" decoding="async" />
+      <div>
+        <p class="eyebrow text-accent">Zakladateľ</p>
+        <h2 id="founder-title" class="h2">Róbert Papcun „PAPI“</h2>
+        <p class="lead">
+          Po rokoch skúseností a pôsobenia ako školiteľ pre komerčné značky sa v roku 2021 rozhodol pre vegánsku značku
+          <strong>Gold Haircare Professional</strong>, ktorá vystihuje filozofiu salónu – kvalitu, udržateľnosť a
+          úprimný prístup k vlasom aj prírode.
+        </p>
+        <ul class="credentials">
+          @for (item of credentials; track item) {
+          <li>
+            <svg aria-hidden="true" class="ico text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+              stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+            <span>{{ item }}</span>
+          </li>
+          }
+        </ul>
+        <p class="body">
+          Venujeme sa všetkým vlasovým výzvam – od precízneho strihania, farbenia a ošetrení až po balayage a kreatívne
+          premeny. Cieľom je, aby každý odchádzal s vlasmi, ktoré si zaslúžia to najlepšie.
+        </p>
+        <blockquote class="quote">
+          PAPI HAIR DESIGN vás osloví pozitívnou atmosférou a príjemným prostredím, v ktorom si určite oddýchnete.
+        </blockquote>
+        <a routerLink="/blog/pribeh-znacky" class="btn btn-outline founder-cta">Celý príbeh zakladateľa</a>
       </div>
     </div>
+  </section>
 
-    <a routerLink="/blog/pribeh-znacky"
-      class="inline-block bg-gold text-brand-dark font-bold py-3 px-8 rounded-full hover:bg-yellow-300 transition-transform transform hover:scale-105 duration-300 mb-20">
-      Prečítajte si celý príbeh zakladateľa
-    </a>
-  </div>
-
-  <!-- Team Section -->
-  <section class="text-center mt-16">
-    <h1 class="text-4xl font-bold text-gold mb-4">Náš talentovaný tím</h1>
-    <p class="text-lg text-brand-light/80 mb-12 max-w-2xl mx-auto">Srdce a duša nášho salónu. Spoznajte umelcov za
-      kreslami.</p>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-      @for (member of teamMembers(); track member.name; let i = $index) {
-      <div class="card-container">
-        <div class="card">
-          <!-- Front of the card -->
-          <div class="card-front">
-            @if (i === 0) {
-            <img src="/images/papi.webp" alt="Papi" title="Fotografia člena tímu" width="400" height="500"
-              class="w-full h-full object-cover">
-            }
-            @if (i === 1) {
-            <img src="/images/mato.webp" alt="Mato" title="Fotografia člena tímu" width="400" height="500"
-              class="w-full h-full object-cover">
-            }
-            @if (i === 2) {
-            <img src="/images/miska.webp" alt="Miska" title="Fotografia člena tímu" width="400" height="500"
-              class="w-full h-full object-cover">
-            }
-            @if (i !== 0 && i !== 1 && i !== 2) {
-            <img [ngSrc]="member.imageUrl" [alt]="member.name" title="Fotografia člena tímu" width="400" height="500"
-              class="w-full h-full object-cover">
-            }
-            <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/80 to-transparent">
-              <h3 class="text-2xl font-bold text-white">{{ member.name }}</h3>
-              <p class="text-gold">{{ member.title }}</p>
-            </div>
+  <!-- Tím -->
+  <section class="page-section is-alt" aria-labelledby="team-title">
+    <div class="container-site">
+      <p class="eyebrow text-accent">Tím</p>
+      <h2 id="team-title" class="h2">Náš tím</h2>
+      <p class="lead team-lead">Srdce a duša nášho salónu. Spoznajte ľudí, ktorí sa postarajú o vaše vlasy.</p>
+      <ul class="team-grid">
+        @for (member of teamMembers(); track member.name) {
+        <li class="feature-card team-card">
+          <img class="team-photo" [src]="member.imageUrl" [alt]="member.name + ' – ' + member.title" width="640"
+            height="960" loading="lazy" decoding="async" />
+          <div class="team-body">
+            <h3 class="h3">{{ member.name }}</h3>
+            <p class="team-role">{{ member.title }}</p>
+            <p class="body team-desc">{{ member.description }}</p>
+            <ul class="team-skills" aria-label="Špecializácia">
+              @for (skill of member.skills; track skill) { <li>{{ skill }}</li> }
+            </ul>
           </div>
-          <!-- Back of the card -->
-          <div class="card-back">
-            <div class="p-6 text-left">
-              <h3 class="text-xl font-bold text-gold mb-1">{{ member.name }}</h3>
-              <p class="text-sm text-brand-light/70 mb-3">{{ member.title }}</p>
-              <p class="text-sm text-brand-light/90 mb-4 leading-relaxed">{{ member.description }}</p>
-              <h4 class="text-base font-semibold text-gold mb-2">Špecializácia:</h4>
-              <ul class="mt-1 space-y-1 text-sm" role="list">
-                @for (skill of member.skills; track skill) {
-                <li class="flex items-center gap-2" role="listitem">
-                  <span class="inline-block h-1.5 w-1.5 rounded-full bg-gold"></span>
-                  <span>{{ skill }}</span>
-                </li>
-                }
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-      }
+        </li>
+        }
+      </ul>
     </div>
+  </section>
 
-
+  <!-- CTA -->
+  <section class="page-section" aria-label="Rezervácia">
+    <div class="container-site about-cta">
+      <h2 class="h2">Tešíme sa na vašu návštevu</h2>
+      <p class="lead">Na prvú rezerváciu k Róbertovi je potrebná krátka konzultácia – stačí zavolať.</p>
+      <div class="about-cta-actions">
+        <a [href]="contact.bookingUrl" target="_blank" rel="noopener" class="btn btn-primary">
+          Rezervovať online<span class="sr-only"> (otvorí sa v novom okne)</span>
+        </a>
+        <a [href]="contact.phoneHref" class="btn btn-outline">Zavolať {{ contact.phoneDisplay }}</a>
+      </div>
+    </div>
   </section>
 </div>

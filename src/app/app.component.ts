@@ -53,14 +53,7 @@ export class AppComponent {
       // Hide global layout for the immersive story component
       this.showLayout.set(!isImmersiveStory);
 
-      // Enforce white background for regular blog section, skip for immersive story
-      if (url.startsWith('/blog') && !isImmersiveStory) {
-        document.body.classList.add('blog-theme');
-        document.body.style.backgroundColor = '#ffffff';
-      } else {
-        document.body.classList.remove('blog-theme');
-        document.body.style.backgroundColor = ''; // Reset to default CSS variable
-      }
+      // Blog používa globálne tokeny (light/dark) – žiadna vynútená biela.
     });
   }
 

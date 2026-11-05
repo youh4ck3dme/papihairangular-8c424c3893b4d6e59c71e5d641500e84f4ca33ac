@@ -45,7 +45,7 @@ export class SalonDataService {
         title: 'Founder & Creative Director',
         imageUrl: '/images/papi.webp',
         services: [],
-        description: 'Zakladateľ značky a vizionár s viac ako 10-ročnou praxou. Špecializuje sa na kompletné premeny, precízne geometrické strihy a kreatívne farbenie. Jeho vášňou je posúvať hranice klasického kaderníctva a vzdelávať novú generáciu stylistov.',
+        description: 'Zakladateľ značky a vizionár, ktorý sa kaderníctvu venuje od roku 2009. Špecializuje sa na kompletné premeny, precízne geometrické strihy a kreatívne farbenie. Jeho vášňou je posúvať hranice klasického kaderníctva a vzdelávať novú generáciu stylistov.',
         skills: ['Kreatívne strihy', 'Coloristika', 'Vzdelávanie', 'Premeny']
       },
       {

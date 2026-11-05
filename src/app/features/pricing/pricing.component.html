@@ -1,659 +1,111 @@
-<div class="max-w-7xl mx-auto flex-grow flex flex-col">
-  <div class="relative py-10 px-4 mb-16 max-w-4xl mx-auto">
-    <!-- Ornaments -->
-    <div class="absolute top-0 left-0 w-24 h-24 md:w-40 md:h-40 opacity-10 pointer-events-none text-gold">
-      <svg viewBox="0 0 100 100" fill="currentColor">
-        <path d="M0,0 L0,40 Q0,5 35,0 Z M0,45 L0,70 Q5,40 30,30 Z" />
-        <path d="M10,10 Q30,10 40,30 T60,60" fill="none" stroke="currentColor" stroke-width="2" />
-      </svg>
-    </div>
-    <div
-      class="absolute bottom-0 right-0 w-24 h-24 md:w-40 md:h-40 opacity-10 pointer-events-none text-gold transform rotate-180">
-      <svg viewBox="0 0 100 100" fill="currentColor">
-        <path d="M0,0 L0,40 Q0,5 35,0 Z M0,45 L0,70 Q5,40 30,30 Z" />
-        <path d="M10,10 Q30,10 40,30 T60,60" fill="none" stroke="currentColor" stroke-width="2" />
-      </svg>
-    </div>
+<div class="page-bleed">
+  <app-page-header eyebrow="Cenník" title="Cenník kaderníctva Košice"
+    lead="Ceny dámskych a pánskych služieb v PAPI HAIR DESIGN. Pracujeme výhradne s prémiovou kozmetikou GOLD Haircare a každej službe venujeme dostatok času.">
+    <a [href]="contact.bookingUrl" target="_blank" rel="noopener" class="btn btn-primary">
+      Rezervovať online<span class="sr-only"> (otvorí sa v novom okne)</span>
+    </a>
+    <a [href]="contact.phoneHref" class="btn btn-outline">Zavolať {{ contact.phoneDisplay }}</a>
+  </app-page-header>
 
-    <!-- Content -->
-    <div class="relative z-10 text-center">
-      <h1 class="text-4xl md:text-5xl font-serif font-bold text-gold mb-4 tracking-wide uppercase">Cenník Kaderníctvo
-        Košice</h1>
-      <div class="w-24 h-1 bg-gold mx-auto mb-6 rounded-full opacity-60"></div>
-      <p class="text-xl text-brand-light/90 font-light mb-6">Prehľad cien našich prémiových služieb pre dámy a pánov v
-        PAPI HAIR DESIGN Košice.</p>
-
-      <div class="max-w-3xl mx-auto bg-black/20 backdrop-blur-sm p-6 rounded-xl border border-gold/10 shadow-lg">
-        <p class="text-base md:text-lg text-brand-light/80 leading-relaxed italic">
-          "V našom kaderníctve v Košiciach veríme, že kvalita služieb a spokojnosť klientov je dôležitejšia ako
-          najnižšie ceny.
-          Preto používame výhradne prémiové produkty Gold Haircare a venujeme dostatok času každej službe pre dokonalý
-          výsledok.
-          Naše ceny odrážajú profesionálny prístup, skúsenosti našich kaderníkov a kvalitu materiálov."
-        </p>
-      </div>
-    </div>
+  <!-- Rýchla navigácia -->
+  <div class="price-nav-bar">
+  <nav class="price-nav container-site" aria-label="Časti cenníka">
+    @for (list of lists; track list.id) {
+    <a [routerLink]="[]" [fragment]="list.id" class="price-nav-link">{{ list.title }}</a>
+    }
+    <a [routerLink]="[]" fragment="inspiracie" class="price-nav-link">Inšpirácie</a>
+  </nav>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16">
-
-    <!-- Dámsky cenník -->
-    <div class="bg-black/20 p-8 rounded-lg border border-gold/10">
-      <h2 class="text-3xl font-bold text-center text-gold mb-8">Dámsky cenník</h2>
-
-      <div class="mb-8">
-        <h3 class="text-2xl font-semibold text-gold mb-4 border-b border-gold/20 pb-4 leading-normal">Strih & Styling
-        </h3>
-        <div class="space-y-3 text-brand-light/90">
-          <div class="flex justify-between items-center group">
-            <div class="flex items-center gap-2">
-              <span>Dámsky strih</span>
-              <button class="text-gold/50 hover:text-gold transition-colors touch-target-min"
-                (click)="openServiceInfo('Dámsky strih', 30, 60, 'Dámske', 'Kompletný servis zahrňujúci odbornú konzultáciu, umývanie vlasov, relaxačnú masáž hlavy, precízny strih na mieru a záverečný styling. (Služba zahŕňa: umytie, strihanie a styling)')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-            <span class="font-mono">30.00 €</span>
-          </div>
-          <div class="flex justify-between items-center group">
-            <div class="flex items-center gap-2">
-              <span>Fúkaná dlhé vlasy</span>
-              <button class="text-gold/50 hover:text-gold transition-colors touch-target-min"
-                (click)="openServiceInfo('Fúkaná dlhé vlasy', 30, 45, 'Dámske', 'Profesionálna úprava dlhých vlasov (pod ramená) fúkaním cez guľatú kefu pre maximálny objem, lesk a dlhotrvajúci tvar. (Služba zahŕňa: umytie a styling)')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-            <span class="font-mono">30.00 €</span>
-          </div>
-          <div class="flex justify-between items-center group">
-            <div class="flex items-center gap-2">
-              <span>Fúkaná polodlhé vlasy</span>
-              <button class="text-gold/50 hover:text-gold transition-colors touch-target-min"
-                (click)="openServiceInfo('Fúkaná polodlhé vlasy', 20, 45, 'Dámske', 'Profesionálna úprava polodlhých vlasov (po ramená) fúkaním. Zaručuje zdravý lesk a objem. (Služba zahŕňa: umytie a styling)')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-            <span class="font-mono">20.00 €</span>
-          </div>
-          <div class="flex justify-between items-center group">
-            <div class="flex items-center gap-2">
-              <span>Finálny styling</span>
-              <button class="text-gold/50 hover:text-gold transition-colors touch-target-min"
-                (click)="openServiceInfo('Finálny styling', 20, 30, 'Dámske', 'Dokonalá bodka za vaším účesom. Profesionálna úprava vlasov pomocou kulmy, žehličky alebo náročný styling pre výnimočné príležitosti. (Služba zahŕňa: profesionálny styling vlasov)')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-            <span class="font-mono">20.00 €</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="mb-8">
-        <h3 class="text-2xl font-semibold text-gold mb-4 border-b border-gold/20 pb-4 leading-normal">Farbenie</h3>
-        <div class="space-y-3 text-brand-light/90">
-          <div class="flex justify-between items-center group">
-            <div class="flex items-center gap-2">
-              <span>Farbenie odrastov so strihom</span>
-              <button class="text-gold/50 hover:text-gold transition-colors touch-target-min"
-                (click)="openServiceInfo('Farbenie odrastov so strihom', 60, 120, 'Farbenie', 'Profesionálne dofarbenie odrastov s následným strihom a konečnou úpravou pre zjednotený a svieži vzhľad. (Služba zahŕňa: farbenie, umytie, strihanie a styling)')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-            <span class="font-mono">60.00 €</span>
-          </div>
-          <div class="flex justify-between items-center group">
-            <div class="flex items-center gap-2">
-              <span>Farbenie odrastov</span>
-              <button class="text-gold/50 hover:text-gold transition-colors touch-target-min"
-                (click)="openServiceInfo('Farbenie odrastov', 45, 90, 'Farbenie', 'Precízna aplikácia farby na odrastenú časť vlasov pre plynulý prechod a dokonalé krytie pri zachovaní zdravia vlasov. (Služba zahŕňa: farbenie, umytie a styling)')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-            <span class="font-mono">45.00 €</span>
-          </div>
-          <div class="flex justify-between items-center group">
-            <div class="flex items-center gap-2">
-              <span>Kompletné farbenie</span>
-              <button class="text-gold/50 hover:text-gold transition-colors touch-target-min"
-                (click)="openServiceInfo('Kompletné farbenie', 70, 90, 'Farbenie', 'Zmena alebo oživenie odtieňa v celej dĺžke vlasov pomocou šetrných a vysoko kvalitných farieb Gold Haircare pre žiarivý lesk. (Služba zahŕňa: farbenie, umytie a styling)')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-            <span class="font-mono">70.00 €</span>
-          </div>
-          <div class="flex justify-between items-center group">
-            <div class="flex items-center gap-2">
-              <span>Kompletné farbenie so strihom</span>
-              <button class="text-gold/50 hover:text-gold transition-colors touch-target-min"
-                (click)="openServiceInfo('Kompletné farbenie so strihom', 90, 120, 'Farbenie', 'Celková zmena farby vlasov doplnená o profesionálny strih, ktorý podčiarkne váš nový odtieň a osobný štýl. (Služba zahŕňa: farbenie, umytie, strihanie a styling)')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-            <span class="font-mono">90.00 €</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="mb-8">
-        <h3 class="text-2xl font-semibold text-gold mb-4 border-b border-gold/20 pb-4 leading-normal">Balayage & Melír
-        </h3>
-        <div class="space-y-3 text-brand-light/90">
-          <div class="flex justify-between items-center group">
-            <div class="flex items-center gap-2">
-              <span>Balayage komplet</span>
-              <button class="text-gold/50 hover:text-gold transition-colors touch-target-min"
-                (click)="openServiceInfo('Balayage komplet', 150, 240, 'Farbenie', 'Moderná technika farbenia vytvárajúca prirodzené prechody. Zahŕňa konzultáciu, zosvetlenie, tónovanie a hĺbkovú regeneráciu. (Služba zahŕňa: balayage, umytie a styling)')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-            <span class="font-mono">150.00 €</span>
-          </div>
-          <div class="flex justify-between items-center group">
-            <div class="flex items-center gap-2">
-              <span>Balayage dorábka</span>
-              <button class="text-gold/50 hover:text-gold transition-colors touch-target-min"
-                (click)="openServiceInfo('Balayage dorábka', 120, 180, 'Farbenie', 'Obnova a oživenie vašej balayage techniky, zameraná na oživenie odrastov a prejasnenie končekov. (Služba zahŕňa: balayage, umytie a styling)')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-            <span class="font-mono">120.00 €</span>
-          </div>
-          <div class="flex justify-between items-center group">
-            <div class="flex items-center gap-2">
-              <span>Melír dorábka</span>
-              <button class="text-gold/50 hover:text-gold transition-colors touch-target-min"
-                (click)="openServiceInfo('Melír dorábka', 120, 180, 'Farbenie', 'Klasická technika zosvetľovania prameňov zameraná na odrastenú časť vlasov pre zachovanie prirodzeného blond efektu. (Služba zahŕňa: melír, umytie a styling)')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-            <span class="font-mono">120.00 €</span>
-          </div>
-          <div class="flex justify-between items-center group">
-            <div class="flex items-center gap-2">
-              <span>Melír komplet</span>
-              <button class="text-gold/50 hover:text-gold transition-colors touch-target-min"
-                (click)="openServiceInfo('Melír komplet', 150, 240, 'Farbenie', 'Zosvetľovanie prameňov po celej dĺžke vlasov pre dosiahnutie multidimenzionálneho a žiarivého blond vzhľadu. (Služba zahŕňa: melír, umytie a styling)')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-            <span class="font-mono">150.00 €</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="mb-8">
-        <h3 class="text-2xl font-semibold text-gold mb-4 border-b border-gold/20 pb-4 leading-normal">Odfarbovanie &
-          Regenerácia</h3>
-        <div class="space-y-3 text-brand-light/90">
-          <div class="flex justify-between items-center group">
-            <div class="flex items-center gap-2">
-              <span>Gumovanie alebo čistenie farby</span>
-              <button class="text-gold/50 hover:text-gold transition-colors touch-target-min"
-                (click)="openServiceInfo('Gumovanie alebo čistenie farby', 100, 150, 'Farbenie', 'Neutralizácia nežiaducich odtieňov a dodanie vysokého lesku pomocou jemných tónovacích prelivov bez amoniaku. (Služba zahŕňa: gumovanie, umytie a styling)')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-            <span class="font-mono">100.00 €</span>
-          </div>
-          <div class="flex justify-between items-center group">
-            <div class="flex items-center gap-2">
-              <span>Sťahovanie farby</span>
-              <button class="text-gold/50 hover:text-gold transition-colors touch-target-min"
-                (click)="openServiceInfo('Sťahovanie farby', 160, 240, 'Farbenie', 'Odborné a šetrné odstránenie starého tmavého pigmentu z vlasov pre prípravu na nový, svetlejší odtieň. (Služba zahŕňa: odfarbovanie, farbenie, umytie a styling)')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-            <span class="font-mono">160.00 €</span>
-          </div>
-          <div class="flex justify-between items-center group">
-            <div class="flex items-center gap-2">
-              <span>Methamorphyc - rýchla kúra</span>
-              <button class="text-gold/50 hover:text-gold transition-colors touch-target-min"
-                (click)="openServiceInfo('Methamorphyc - rýchla kúra', 35, 45, 'Ostatné', 'Expresná regeneračná kúra, ktorá dodá vlasom okamžitú výživu, hebkosť a lesk v rekordne krátkom čase. (Služba zahŕňa: ošetrenie a styling)')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-            <span class="font-mono">35.00 €</span>
-          </div>
-          <div class="flex justify-between items-center group">
-            <div class="flex items-center gap-2">
-              <span>Methamorphyc - exkluzívna kúra</span>
-              <button class="text-gold/50 hover:text-gold transition-colors touch-target-min"
-                (click)="openServiceInfo('Methamorphyc - exkluzívna kúra', 50, 60, 'Ostatné', 'Luxusná hĺbková rekonštrukcia vlasového vlákna pomocou prémiových produktov pre maximálne zdravie a vitalitu vašich vlasov. (Služba zahŕňa: ošetrenie a styling)')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-            <span class="font-mono">50.00 €</span>
-          </div>
-          <div class="flex justify-between items-center group">
-            <div class="flex items-center gap-2">
-              <span>Brazílsky keratín</span>
-              <button class="text-gold/50 hover:text-gold transition-colors touch-target-min"
-                (click)="openServiceInfo('Brazílsky keratín', 130, 180, 'Ostatné', 'Profesionálne vyhladenie a hĺbková regenerácia vlasov s výsledkom dokonale rovných, lesklých a zdravých vlasov na 3-5 mesiacov. (Služba zahŕňa: hĺbkovú regeneráciu a vyhladenie vlasov)')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-            <span class="font-mono">130.00 €</span>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <h3 class="text-2xl font-semibold text-gold mb-4 border-b border-gold/20 pb-4 leading-normal">Predlžovanie &
-          Účesy</h3>
-        <div class="space-y-3 text-brand-light/90">
-          <div class="flex justify-between items-center group">
-            <div class="flex items-center gap-2">
-              <span>Aplikácia Tape-in</span>
-              <button class="text-gold/50 hover:text-gold transition-colors touch-target-min"
-                (click)="openServiceInfo('Aplikácia Tape-in', 40, 60, 'Ostatné', 'Profesionálne predĺženie alebo zahustenie vlasov pomocou diskrétnej a šetrnej páskovej metódy s mimoriadne prirodzeným efektom. (Služba zahŕňa: profesionálnu aplikáciu vlasových pások)')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-            <span class="font-mono">40.00 €</span>
-          </div>
-          <div class="flex justify-between items-center group">
-            <div class="flex items-center gap-2">
-              <span>Prepojenie Tape-in</span>
-              <button class="text-gold/50 hover:text-gold transition-colors touch-target-min"
-                (click)="openServiceInfo('Prepojenie Tape-in', 120, 150, 'Ostatné', 'Odborná úprava a posunutie spojov pri Tape-in metóde po odrastení vlasov, zahŕňajúca čistenie a opätovnú aplikáciu. (Služba zahŕňa: odborné prepojenie vlasových pások)')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-            <span class="font-mono">120.00 €</span>
-          </div>
-          <div class="flex justify-between items-center group">
-            <div class="flex items-center gap-2">
-              <span>Zapletané vrkôčiky</span>
-              <button class="text-gold/50 hover:text-gold transition-colors touch-target-min"
-                (click)="openServiceInfo('Zapletané vrkôčiky', 30, 180, 'Ostatné', 'Štýlové a precízne zapletanie vlasov rôznymi technikami (boxerské vrkoče, priberané vrkôčiky) pre moderný look. (Služba zahŕňa: precízne zapletanie vlasov; trvanie 45 - 180 min)')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-            <span class="font-mono">30.00 €</span>
-          </div>
-          <div class="flex justify-between items-center group">
-            <div class="flex items-center gap-2">
-              <span>Spoločenský účes</span>
-              <button class="text-gold/50 hover:text-gold transition-colors touch-target-min"
-                (click)="openServiceInfo('Spoločenský účes', 40, 60, 'Ostatné', 'Elegantná a trvácna úprava vlasov pre svadby, plesy a iné výnimočné spoločenské príležitosti, vytvorená na mieru vašim šatám. (Služba zahŕňa: styling pre spoločenské príležitosti)')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-            <span class="font-mono">40.00 €</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Pánsky cenník -->
-    <div class="bg-black/20 p-8 rounded-lg border border-gold/10">
-      <h2 class="text-3xl font-bold text-center text-gold mb-8">Pánsky cenník</h2>
-
-      <div class="mb-8">
-        <h3 class="text-2xl font-semibold text-gold mb-4 border-b border-gold/20 pb-4 leading-normal">Vlasy</h3>
-        <div class="space-y-3 text-brand-light/90">
-          <div class="flex justify-between items-center group">
-            <div class="flex items-center gap-2">
-              <span>Strih Junior (do 15r.)</span>
-              <button class="text-gold/50 hover:text-gold transition-colors touch-target-min"
-                (click)="openServiceInfo('Strih Junior (do 15r.)', 15, 45, 'Pánske', 'Moderný a štýlový strih pre našich mladých zákazníkov do 15 rokov, prispôsobený ich vlasom a aktuálnym trendom. (Služba zahŕňa: umytie, strihanie, umytie a styling)')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-            <span class="font-mono">15.00 €</span>
-          </div>
-          <div class="flex justify-between items-center group">
-            <div class="flex items-center gap-2">
-              <span>Pánsky strih</span>
-              <button class="text-gold/50 hover:text-gold transition-colors touch-target-min"
-                (click)="openServiceInfo('Pánsky strih', 19, 60, 'Pánske', 'Kompletný pánsky strih zahŕňajúci konzultáciu, umývanie vlasov pred aj po strihaní a finálny styling s použitím prémiových produktov. (Služba zahŕňa: umytie, strihanie, umytie a styling)')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-            <span class="font-mono">19.00 €</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="mb-8">
-        <h3 class="text-2xl font-semibold text-gold mb-4 border-b border-gold/20 pb-4 leading-normal">Brada & Kombinácie
-        </h3>
-        <div class="space-y-3 text-brand-light/90">
-          <div class="flex justify-between items-center group">
-            <div class="flex items-center gap-2">
-              <span>Úprava brady</span>
-              <button class="text-gold/50 hover:text-gold transition-colors touch-target-min"
-                (click)="openServiceInfo('Úprava brady', 12, 30, 'Pánske', 'Kompletný servis pre vašu bradu: tvarovanie, skracovanie strojčekom aj nožnicami, ošetrenie kontúr a aplikácia vyživujúceho oleja alebo balzamu. (Služba zahŕňa: úpravu brady, umytie a ošetrenie/styling)')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-            <span class="font-mono">12.00 €</span>
-          </div>
-          <div class="flex justify-between items-center group">
-            <div class="flex items-center gap-2">
-              <span>Kombinácia vlasy a brada</span>
-              <button class="text-gold/50 hover:text-gold transition-colors touch-target-min"
-                (click)="openServiceInfo('Kombinácia vlasy a brada', 27, 60, 'Pánske', 'Kompletný servis zahŕňajúci profesionálny strih vlasov a komplexnú úpravu brady pre dokonale upravený mužský vzhľad. (Služba zahŕňa: umytie, strihanie vlasov, úpravu brady, umytie a styling)')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-            <span class="font-mono">27.00 €</span>
-          </div>
-          <div class="flex justify-between items-center group">
-            <div class="flex items-center gap-2">
-              <span>Pánsky špeciál</span>
-              <button class="text-gold/50 hover:text-gold transition-colors touch-target-min"
-                (click)="openServiceInfo('Pánsky špeciál', 50, 90, 'Pánske', 'Prémiový balíček zahŕňajúci strih, kompletnú úpravu brady, naparovanie, relaxačnú masáž hlavy a ošetrenie pleti. (Komplexný balíček: umytie, strihanie, úprava brady, depilácia, ušné sviečky, umytie, masáž vlasovej pokožky, čierna maska, peeling a styling)')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-            <span class="font-mono">50.00 €</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="mb-8">
-        <h3 class="text-2xl font-semibold text-gold mb-4 border-b border-gold/20 pb-4 leading-normal">Farbenie</h3>
-        <div class="space-y-3 text-brand-light/90">
-          <div class="flex justify-between items-center group">
-            <div class="flex items-center gap-2">
-              <span>Trvalá</span>
-              <button class="text-gold/50 hover:text-gold transition-colors touch-target-min"
-                (click)="openServiceInfo('Trvalá', 40, 90, 'Farbenie', 'Profesionálna trvalá ondulácia pre pánov. Získajte požadovaný objem, vlny alebo kučery s dlhotrvajúcim efektom a šetrným prístupom k vašim vlasom. (Služba zahŕňa: trvalú onduláciu vlasov)')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-            <span class="font-mono">40.00 €</span>
-          </div>
-          <div class="flex justify-between items-center group">
-            <div class="flex items-center gap-2">
-              <span>Zosvetlenie vlasov</span>
-              <button class="text-gold/50 hover:text-gold transition-colors touch-target-min"
-                (click)="openServiceInfo('Zosvetlenie vlasov', 40, 90, 'Farbenie', 'Odborné zosvetlenie pánskych vlasov o niekoľko odtieňov. Ideálne pre dosiahnutie moderného looku pri zachovaní kvality vlasov. (Služba zahŕňa: zosvetlenie, tónovanie, umytie a styling)')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-            <span class="font-mono">40.00 €</span>
-          </div>
-          <div class="flex justify-between items-center group">
-            <div class="flex items-center gap-2">
-              <span>Farbenie brady</span>
-              <button class="text-gold/50 hover:text-gold transition-colors touch-target-min"
-                (click)="openServiceInfo('Farbenie brady', 10, 30, 'Farbenie', 'Korekcia farby brady pre zjednotenie odtieňa alebo prirodzené zakrytie šedín pomocou šetrných prípravkov. (Služba zahŕňa: farbenie brady, umytie a styling)')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-            <span class="font-mono">10.00 €</span>
-          </div>
-          <div class="flex justify-between items-center group">
-            <div class="flex items-center gap-2">
-              <span>Tónovanie sedín</span>
-              <button class="text-gold/50 hover:text-gold transition-colors touch-target-min"
-                (click)="openServiceInfo('Tónovanie sedín', 10, 30, 'Farbenie', 'Diskrétne a prirodzené prekrytie šedín u pánov (kamufláž), ktoré prirodzene odrastá bez viditeľných prechodov. (Služba zahŕňa: tónovanie, umytie a styling)')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-            <span class="font-mono">10.00 €</span>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <h3 class="text-2xl font-semibold text-gold mb-4 border-b border-gold/20 pb-4 leading-normal">Doplnkové Služby
-        </h3>
-        <div class="space-y-3 text-brand-light/90">
-          <div class="flex justify-between items-center group">
-            <div class="flex items-center gap-2">
-              <span>Depilácia nosa aj uši</span>
-              <button class="text-gold/50 hover:text-gold transition-colors touch-target-min"
-                (click)="openServiceInfo('Depilácia nosa aj uši', 5, 10, 'Ostatné', 'Rýchle a takmer bezbolestné odstránenie nežiaducich chĺpkov v oblasti nosa a uší pomocou teplého vosku. (Služba zahŕňa: depiláciu nosa alebo uší)')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-            <span class="font-mono">5.00 €</span>
-          </div>
-          <div class="flex justify-between items-center group">
-            <div class="flex items-center gap-2">
-              <span>Ušné sviečky</span>
-              <button class="text-gold/50 hover:text-gold transition-colors touch-target-min"
-                (click)="openServiceInfo('Ušné sviečky', 10, 10, 'Ostatné', 'Relaxačná a tradičná metóda čistenia uší, ktorá pomáha pri tlaku v ušiach a prináša celkové uvoľnenie hlavy. (Služba zahŕňa: aplikáciu ušných sviečok)')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-            <span class="font-mono">10.00 €</span>
-          </div>
-          <div class="flex justify-between items-center group">
-            <div class="flex items-center gap-2">
-              <span>Čierna zlupovacia maska</span>
-              <button class="text-gold/50 hover:text-gold transition-colors touch-target-min"
-                (click)="openServiceInfo('Čierna zlupovacia maska', 12, 20, 'Ostatné', 'Hĺbkové čistenie pleti zamerané na odstránenie nečistôt a čiernych bodiek pre sviežu a zdravú pokožku.')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-            </div>
-            <span class="font-mono">12.00 €</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Inspirations Section -->
-  <section class="mt-24 mb-16 relative">
-    <div
-      class="absolute inset-x-0 top-1/2 h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent transform -translate-y-1/2">
-    </div>
-    <h2
-      class="relative z-10 text-3xl md:text-5xl font-bold text-center text-gold bg-brand-dark px-8 inline-block left-1/2 transform -translate-x-1/2 mb-12 tracking-wider">
-      INŠPIRÁCIE & LOOKY
-    </h2>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto px-4">
-      @for (look of looks; track look.name) {
-      <div (click)="openLookbook(look)" (keydown.enter)="openLookbook(look)" tabindex="0"
-        class="group relative aspect-[3/4] cursor-pointer overflow-hidden rounded-xl border border-gold/10 shadow-lg hover:shadow-gold/20 transition-all duration-500 outline-none focus:ring-2 focus:ring-gold"
-        role="button" [attr.aria-label]="'Zobraziť detail pre ' + look.name">
-
-        <!-- Badge with Animation -->
-        @if (look.badge) {
-        <div class="absolute top-4 right-4 z-20">
-          <div class="relative">
-            <div class="absolute inset-0 bg-gold blur-md opacity-50 animate-pulse"></div>
-            <span
-              class="relative block px-3 py-1 bg-gold text-black text-xs font-bold uppercase tracking-widest rounded-full shadow-lg border border-white/20">
-              {{ look.badge }}
-            </span>
-          </div>
+  <section class="page-section" aria-label="Cenník služieb">
+    <div class="container-site price-grid">
+      @for (list of lists; track list.id) {
+      <div class="price-list" [id]="list.id">
+        <h2 class="h2">{{ list.title }}</h2>
+        @for (group of list.groups; track group.title) {
+        <div class="feature-card price-group">
+          <h3 class="h3 price-group-title">{{ group.title }}</h3>
+          <ul class="price-rows">
+            @for (item of group.items; track item.name) {
+            <li>
+              @if (item.description) {
+              <details class="price-row">
+                <summary>
+                  <span class="price-name">{{ item.name }}
+                    <svg aria-hidden="true" class="price-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                      stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                  </span>
+                  <span class="price-meta">
+                    <span class="price-duration">{{ formatDuration(item.duration) }}</span>
+                    <span class="price-value">{{ formatPrice(item.price) }}</span>
+                  </span>
+                </summary>
+                <p class="price-desc">{{ item.description }}</p>
+              </details>
+              } @else {
+              <div class="price-row price-row-static">
+                <span class="price-name">{{ item.name }}</span>
+                <span class="price-meta">
+                  <span class="price-duration">{{ formatDuration(item.duration) }}</span>
+                  <span class="price-value">{{ formatPrice(item.price) }}</span>
+                </span>
+              </div>
+              }
+            </li>
+            }
+          </ul>
         </div>
         }
-
-        <!-- Image with Slow Cinematic Zoom -->
-        <img [src]="look.image" [alt]="look.name"
-          class="w-full h-full object-cover transition-transform duration-[1500ms] ease-out group-hover:scale-110 filter sepia-[0.1]">
-
-        <!-- Darkening Overlay Effect -->
-        <div
-          class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-in-out z-10">
-        </div>
-
-        <!-- Subtle Logo Watermark -->
-        <div
-          class="absolute bottom-28 right-4 z-10 opacity-60 mix-blend-overlay pointer-events-none transition-opacity duration-500 group-hover:opacity-40">
-          <img src="/assets/logo.webp" alt="Watermark"
-            class="h-8 w-auto filter grayscale brightness-200 drop-shadow-md">
-        </div>
-
-        <!-- Gradient for Text Readability -->
-        <div
-          class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500">
-        </div>
-
-        <!-- Content -->
-        <div
-          class="absolute bottom-0 left-0 w-full p-6 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500 ease-out z-20">
-          <h3
-            class="text-2xl font-serif text-white mb-1 drop-shadow-md group-hover:text-gold transition-colors duration-300">
-            {{ look.name }}
-          </h3>
-          <p class="text-sm text-brand-light/70 uppercase tracking-widest mb-3">Get the Look</p>
-
-          <div
-            class="flex items-center gap-2 text-xs font-mono text-gold/80 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-            <span>Zobraziť recept</span>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </div>
-        </div>
       </div>
       }
     </div>
+    <p class="container-site price-note">
+      Ceny sú orientačné a môžu sa líšiť podľa dĺžky a hustoty vlasov a spotreby materiálu. Konečnú cenu vám radi
+      upresníme pri osobnej konzultácii pred začatím služby.
+    </p>
   </section>
 
-  <!-- Pricing Disclaimer -->
-  <div class="mt-12 text-center max-w-3xl mx-auto px-4">
-    <p class="text-sm text-brand-light/60 italic">
-      Ceny sú orientačné a môžu sa líšiť v závislosti od dĺžky, hustoty vlasov a spotreby materiálu. Konečnú cenu vám
-      radi upresníme pri osobnej konzultácii pred začatím služby.
-    </p>
-  </div>
+  <!-- Inšpirácie / balíčky -->
+  <section id="inspiracie" class="page-section is-alt" aria-labelledby="looks-title">
+    <div class="container-site">
+      <p class="eyebrow text-accent">Balíčky</p>
+      <h2 id="looks-title" class="h2">Inšpirácie a looky</h2>
+      <p class="lead looks-lead">Obľúbené kombinácie služieb za zvýhodnenú cenu. Kliknite na look a pozrite si, čo obsahuje.</p>
+      <ul class="looks-grid">
+        @for (look of looks; track look.name) {
+        <li>
+          <button type="button" class="look-card" (click)="openLookbook(look)"
+            [attr.aria-label]="'Detail balíčka ' + look.name + ', ' + formatPrice(look.price)">
+            <img [src]="look.image" [alt]="''" width="1024" height="1024" loading="lazy" decoding="async" />
+            @if (look.badge) { <span class="look-badge">{{ look.badge }}</span> }
+            <span class="look-body">
+              <span class="look-name">{{ look.name }}</span>
+              <span class="look-meta">{{ formatDuration(look.duration) }} · <strong>{{ formatPrice(look.price) }}</strong></span>
+            </span>
+          </button>
+        </li>
+        }
+      </ul>
+    </div>
+  </section>
 
-  <!-- Service Info Modal -->
+  <!-- CTA -->
+  <section class="page-section" aria-label="Rezervácia">
+    <div class="container-site price-cta">
+      <blockquote class="quote">
+        Veríme, že kvalita služieb a spokojnosť klientov je dôležitejšia ako najnižšie ceny. Naše ceny odrážajú
+        profesionálny prístup, skúsenosti a kvalitu materiálov.
+      </blockquote>
+      <div class="price-cta-actions">
+        <a [href]="contact.bookingUrl" target="_blank" rel="noopener" class="btn btn-primary">
+          Rezervovať termín<span class="sr-only"> (otvorí sa v novom okne)</span>
+        </a>
+        <a [href]="contact.phoneHref" class="btn btn-outline">Zavolať</a>
+      </div>
+    </div>
+  </section>
+
   @if (selectedService(); as service) {
-  <app-service-info-modal [service]="service" (modalClose)="closeServiceInfo()">
-  </app-service-info-modal>
+  <app-service-info-modal [service]="service" (modalClose)="closeServiceInfo()" />
   }
 </div>

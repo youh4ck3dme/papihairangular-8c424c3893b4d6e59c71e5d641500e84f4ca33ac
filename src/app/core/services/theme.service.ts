@@ -1,33 +1,36 @@
-import { Injectable, signal, WritableSignal, effect, computed } from '@angular/core';
+import { Injectable, PLATFORM_ID, computed, effect, inject, signal, DOCUMENT } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
+export type Theme = 'light' | 'dark';
+
+/**
+ * Téma webu. Počiatočný stav preberá z <html class="dark">, ktorú nastaví inline skript
+ * v index.html ešte pred štartom Angularu (uložená voľba, inak systémové nastavenie) –
+ * takže nevznikne bliknutie ani prepísanie systémovej tmavej témy.
+ */
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
-  // Signál držiaci aktuálnu tému
-  themeSignal: WritableSignal<'light' | 'dark'> = signal<'light' | 'dark'>('light');
+  private readonly document = inject(DOCUMENT);
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
-  // Computed signal pre jednoduché zistenie, či je dark mode aktívny
-  isDark = computed(() => this.themeSignal() === 'dark');
+  readonly themeSignal = signal<Theme>(
+    this.isBrowser && this.document.documentElement.classList.contains('dark') ? 'dark' : 'light',
+  );
+  readonly isDark = computed(() => this.themeSignal() === 'dark');
 
   constructor() {
-    // Automaticky pridá/odoberie 'dark' triedu z <html> elementu pri zmene signálu
     effect(() => {
-      if (this.themeSignal() === 'dark') {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
+      this.document.documentElement.classList.toggle('dark', this.isDark());
+      const meta = this.document.querySelector('meta[name="theme-color"]');
+      meta?.setAttribute('content', this.isDark() ? '#0a0a0a' : '#ffffff');
     });
-
-    // (Voliteľné) Načítanie uloženej témy z localStorage pri štarte
-    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark';
-    if (savedTheme) {
-      this.themeSignal.set(savedTheme);
-    }
   }
 
-  toggleTheme() {
-    const newTheme = this.themeSignal() === 'light' ? 'dark' : 'light';
-    this.themeSignal.set(newTheme);
-    localStorage.setItem('theme', newTheme);
+  toggleTheme(): void {
+    const next: Theme = this.isDark() ? 'light' : 'dark';
+    this.themeSignal.set(next);
+    if (this.isBrowser) {
+      try { localStorage.setItem('theme', next); } catch { /* private mode */ }
+    }
   }
 }

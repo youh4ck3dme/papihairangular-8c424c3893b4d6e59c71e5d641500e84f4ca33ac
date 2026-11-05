@@ -11,7 +11,7 @@ import { BlogService } from "../../core/services/blog.service";
 import { BlogPost, ContentBlock } from "../../core/models/blog-post.interface";
 import { SeoService } from "../../core/services/seo.service";
 import { fadeSlideIn, slideInLeft, slideInRight, fadeIn } from "../../core/animations";
-import { BlogComments } from "./blog-comments/blog-comments";
+import { SALON_CONTACT } from "../../core/config/salon-contact";
 import { LazyImageDirective } from "../../shared/directives";
 import { SafeHtmlPipe } from "../../shared/pipes/safe-html.pipe";
 import { effect } from "@angular/core";
@@ -22,10 +22,11 @@ import { effect } from "@angular/core";
   styleUrls: ["./blog-post.component.css"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, RouterLink, BlogComments, LazyImageDirective, SafeHtmlPipe, NgOptimizedImage],
+  imports: [CommonModule, RouterLink, LazyImageDirective, SafeHtmlPipe, NgOptimizedImage],
   animations: [fadeSlideIn, slideInLeft, slideInRight, fadeIn],
 })
 export class BlogPostComponent {
+  readonly bookingUrl = SALON_CONTACT.bookingUrl;
   private route = inject(ActivatedRoute);
   private blogService = inject(BlogService);
   private seoService = inject(SeoService);

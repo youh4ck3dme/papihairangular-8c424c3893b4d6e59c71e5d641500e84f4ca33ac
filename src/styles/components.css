@@ -269,3 +269,9 @@ html.dark .status-pill.is-open { color: #4ade80; }
   color: var(--text);
   font-family: var(--font-body);
 }
+
+/* Obal aplikácie – pozadie podľa témy (predtým natvrdo čierne) */
+.app-shell {
+  background: var(--surface);
+  color: var(--text);
+}

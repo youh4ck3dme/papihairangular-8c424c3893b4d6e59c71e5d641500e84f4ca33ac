@@ -1,7 +1,10 @@
 import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { ServiceInfoModalComponent } from '../../shared/components/service-info-modal/service-info-modal.component';
+import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
 import { SalonService } from '../../core/models';
+import { SALON_CONTACT } from '../../core/config/salon-contact';
+import { PRICE_LISTS } from './pricing.data';
 
 interface Look {
   name: string;
@@ -19,23 +22,23 @@ interface Look {
   templateUrl: './pricing.component.html',
   styleUrls: ['./pricing.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, ServiceInfoModalComponent]
+  imports: [RouterLink, ServiceInfoModalComponent, PageHeaderComponent]
 })
 export class PricingComponent {
+  readonly contact = SALON_CONTACT;
+  readonly lists = PRICE_LISTS;
   selectedService = signal<SalonService | null>(null);
 
-  openServiceInfo(name: string, price: number, duration: number, category: "Dámske" | "Pánske" | "Farbenie" | "Ostatné", description?: string) {
-    this.selectedService.set({
-      id: 'temp', // This ID is temporary and should ideally be generated or fetched
-      name,
-      price,
-      duration,
-      category,
-      description
-    });
+  /** 30 → „30 €“, 12.5 → „12,50 €“ */
+  formatPrice(price: number): string {
+    return Number.isInteger(price) ? `${price} €` : `${price.toFixed(2).replace('.', ',')} €`;
   }
 
-
+  formatDuration(min: number): string {
+    if (min < 60) return `${min} min`;
+    const h = Math.floor(min / 60), m = min % 60;
+    return m ? `${h} h ${m} min` : `${h} h`;
+  }
 
   openLookbook(look: Look) {
     this.selectedService.set({

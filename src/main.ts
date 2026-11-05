@@ -1,15 +1,21 @@
 import { bootstrapApplication, provideClientHydration, withEventReplay } from "@angular/platform-browser";
 import { provideAnimations } from "@angular/platform-browser/animations";
-import { provideRouter } from "@angular/router";
+import { provideRouter, withInMemoryScrolling } from "@angular/router";
 import { provideHttpClient } from "@angular/common/http";
 import { provideServiceWorker } from "@angular/service-worker";
-import { isDevMode } from "@angular/core";
+import { isDevMode, LOCALE_ID } from "@angular/core";
+import { registerLocaleData } from "@angular/common";
+import localeSk from "@angular/common/locales/sk";
 import { AppComponent } from "./app/app.component";
 import { APP_ROUTES as routes } from "./app/app.routes";
 
+// Slovenské formáty dátumov a čísel (DatePipe: „5. januára 2026“)
+registerLocaleData(localeSk);
+
 bootstrapApplication(AppComponent, {
   providers: [
-    provideRouter(routes),
+    { provide: LOCALE_ID, useValue: 'sk' },
+    provideRouter(routes, withInMemoryScrolling({ scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' })),
     provideAnimations(),
     provideHttpClient(),
     provideServiceWorker('ngsw-worker.js', {

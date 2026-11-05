@@ -40,7 +40,7 @@ interface QuizState {
         <!-- STEP 1: Problem -->
         @if (step() === 1) {
         <div class="animate-fadeIn">
-            <h2 class="text-3xl md:text-5xl font-serif text-center mb-4 text-transparent bg-clip-text bg-gradient-to-r from-white to-white/70">
+            <h2 class="text-3xl md:text-5xl font-heading text-center mb-4 text-transparent bg-clip-text bg-gradient-to-r from-white to-white/70">
                 Čo vás trápi najviac?
             </h2>
             <p class="text-center text-brand-light/60 mb-12 text-lg">Vyberte jeden hlavný problém vašich vlasov</p>
@@ -64,7 +64,7 @@ interface QuizState {
             <button (click)="step.set(1)" class="text-sm text-gold/60 hover:text-gold mb-6 flex items-center gap-2">
                 &larr; Späť
             </button>
-            <h2 class="text-3xl md:text-5xl font-serif text-center mb-12 text-transparent bg-clip-text bg-gradient-to-r from-white to-white/70">
+            <h2 class="text-3xl md:text-5xl font-heading text-center mb-12 text-transparent bg-clip-text bg-gradient-to-r from-white to-white/70">
                 Akú máte dĺžku vlasov?
             </h2>
 
@@ -73,7 +73,7 @@ interface QuizState {
                 <button (click)="selectLength(option.id)" 
                         class="group p-8 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-gold/50 transition-all duration-300 text-center">
                     <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-black/50 border border-gold/20 flex items-center justify-center group-hover:border-gold transition-colors">
-                        <span class="text-gold font-serif italic text-2xl">{{option.letter}}</span>
+                        <span class="text-gold font-heading italic text-2xl">{{option.letter}}</span>
                     </div>
                     <h3 class="text-xl font-bold text-white group-hover:text-gold transition-colors">{{option.label}}</h3>
                 </button>
@@ -88,7 +88,7 @@ interface QuizState {
             <button (click)="step.set(2)" class="text-sm text-gold/60 hover:text-gold mb-6 flex items-center gap-2">
                 &larr; Späť
             </button>
-            <h2 class="text-3xl md:text-5xl font-serif text-center mb-12 text-transparent bg-clip-text bg-gradient-to-r from-white to-white/70">
+            <h2 class="text-3xl md:text-5xl font-heading text-center mb-12 text-transparent bg-clip-text bg-gradient-to-r from-white to-white/70">
                 Aký je váš cieľ?
             </h2>
 
@@ -123,7 +123,7 @@ interface QuizState {
             
             <div class="text-center">
                 <p class="text-gold font-mono text-sm uppercase tracking-[0.3em] mb-4 animate-pulse">Generujeme analýzu</p>
-                <h3 class="text-2xl font-serif text-white h-8 overflow-hidden">
+                <h3 class="text-2xl font-heading text-white h-8 overflow-hidden">
                     <span class="block animate-slideUp">{{ generationMessages[generationStep()] }}</span>
                 </h3>
                 
@@ -141,7 +141,7 @@ interface QuizState {
                 Vaša Diagnostika je hotová
             </div>
             
-            <h2 class="text-4xl md:text-6xl font-serif text-white mb-6">
+            <h2 class="text-4xl md:text-6xl font-heading text-white mb-6">
                 {{ result()?.title }}
             </h2>
             

@@ -11,6 +11,7 @@ import { BlogPost } from "../../core/models/blog-post.interface";
 import { fadeSlideIn, slideInLeft, hoverScale } from "../../core/animations";
 import { SeoService } from "../../core/services/seo.service";
 import { ThemeService } from "../../core/services/theme.service";
+import { PageHeaderComponent } from "../../shared/components/page-header/page-header.component";
 
 
 @Component({
@@ -19,7 +20,7 @@ import { ThemeService } from "../../core/services/theme.service";
   styleUrls: ["./blog-list.component.css"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, RouterLink, NgOptimizedImage],
+  imports: [CommonModule, RouterLink, NgOptimizedImage, PageHeaderComponent],
   animations: [fadeSlideIn, slideInLeft, hoverScale],
 })
 export class BlogListComponent {

@@ -1,7 +1,7 @@
 :host {
   display: block;
-  background-color: #ffffff;
-  color: #000000;
+  background-color: var(--card);
+  color: var(--text);
   min-height: 100vh;
 }
 
@@ -27,7 +27,7 @@
 
 .tag {
   background: rgba(212, 175, 55, 0.1);
-  color: #b8860b;
+  color: var(--accent);
   padding: 0.25rem 0.75rem;
   border-radius: 1rem;
   font-size: 0.875rem;
@@ -39,7 +39,7 @@
 
 .tag:hover {
   background: rgba(212, 175, 55, 0.2);
-  border-color: #b8860b;
+  border-color: var(--accent);
 }
 
 /* Enhanced responsive design */
@@ -97,5 +97,16 @@ article,
 
   50% {
     opacity: 0.5;
+  }
+}
+.blog-grid-wrap {
+  padding-top: 48px;
+  padding-bottom: 64px;
+}
+
+@media (min-width: 768px) {
+  .blog-grid-wrap {
+    padding-top: 64px;
+    padding-bottom: 96px;
   }
 }

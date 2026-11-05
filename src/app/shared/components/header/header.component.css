@@ -1,100 +1,179 @@
 /* Pevná výška headera – home sekcie (100dvh) s ňou počítajú cez --header-h */
-.site-header {
-  height: var(--header-h);
-}
-
-/* Header Component Styles */
-.main-header {
-  background-color: #ffffff;
+:host {
+  display: block;
   position: sticky;
   top: 0;
   z-index: 50;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
-.logo-wrapper {
+.site-header {
+  height: var(--header-h);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+
+.header-bar {
+  height: 100%;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 16px;
 }
 
-.logo-wrapper img {
-  height: 4rem; /* 64px - zväčšené o ~33% */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.logo img {
+  height: 40px;
   width: auto;
   object-fit: contain;
-  max-height: 3rem; /* 48px na mobile pre čitateľnosť */
 }
 
-.menu-toggle {
+.nav-links {
+  display: none;
+  align-items: center;
+  gap: 4px;
+  margin: 0 auto;
+}
+
+.nav-links a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 12px;
+  font-weight: 500;
+  color: var(--text);
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--accent); }
+
+.nav-links a.is-active { font-weight: 700; }
+
+.nav-links a.is-active::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 6px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--gold);
+}
+
+.header-actions {
   display: flex;
   align-items: center;
+  gap: 8px;
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #1a202c; /* brand-dark */
+  width: 44px;
+  height: 44px;
+  border-radius: 9999px;
+  color: var(--text);
+  transition: background-color 0.2s;
 }
 
-.menu-toggle:focus {
-  outline: none;
+.icon-btn:hover { background: var(--surface-alt); }
+.icon-btn svg { width: 22px; height: 22px; }
+
+.icon-btn:focus-visible,
+.nav-links a:focus-visible,
+.logo:focus-visible,
+.mobile-menu a:focus-visible,
+.theme-row:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+  border-radius: 8px;
 }
 
-/* Mobile Styles */
-@media (max-width: 768px) {
-  .main-header {
-    padding: 0.75rem 1.5rem; /* 12px 24px - kompaktnejšie */
-  }
-
-  .logo-wrapper img {
-    height: 3rem; /* 48px */
-    max-width: 100%;
-  }
+.header-cta {
+  display: none;
+  height: 44px;
+  padding: 0 20px;
+  font-size: 15px;
 }
 
-/* Desktop Styles */
-@media (min-width: 769px) {
-  .main-header {
-    padding: 0.75rem 1.5rem; /* 12px 24px - kompaktnejšie, namiesto 16px */
-  }
-
-  .logo-wrapper img {
-    height: 4rem; /* 64px */
-  }
+@media (min-width: 768px) {
+  .logo img { height: 48px; }
+  .nav-links { display: flex; }
+  .header-cta { display: inline-flex; }
+  .menu-btn { display: none; }
 }
 
-/* Animations */
-@keyframes slide-in-right {
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0);
-  }
+/* ---- Mobilné menu ---- */
+.menu-backdrop {
+  position: fixed;
+  inset: var(--header-h) 0 0 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 49;
+  animation: fade 0.2s ease-out;
 }
 
-@keyframes slide-out-right {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(100%);
-  }
+.mobile-menu {
+  position: fixed;
+  top: var(--header-h);
+  right: 0;
+  bottom: 0;
+  width: min(320px, 86vw);
+  z-index: 50;
+  overflow-y: auto;
+  padding: 16px 20px calc(24px + env(safe-area-inset-bottom));
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  box-shadow: -16px 0 40px -20px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  animation: slide 0.25s ease-out;
 }
 
-.animate-slide-in-right {
-  animation: slide-in-right 0.3s ease-out;
+.mobile-menu ul { display: grid; }
+
+.mobile-menu a:not(.btn) {
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+  padding: 0 12px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text);
 }
 
-.animate-slide-out-right {
-  animation: slide-out-right 0.3s ease-in;
+.mobile-menu a.is-active {
+  font-weight: 700;
+  background: var(--surface-alt);
+  box-shadow: inset 3px 0 0 var(--gold);
 }
 
-/* Additional responsive adjustments */
-@media (max-width: 480px) {
-  .main-header {
-    padding: 0.5rem 1rem; /* 8px 16px - ešte kompaktnejšie na malých obrazovkách */
-  }
+.mobile-menu-actions {
+  display: grid;
+  gap: 12px;
+}
 
-  .logo-wrapper img {
-    height: 3rem; /* 48px */
-  }
+.mobile-menu-actions .btn { width: 100%; }
+
+.theme-row {
+  min-height: 44px;
+  font-weight: 600;
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+@keyframes slide { from { transform: translateX(100%); } to { transform: none; } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu, .menu-backdrop { animation: none; }
 }

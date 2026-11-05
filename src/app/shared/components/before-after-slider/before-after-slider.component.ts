@@ -45,7 +45,7 @@ import { CommonModule } from '@angular/common';
       <!-- Title -->
       @if (title) {
       <div class="absolute top-4 left-0 right-0 text-center pointer-events-none z-10">
-          <span class="bg-black/40 backdrop-blur px-4 py-2 rounded-full text-white font-serif text-sm border border-white/10 md:text-base">
+          <span class="bg-black/40 backdrop-blur px-4 py-2 rounded-full text-white font-heading text-sm border border-white/10 md:text-base">
               {{ title }}
           </span>
       </div>
