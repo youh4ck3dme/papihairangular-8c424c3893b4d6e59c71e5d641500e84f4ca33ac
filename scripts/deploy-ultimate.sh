@@ -63,7 +63,7 @@ log_info "2/7) Build Angular aplikácie (Production)..."
 rm -rf dist/
 
 # Spustenie buildu
-if pnpm ng build --configuration=production; then
+if pnpm run build:prod; then
     log_success "Build úspešný."
 else
     log_error "Build zlyhal. Opravte chyby a skúste znova."

@@ -4,7 +4,7 @@ export const BLOG_ROUTES: Routes = [
   // Sticky Featured Story - Always first
   {
     path: 'pribeh-znacky',
-    title: 'Príbeh značky | PAPI HAIR DESIGN - From Streets to World Stages',
+    title: 'Príbeh značky – Róbert Papcun | PAPI HAIR DESIGN',
     data: {
       seo: {
         description: 'Príbeh Róberta Papcuna – od košického sídliska po svetové módne prehliadky. Zakladateľ PAPI HAIR DESIGN.',
@@ -16,7 +16,7 @@ export const BLOG_ROUTES: Routes = [
   },
   {
     path: '',
-    title: 'Blog | PAPI HAIR DESIGN - Trendy, tipy a novinky',
+    title: 'Blog – trendy a tipy na vlasy | PAPI HAIR DESIGN',
     data: {
       seo: {
         description: 'Objavte najnovšie trendy vo vlasoch, tipy na starostlivosť a inšpiráciu od našich kaderníkov v PAPI HAIR DESIGN Košice.',

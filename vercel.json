@@ -34,11 +34,45 @@
   ],
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/cennik",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/o-nas",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/kontakt",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/blog",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/blog/:slug",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/sluzby/:slug",
       "destination": "/index.html"
     }
   ],
   "redirects": [
+    {
+      "source": "/booking",
+      "destination": "https://services.bookio.com/papi-hair-design/widget?lang=sk",
+      "permanent": false
+    },
+    {
+      "source": "/shop",
+      "destination": "https://www.goldhaircare.sk/affiliate/2208",
+      "permanent": false
+    },
     {
       "source": "/ai-studio",
       "destination": "/",

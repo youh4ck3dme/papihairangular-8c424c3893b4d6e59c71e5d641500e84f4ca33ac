@@ -3,14 +3,14 @@
    --header-h a --cta-h sú v src/styles.css (:root)
    ========================================================= */
 :host {
-  --home-bg: #ffffff;
-  --home-bg-alt: #f7f5f0;
-  --home-text: #171717;
-  --home-muted: #52525b;
-  --home-border: rgba(23, 23, 23, 0.1);
-  --home-card: #ffffff;
-  --home-accent: #8a6a12; /* AA 5.1:1 na bielej */
-  --gold: #d4af37;
+  /* aliasy na globálne tokeny zo src/styles/tokens.css (light/dark sa prepína tam) */
+  --home-bg: var(--surface);
+  --home-bg-alt: var(--surface-alt);
+  --home-text: var(--text);
+  --home-muted: var(--muted);
+  --home-border: var(--border);
+  --home-card: var(--card);
+  --home-accent: var(--accent);
   --pad-x: 20px;
   --pad-y: 24px;
   --radius: 16px;
@@ -22,16 +22,6 @@
   margin-top: calc(-2rem - var(--header-h));
   margin-bottom: -2rem;
   background: var(--home-bg);
-}
-
-:host-context(.dark) {
-  --home-bg: #0a0a0a;
-  --home-bg-alt: #121212;
-  --home-text: #f5f5f5;
-  --home-muted: #a1a1aa;
-  --home-border: rgba(212, 175, 55, 0.15);
-  --home-card: #171717;
-  --home-accent: #d4af37;
 }
 
 @media (min-width: 768px) {
@@ -93,138 +83,12 @@
   justify-content: center;
 }
 
-/* ---------- Typografia ---------- */
-.eyebrow {
-  font-size: 12px;
-  line-height: 16px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  margin: 0 0 8px;
-}
-
-.text-accent {
-  color: var(--home-accent);
-}
-
-.h2 {
-  font-size: 28px;
-  line-height: 34px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  margin: 0 0 16px;
-  color: var(--home-text);
-}
-
-.lead,
-.body {
-  font-size: 16px;
-  line-height: 26px;
-  color: var(--home-muted);
-  margin: 0 0 16px;
-}
-
-.lead strong,
-.body strong {
-  color: var(--home-text);
-  font-weight: 600;
-}
-
-@media (min-width: 768px) {
-  .h2 {
-    font-size: 40px;
-    line-height: 46px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .h2 {
-    font-size: 48px;
-    line-height: 54px;
-    margin-bottom: 16px;
-  }
-
-  .lead,
-  .body {
-    font-size: 18px;
-    line-height: 30px;
-  }
-}
-
-.clamp-1,
-.clamp-2,
-.clamp-3 {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.clamp-1 { -webkit-line-clamp: 1; line-clamp: 1; }
-.clamp-2 { -webkit-line-clamp: 2; line-clamp: 2; }
-.clamp-3 { -webkit-line-clamp: 3; line-clamp: 3; }
-
-.inline-link {
-  color: var(--home-accent);
-  font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.ico {
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-}
-
-/* ---------- Tlačidlá ---------- */
-.btn {
-  box-sizing: border-box;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  height: 52px;
-  padding: 0 24px;
-  border-radius: 9999px;
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  white-space: nowrap;
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-}
-
-@media (min-width: 768px) {
-  .btn {
-    height: 56px;
-    padding: 0 32px;
-  }
-}
-
-.btn:hover { transform: translateY(-2px); }
-
-.btn:focus-visible,
+/* Typografia (.eyebrow, .h2, .lead, .body, .clamp-*) a tlačidlá (.btn, .btn-primary,
+   .btn-outline) sú globálne v src/styles/components.css. Tu sú len varianty pre home. */
 a:focus-visible,
 summary:focus-visible {
   outline: 3px solid var(--gold);
   outline-offset: 3px;
-}
-
-.btn-primary {
-  background: var(--gold);
-  color: #111;
-  box-shadow: 0 8px 24px -8px rgba(212, 175, 55, 0.6);
-}
-
-.btn-primary:hover { background: #e6c35c; }
-
-.btn-outline {
-  border: 2px solid var(--home-accent);
-  color: var(--home-accent);
-}
-
-.btn-outline:hover {
-  background: var(--home-accent);
-  color: var(--home-bg);
 }
 
 .btn-ghost-light {
@@ -709,16 +573,6 @@ summary:focus-visible {
   font-weight: 700;
 }
 
-.feature-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  border-radius: 9999px;
-  background: rgba(212, 175, 55, 0.14);
-  color: var(--home-accent);
-}
-
 @media (min-width: 768px) {
   .gold-grid {
     display: grid;
@@ -1024,34 +878,9 @@ summary:focus-visible {
 
 .contact-actions .btn { padding: 0 16px; }
 
-.status-pill {
+.contact-card .status-pill {
   align-self: flex-start;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 4px 12px;
   margin-bottom: 8px;
-  border-radius: 9999px;
-  font-size: 14px;
-  line-height: 20px;
-  font-weight: 600;
-  color: #b91c1c;
-  background: rgba(220, 38, 38, 0.1);
-}
-
-.status-pill.is-open {
-  color: #15803d;
-  background: rgba(22, 163, 74, 0.12);
-}
-
-:host-context(.dark) .status-pill { color: #f87171; }
-:host-context(.dark) .status-pill.is-open { color: #4ade80; }
-
-.status-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 9999px;
-  background: currentColor;
 }
 
 /* =========================================================
@@ -1084,6 +913,5 @@ summary:focus-visible {
   .animate-fade-in,
   .hero-scroll { animation: none; }
 
-  .btn:hover,
   .product-card:hover { transform: none; }
 }

@@ -1,7 +1,6 @@
-import { ChangeDetectionStrategy, Component, OnInit, PLATFORM_ID, computed, inject } from "@angular/core";
+import { ChangeDetectionStrategy, Component, PLATFORM_ID, computed, inject } from "@angular/core";
 import { NgTemplateOutlet, isPlatformBrowser } from "@angular/common";
 import { RouterLink } from "@angular/router";
-import { SeoService } from "../../core/services/seo.service";
 import { ServiceCardsComponent } from "../../shared/components/service-cards/service-cards.component";
 import { SALON_CONTACT } from "../../core/config/salon-contact";
 import { BusinessHoursService } from "../../core/services/business-hours.service";
@@ -25,8 +24,7 @@ interface Faq {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterLink, NgTemplateOutlet, ServiceCardsComponent],
 })
-export class HomeComponent implements OnInit {
-  private readonly seoService = inject(SeoService);
+export class HomeComponent {
   private readonly hours = inject(BusinessHoursService);
 
   readonly contact = SALON_CONTACT;
@@ -110,11 +108,4 @@ export class HomeComponent implements OnInit {
       ],
     },
   ];
-
-  ngOnInit(): void {
-    this.seoService.updateMetaTags({
-      description:
-        "Kaderníctvo PAPI HAIR DESIGN v Košiciach – dámske strihy, farbenie a balayage, barber a regenerácia vlasov s produktmi Gold Haircare. Rezervácie online 24/7.",
-    });
-  }
 }

@@ -132,7 +132,7 @@ fi
 
 log_info "2/6) Building Angular app..."
 rm -rf dist/
-if npx ng build --configuration=production; then
+if pnpm run build:prod; then
   log_success "Build completed."
 else
   log_error "Build failed."

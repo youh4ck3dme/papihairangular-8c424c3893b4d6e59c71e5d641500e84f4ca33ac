@@ -13,6 +13,8 @@
 -------------------------------------------------------------- */
 
 @import './design-system.css';
+@import './styles/tokens.css';
+@import './styles/components.css';
 
 /* Font Faces */
 @font-face {

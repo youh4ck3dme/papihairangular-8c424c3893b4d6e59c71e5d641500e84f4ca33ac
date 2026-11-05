@@ -9,6 +9,7 @@ export interface RouteData {
     keywords?: string;
     ogImage?: string;
     ogType?: string;
+    robots?: string;
   };
   [key: string]: unknown;
 }
