@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject } from "@angular/core";
-import { NgTemplateOutlet } from "@angular/common";
+import { ChangeDetectionStrategy, Component, OnInit, PLATFORM_ID, computed, inject } from "@angular/core";
+import { NgTemplateOutlet, isPlatformBrowser } from "@angular/common";
 import { RouterLink } from "@angular/router";
 import { SeoService } from "../../core/services/seo.service";
 import { ServiceCardsComponent } from "../../shared/components/service-cards/service-cards.component";
 import { SALON_CONTACT } from "../../core/config/salon-contact";
+import { BusinessHoursService } from "../../core/services/business-hours.service";
 
 interface Feature {
   icon: "globe" | "sparkles" | "leaf" | "flask" | "bolt" | "bag";
@@ -26,8 +27,18 @@ interface Faq {
 })
 export class HomeComponent implements OnInit {
   private readonly seoService = inject(SeoService);
+  private readonly hours = inject(BusinessHoursService);
 
   readonly contact = SALON_CONTACT;
+  /** Stav otvorené/zatvorené len v prehliadači – SSR by použil čas servera. */
+  readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+  readonly status = this.hours.currentStatus;
+  readonly todayLabel = computed(() => {
+    const today = this.hours.openingHours().find(h => h.dayIndex === this.hours.todayIndex());
+    if (!today || today.open === "ZAVRETÉ") return "zatvorené";
+    if (!today.close) return today.open.toLowerCase();
+    return `${today.open} – ${today.close}`;
+  });
 
   /** Krátke dôveryhodné fakty pod hero – skenovateľné namiesto vety s bodkami. */
   readonly highlights = [

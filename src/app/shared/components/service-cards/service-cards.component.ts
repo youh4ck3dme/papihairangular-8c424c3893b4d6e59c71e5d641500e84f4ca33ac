@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, signal, ElementRef, viewChild, afterNextRender, DestroyRef } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { NgTemplateOutlet } from '@angular/common';
@@ -24,6 +24,25 @@ interface ServiceCard {
 })
 export class ServiceCardsComponent {
     private readonly sanitizer = inject(DomSanitizer);
+    private readonly destroyRef = inject(DestroyRef);
+    private readonly scroller = viewChild.required<ElementRef<HTMLElement>>('scroller');
+
+    /** Index karty viditeľnej v mobilnom karuseli (bodky). */
+    readonly active = signal(0);
+
+    constructor() {
+        // afterNextRender beží iba v prehliadači → SSR-safe
+        afterNextRender(() => {
+            const root = this.scroller().nativeElement;
+            const io = new IntersectionObserver(entries => {
+                for (const e of entries) {
+                    if (e.isIntersecting) this.active.set(Number((e.target as HTMLElement).dataset['index']));
+                }
+            }, { root, threshold: 0.6 });
+            root.querySelectorAll('.card-slot').forEach(el => io.observe(el));
+            this.destroyRef.onDestroy(() => io.disconnect());
+        });
+    }
 
     private readonly data: ServiceCard[] = [
         {

@@ -1,13 +1,13 @@
-<ul class="cards-grid" role="list">
-    @for (service of services; track service.id) {
-    <li>
+<ul #scroller class="cards-grid" role="list" data-scroller tabindex="0" aria-label="Služby – posúvajte do strany">
+    @for (service of services; track service.id; let i = $index) {
+    <li class="card-slot" [attr.data-index]="i">
         @if (service.external) {
-        <a class="card group" [href]="service.link" target="_blank" rel="noopener sponsored"
+        <a class="card" [href]="service.link" target="_blank" rel="noopener sponsored"
             (pointermove)="onPointerMove($event)">
             <ng-container *ngTemplateOutlet="content; context: { $implicit: service }" />
         </a>
         } @else {
-        <a class="card group" [routerLink]="service.link" (pointermove)="onPointerMove($event)">
+        <a class="card" [routerLink]="service.link" (pointermove)="onPointerMove($event)">
             <ng-container *ngTemplateOutlet="content; context: { $implicit: service }" />
         </a>
         }
@@ -15,12 +15,22 @@
     }
 </ul>
 
+<div class="dots" aria-hidden="true">
+    @for (service of services; track service.id; let i = $index) {
+    <span class="dot" [class.is-active]="active() === i"></span>
+    }
+</div>
+
 <ng-template #content let-service>
     <div class="card-glow" aria-hidden="true"></div>
     <div class="card-content">
-        <span class="card-icon" aria-hidden="true" [innerHTML]="service.safeIcon"></span>
-        <p class="card-subtitle">{{ service.subtitle }}</p>
-        <h3 class="card-title">{{ service.title }}</h3>
+        <div class="card-head">
+            <span class="card-icon" aria-hidden="true" [innerHTML]="service.safeIcon"></span>
+            <span class="card-head-text">
+                <span class="card-subtitle">{{ service.subtitle }}</span>
+                <span class="card-title">{{ service.title }}</span>
+            </span>
+        </div>
         <p class="card-description">{{ service.description }}</p>
         <ul class="card-benefits">
             @for (benefit of service.benefits; track benefit) {

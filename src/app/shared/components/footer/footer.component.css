@@ -223,3 +223,8 @@ a:focus-visible {
     text-underline-offset: 3px;
     white-space: nowrap;
 }
+
+/* Snap: pätička má prirodzenú výšku */
+.site-footer {
+    scroll-snap-align: end;
+}

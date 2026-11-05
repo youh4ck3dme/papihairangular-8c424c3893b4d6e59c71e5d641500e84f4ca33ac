@@ -30,6 +30,38 @@
 }
 
 /* Animation & Timing Variables */
+/* ===== Výška headera – jediný zdroj (header + home 100dvh sekcie) ===== */
+:root {
+  --header-h: 64px;
+  --cta-h: 64px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --header-h: 80px;
+    --cta-h: 0px;
+  }
+}
+
+/* Snap scroll len na domovskej stránke */
+html:has(app-home) {
+  scroll-snap-type: y proximity;
+  scroll-padding-top: 0;
+}
+
+/* Na mobile má home vlastnú sticky CTA lištu – plávajúce „hore“ by prekrývalo obsah sekcií */
+@media (max-width: 767px) {
+  body:has(app-home) app-scroll-to-top {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:has(app-home) {
+    scroll-snap-type: none;
+  }
+}
+
 :root {
   /* Animation Durations */
   --duration-fast: 150ms;

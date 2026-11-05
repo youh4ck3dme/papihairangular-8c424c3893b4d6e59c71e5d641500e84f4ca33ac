@@ -1,3 +1,8 @@
+/* Pevná výška headera – home sekcie (100dvh) s ňou počítajú cez --header-h */
+.site-header {
+  height: var(--header-h);
+}
+
 /* Header Component Styles */
 .main-header {
   background-color: #ffffff;
