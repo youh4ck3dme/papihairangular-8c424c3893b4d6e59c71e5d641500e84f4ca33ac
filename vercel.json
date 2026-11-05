@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "installCommand": "pnpm install --frozen-lockfile",
   "buildCommand": "node scripts/ensure-env.mjs && pnpm run build:prod",
   "outputDirectory": "dist/app/browser",
   "headers": [
