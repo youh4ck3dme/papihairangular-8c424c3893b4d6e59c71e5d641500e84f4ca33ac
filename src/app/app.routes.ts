@@ -78,46 +78,6 @@ export const APP_ROUTES: Routes = [
       }
     }
   },
-  // {
-  //   path: 'virtualny-stylista',
-  //   title: 'Virtuálny stylista | PAPI HAIR DESIGN Košice',
-  //   data: {
-  //     seo: {
-  //       description: 'Virtuálny stylista PAPI HAIR DESIGN. Vyskúšajte si účes online pred návštevou kaderníctva.',
-  //       keywords: 'virtuálny stylista, online účes, PAPI HAIR DESIGN',
-  //       ogImage: 'https://papihairdesign.sk/images/logo.png'
-  //     }
-  //   },
-  //   loadComponent: () => import('./features/virtual-try-on/vto.component').then(c => c.VtoComponent)
-  // },
-  // {
-  //   path: 'virtual-salon',
-  //   title: 'Virtual Salon - AI Zmena Účesu | PAPI HAIR DESIGN Košice',
-  //   data: {
-  //     seo: {
-  //       description: 'Virtual Salon - odfotťe sa cez webcam a nechajte AI magicky zmeniť váš účes. Vyskúšajte si nový look pred návštevou kaderníctva.',
-  //       keywords: 'virtual salon, AI účes, zmena účesu, webcam účes, PAPI HAIR DESIGN',
-  //       ogImage: 'https://papihairdesign.sk/images/logo.png'
-  //     }
-  //   },
-  //   loadComponent: () => import('./features/virtual-salon/virtual-salon.component').then(c => c.VirtualSalonComponent)
-  // },
-  {
-    path: 'ai-studio',
-    title: 'AI Studio - Digitálna Transformácia | PAPI HAIR DESIGN',
-    data: {
-      seo: {
-        description: 'AI Studio - Objavte svoje nové ja. Najmodernejšia neurálna sieť vytvorí digitálnu vizualizáciu vášho vysnívaného štýlu.',
-        keywords: 'AI Studio, virtuálny stylista, zmena účesu, PAPI HAIR DESIGN, kaderníctvo Košice',
-        ogImage: 'https://papihairdesign.sk/images/logo.png'
-      }
-    },
-    loadComponent: () => import('./features/ai-studio/virtual-stylist.component').then(c => c.VirtualStylistComponent)
-  },
-  {
-    path: 'ai-stylista',
-    redirectTo: 'ai-studio'
-  },
   {
     path: 'booking',
     title: 'Rezervácia termínu | PAPI HAIR DESIGN Košice',
@@ -144,11 +104,6 @@ export const APP_ROUTES: Routes = [
   },
 
   {
-    path: 'admin',
-    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
-    title: 'Admin'
-  },
-  {
     path: 'sluzby/ombre-farbenie',
     title: 'Ombre farbenie Košice | PAPI HAIR DESIGN',
     data: {
@@ -160,18 +115,6 @@ export const APP_ROUTES: Routes = [
     },
     loadComponent: () => import('./features/services/ombre/ombre.component').then(m => m.OmbreComponent)
   },
-  // {
-  //   path: 'diagnostika',
-  //   title: 'Vlasová Diagnostika | PAPI HAIR DESIGN',
-  //   data: {
-  //     seo: {
-  //       description: 'Online diagnostika vlasov. Zistite, čo vaše vlasy potrebujú a získajte odporúčanie na mieru od PAPI HAIR DESIGN.',
-  //       keywords: 'diagnostika vlasov, vlasový kvíz, starostlivosť o vlasy Košice',
-  //       ogImage: 'https://papihairdesign.sk/images/logo.png'
-  //     }
-  //   },
-  //   loadComponent: () => import('./features/quiz/hair-diagnosis-wizard.component').then(c => c.HairDiagnosisWizardComponent)
-  // },
   {
     path: '**',
     redirectTo: ''

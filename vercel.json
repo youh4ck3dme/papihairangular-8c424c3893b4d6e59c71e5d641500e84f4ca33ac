@@ -38,15 +38,41 @@
       "destination": "/index.html"
     }
   ],
-  "functions": {
-    "api/chat.js": {
-      "maxDuration": 20
+  "redirects": [
+    {
+      "source": "/ai-studio",
+      "destination": "/",
+      "permanent": true
     },
-    "api/chat/stream.js": {
-      "maxDuration": 20
+    {
+      "source": "/ai-stylista",
+      "destination": "/",
+      "permanent": true
     },
-    "api/image/jobs.js": {
-      "maxDuration": 60
+    {
+      "source": "/virtualny-stylista",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/virtual-salon",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/diagnostika",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/admin/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/admin",
+      "destination": "/",
+      "permanent": true
     }
-  }
+  ]
 }

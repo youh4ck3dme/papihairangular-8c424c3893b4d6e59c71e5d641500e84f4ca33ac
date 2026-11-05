@@ -9,7 +9,6 @@ set -euo pipefail
 #  - Validates environment (npm, npx, ssh)
 #  - Fallback: Uses scp if rsync is missing (Windows Git Bash friendly)
 #  - Builds Angular (production)
-#  - Prepares PHP proxy files into dist/app/browser/proxy
 #  - Safe deploy to /var/www/papihairdesign.sk on VPS
 #  - Automatic backups on server
 #  - Nginx vhost automation
@@ -149,20 +148,6 @@ fi
 # 5. Prepare Proxy          #
 #===========================#
 
-log_info "3/6) Preparing PHP proxy..."
-mkdir -p "${LOCAL_DIST}/proxy"
-PROXY_SRC="src/proxy"
-PROXY_FILES=("chat.php" "chat_stream.php" "image-job.php" "ai-proxy.php" "image-edit.php")
-
-for f in "${PROXY_FILES[@]}"; do
-  if [[ -f "${PROXY_SRC}/${f}" ]]; then
-    cp "${PROXY_SRC}/${f}" "${LOCAL_DIST}/proxy/"
-    log_success "Copied: ${f}"
-  else
-    log_warn "Missing: ${PROXY_SRC}/${f}"
-  fi
-done
-
 #===========================#
 # 6. Remote Backup          #
 #===========================#
@@ -223,12 +208,6 @@ server {
         try_files $uri $uri/ /index.html;
     }
 
-    location /proxy/ {
-        try_files $uri =404;
-        include fastcgi_params;
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        fastcgi_pass unix:/var/run/php/php__PHP_VERSION__-fpm.sock;
-    }
 }
 EOF
 )

@@ -40,17 +40,6 @@ if [ -f ".env" ]; then
     export $(grep -v '^#' .env | xargs)
 fi
 
-# Kontrola kľúčov
-if [ -z "$GEMINI_API_KEY" ]; then
-    log_warn "GEMINI_API_KEY nie je nastavený! AI funkcie (analýza tváre) nebudú fungovať."
-else
-    log_info "GEMINI_API_KEY nájdený."
-fi
-
-if [ -z "$OPENAI_API_KEY" ]; then
-    log_warn "OPENAI_API_KEY nie je nastavený. (Voliteľné ak používate len Gemini)"
-fi
-
 
 # --- 1. KONTROLA PROSTREDIA ---
 log_info "1/7) Kontrola prostredia..."
@@ -74,11 +63,6 @@ log_info "2/7) Build Angular aplikácie (Production)..."
 rm -rf dist/
 
 # Spustenie buildu
-if [ -n "$GEMINI_API_KEY" ]; then
-    log_info "Injecting GEMINI_API_KEY into environment.ts..."
-    sed -i '' "s|geminiApiKey: .*|geminiApiKey: '$GEMINI_API_KEY',|" src/environments/environment.ts || true
-fi
-
 if pnpm ng build --configuration=production; then
     log_success "Build úspešný."
 else
@@ -89,15 +73,6 @@ fi
 if [ ! -f "${LOCAL_DIST}/index.html" ]; then
     log_error "Súbor index.html nebol nájdený v ${LOCAL_DIST}. Skontrolujte 'outputPath' v angular.json."
 fi
-
-# Príprava Proxy (kopírovanie všetkých PHP súborov do dist)
-log_info "Kopírujem PHP proxy súbory do dist..."
-mkdir -p "${LOCAL_DIST}/proxy"
-cp src/proxy/*.php "${LOCAL_DIST}/proxy/"
-# Odstránime config.example.php z dist (nepotrebujeme ho tam)
-rm -f "${LOCAL_DIST}/proxy/config.example.php"
-# Odstránime config.php ak by náhodou existoval lokálne (nechceme ho commitnúť/distribuovať)
-rm -f "${LOCAL_DIST}/proxy/config.php"
 
 # --- 3. ZÁLOHA NA SERVERI ---
 log_info "3/7) Vytváram zálohu na serveri..."
@@ -131,7 +106,7 @@ log_info "5/7) Generujem a nahrávam konfiguráciu..."
 # 5.1 Generovanie Nginx configu LOKÁLNE
 # Pozor: Premenné $host, $request_uri, $uri musia byť escapované (\$host),
 # aby sa vyhodnotili až v Nginx (alebo ich zapíšeme ako string).
-# Premenné ${DOMAIN}, ${GEMINI_API_KEY} sa vyhodnotia teraz (local bash).
+# Premenná ${DOMAIN} sa vyhodnotí teraz (local bash).
 
 cat > dist/nginx.conf << NGINX_CONF
 # HTTP server - presmerovanie na HTTPS
@@ -168,17 +143,6 @@ server {
         try_files \$uri \$uri/ /index.html;
     }
 
-    # PHP Proxy
-    location ~ ^/proxy/(.+\.php)\$ {
-        include snippets/fastcgi-php.conf;
-        fastcgi_param GEMINI_API_KEY "${GEMINI_API_KEY}";
-        # Používame systémový alias, ktorý sme videli na serveri
-        fastcgi_pass unix:/var/run/php/php-fpm.sock; 
-    }
-
-    # Zakázať prístup ku configom
-    location ~ /proxy/config\.php { deny all; return 404; }
-
     # Cache assets
     location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|webp)\$ {
         expires 1y;
@@ -187,18 +151,9 @@ server {
 }
 NGINX_CONF
 
-# 5.2 Generovanie PHP configu LOKÁLNE
-cat > dist/config.php << PHP_CONFIG
-<?php
-return [
-    'openai_key' => '${OPENAI_API_KEY}'
-];
-PHP_CONFIG
-
 # 5.3 Nahrávanie configov
 log_info "Nahrávam konfiguračné súbory..."
 rsync -avz -e "ssh -i ~/.ssh/id_rsa_vps" dist/nginx.conf "${VPS_USER}@${VPS_HOST}:/tmp/${DOMAIN}.nginx.conf"
-rsync -avz -e "ssh -i ~/.ssh/id_rsa_vps" dist/config.php "${VPS_USER}@${VPS_HOST}:${REMOTE_DIR}/proxy/config.php"
 
 # 5.4 Aplikácia a reštart
 log_info "Aplikujem konfiguráciu a reštartujem Nginx..."
@@ -208,11 +163,6 @@ ssh -i ~/.ssh/id_rsa_vps "${VPS_USER}@${VPS_HOST}" << EOF
     # Presun a aktivácia Nginx configu
     mv /tmp/${DOMAIN}.nginx.conf /etc/nginx/sites-available/${DOMAIN}
     ln -sf /etc/nginx/sites-available/${DOMAIN} /etc/nginx/sites-enabled/${DOMAIN}
-    
-    # Oprávnenia
-    chown -R www-data:www-data "${REMOTE_DIR}/proxy"
-    chmod -R 775 "${REMOTE_DIR}/proxy"
-    chmod 644 "${REMOTE_DIR}/proxy/config.php" # Secure config
     
     # Reštart Nginx
     nginx -t && systemctl restart nginx

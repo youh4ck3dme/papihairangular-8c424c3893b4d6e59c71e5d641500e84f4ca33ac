@@ -34,11 +34,6 @@ if [ -f .env ]; then
     export $(grep -v '^#' .env | xargs)
 fi
 
-# Gemini API Key (z environment variable - NIKDY neukladajte do Git!)
-if [ -z "$GEMINI_API_KEY" ]; then
-    log_warn "GEMINI_API_KEY nie je nastavený! AI funkcie nebudú fungovať. Dodajte ho neskôr do /etc/environment."
-fi
-
 # --- 1. KONTROLA PROSTREDIA ---
 log_info "1/7) Kontrola prostredia..."
 
@@ -66,14 +61,6 @@ fi
 if [ ! -f "${LOCAL_DIST}/index.html" ]; then
     log_error "Súbor index.html nebol nájdený v ${LOCAL_DIST}."
 fi
-
-# Príprava Proxy (kopírovanie do dist)
-log_info "Kopírujem PHP proxy súbory do dist..."
-mkdir -p "${LOCAL_DIST}/proxy"
-cp src/proxy/chat.php "${LOCAL_DIST}/proxy/"
-cp src/proxy/chat_stream.php "${LOCAL_DIST}/proxy/"
-cp src/proxy/image-job.php "${LOCAL_DIST}/proxy/"
-cp src/proxy/ai-proxy.php "${LOCAL_DIST}/proxy/"
 
 # --- 3. ZÁLOHA NA SERVERI ---
 log_info "3/7) Vytváram zálohu na Forpsi VPS..."
@@ -120,15 +107,6 @@ ssh "${VPS_USER}@${VPS_HOST}" << FORPSI_CONFIG
         sudo apt update && sudo apt install -y php-fpm php-curl php-json php-mbstring
     fi
 
-    # Vytvorenie config.php pre Proxy
-    echo "Vytváram secure config pre Proxy..."
-    cat > "${REMOTE_DIR}/proxy/config.php" << 'PHP_CONFIG'
-<?php
-return [
-    'openai_key' => ''
-];
-PHP_CONFIG
-    
     # Detekcia PHP verzie (escaped $ so it runs on server)
     PHP_VERSION=\$(ls /var/run/php/php*-fpm.sock 2>/dev/null | head -n 1 | sed 's/.*php\(.*\)-fpm.sock/\1/')
     if [ -z "\$PHP_VERSION" ]; then
@@ -174,59 +152,6 @@ server {
 
     location / {
         try_files \\\$uri \\\$uri/ /index.html;
-    }
-
-    # PHP Proxy - Chat JSON
-    location ~ ^/proxy/chat\.php$ {
-        include snippets/fastcgi-php.conf;
-        fastcgi_pass unix:/var/run/php/php$PHP_VERSION-fpm.sock;
-        fastcgi_read_timeout 20s;
-        
-        # Injection of Secrets
-        fastcgi_param GEMINI_API_KEY "${GEMINI_API_KEY}";
-
-    }
-
-    # PHP Proxy - Chat Stream (disable buffering)
-    location ~ ^/proxy/chat_stream\.php$ {
-        include snippets/fastcgi-php.conf;
-        fastcgi_pass unix:/var/run/php/php$PHP_VERSION-fpm.sock;
-        proxy_buffering off;
-        gzip off;
-        fastcgi_read_timeout 20s;
-        add_header X-Accel-Buffering no;
-        
-        # Injection of Secrets
-        fastcgi_param GEMINI_API_KEY "${GEMINI_API_KEY}";
-
-    }
-
-    # PHP Proxy - Image Job
-    location ~ ^/proxy/image-job\.php$ {
-        include snippets/fastcgi-php.conf;
-        fastcgi_pass unix:/var/run/php/php$PHP_VERSION-fpm.sock;
-        fastcgi_read_timeout 60s;
-        
-        # Injection of Secrets
-        fastcgi_param GEMINI_API_KEY "${GEMINI_API_KEY}";
-
-    }
-
-    # PHP Proxy - AI Proxy
-    location ~ ^/proxy/ai-proxy\.php$ {
-        include snippets/fastcgi-php.conf;
-        fastcgi_pass unix:/var/run/php/php$PHP_VERSION-fpm.sock;
-        fastcgi_read_timeout 60s;
-        
-        # Injection of Secrets
-        fastcgi_param GEMINI_API_KEY "${GEMINI_API_KEY}";
-
-    }
-
-    # Zakázať prístup k config.php
-    location ~ /proxy/config\.php {
-        deny all;
-        return 404;
     }
 
     # Cache pre statické súbory
