@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
     <button
       *ngIf="isVisible()"
       (click)="scrollToTop()"
-      class="fixed bottom-8 right-8 z-50 p-3 rounded-full bg-gradient-to-br from-black via-zinc-800 to-gold text-white shadow-[0_0_15px_rgba(212,175,55,0.5)] border border-gold/30 transition-all duration-300 overflow-hidden"
+      class="fixed bottom-24 right-4 md:bottom-8 md:right-8 z-50 p-3 rounded-full bg-gradient-to-br from-black via-zinc-800 to-gold text-white shadow-[0_0_15px_rgba(212,175,55,0.5)] border border-gold/30 transition-all duration-300 overflow-hidden"
       aria-label="Scroll to top">
       <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-[shine_4s_infinite]"></div>
       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">

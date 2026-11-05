@@ -1,126 +1,111 @@
-<footer
-  class="bg-white dark:bg-black/95 text-brand-dark dark:text-neutral-200 mt-16 border-t border-gold/20 transition-colors duration-300">
+<footer class="site-footer">
+  <div class="footer-grid">
 
-  <!-- Instagram Feed Section -->
+    <!-- Kontakt -->
+    <section aria-labelledby="footer-contact">
+      <h2 id="footer-contact" class="footer-heading">Hair studio &amp; Barber</h2>
+      <address class="footer-address">
+        <a [href]="contact.mapsUrl" target="_blank" rel="noopener" class="footer-row">
+          <svg aria-hidden="true" class="footer-row-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            stroke-width="1.75">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          <span>{{ contact.address.street }}<br>{{ contact.address.city }}</span>
+        </a>
+        <a [href]="contact.phoneHref" class="footer-row">
+          <svg aria-hidden="true" class="footer-row-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            stroke-width="1.75">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+          </svg>
+          <span>{{ contact.phoneDisplay }}</span>
+        </a>
+        <a [href]="'mailto:' + contact.email" class="footer-row">
+          <svg aria-hidden="true" class="footer-row-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            stroke-width="1.75">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+          <span>{{ contact.email }}</span>
+        </a>
+      </address>
+      <p class="footer-note">Predaj vlasovej kozmetiky GOLD Haircare priamo v salóne.</p>
+    </section>
 
+    <!-- Otváracie hodiny -->
+    <section aria-labelledby="footer-hours">
+      <h2 id="footer-hours" class="footer-heading">Otváracie hodiny</h2>
+      @if (isBrowser()) {
+      <p class="status-pill" [class.is-open]="currentStatus().isOpen">
+        <span class="status-dot" aria-hidden="true"></span>
+        {{ currentStatus().isOpen ? 'Práve otvorené' : 'Práve zatvorené' }}
+      </p>
+      }
+      <dl class="hours">
+        @for (item of openingHours(); track item.dayIndex) {
+        <div class="hours-row" [class.is-today]="isBrowser() && item.dayIndex === todayIndex()"
+          [attr.aria-current]="isBrowser() && item.dayIndex === todayIndex() ? 'date' : null">
+          <dt>{{ item.day }}</dt>
+          <dd>
+            @if (item.open === 'ZAVRETÉ') { Zatvorené }
+            @else if (item.open === 'Podľa objednávok') { Podľa objednávok }
+            @else { {{ item.open }} – {{ item.close }} }
+          </dd>
+        </div>
+        }
+      </dl>
+    </section>
 
-  <div class="container mx-auto px-6 py-12">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-
-      <!-- Opening Hours -->
-      <div>
-        <h3
-          class="text-xl font-serif font-bold text-gold mb-6 drop-shadow-sm tracking-widest uppercase relative inline-block">
-          Otváracie hodiny
-          <span class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-12 h-0.5 bg-gold/30"></span>
-        </h3>
-        <ul class="text-black font-medium dark:text-neutral-200 space-y-2 drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)]">
-          @for(item of openingHours(); track item.dayIndex) {
-          <li [class.text-black]="item.dayIndex === todayIndex()"
-            [class.dark:text-gold]="item.dayIndex === todayIndex()"
-            [class.font-extrabold]="item.dayIndex === todayIndex()">
-            <span>{{ item.day }}</span>
-            <span class="ml-2">
-              @if (item.open === 'ZAVRETÉ') {
-              Zavreté
-              } @else if (item.open === 'Podľa objednávok') {
-              Podľa objednávok
-              } @else {
-              {{ item.open }} – {{ item.close }}
-              }
-            </span>
-          </li>
-          }
+    <!-- Odkazy + sociálne siete -->
+    <section aria-labelledby="footer-links">
+      <h2 id="footer-links" class="footer-heading">Rýchle odkazy</h2>
+      <nav aria-label="Pätička">
+        <ul class="footer-links">
+          <li><a routerLink="/cennik">Cenník</a></li>
+          <li><a routerLink="/o-nas">O nás</a></li>
+          <li><a routerLink="/blog">Blog</a></li>
+          <li><a routerLink="/kontakt">Kontakt</a></li>
         </ul>
-        @if (isBrowser()) {
-        @if (currentStatus().isOpen) {
-        <p class="mt-2 text-green-700 font-extrabold drop-shadow-sm">Práve teraz otvorené</p>
-        } @else {
-        <p class="mt-2 text-red-600 font-bold drop-shadow-sm">Práve teraz zatvorené</p>
-        }
-        }
-      </div>
+      </nav>
 
-      <!-- Quick Links & Social -->
-      <div class="space-y-6">
-        <!-- Quick Links -->
-        <div>
-          <h3
-            class="text-xl font-serif font-bold text-gold mb-6 drop-shadow-sm tracking-widest uppercase relative inline-block">
-            Rýchle odkazy
-            <span class="absolute -bottom-2 left-0 w-8 h-0.5 bg-gold/30"></span>
-          </h3>
-          <ul class="text-black font-medium dark:text-neutral-200 space-y-2">
-            <li>
-              <a routerLink="/cennik"
-                class="link-underline !text-black !dark:text-neutral-200 hover:text-gold transition-colors pb-1 touch-target-min">Cenník</a>
-            </li>
-            <li>
-              <a routerLink="/blog"
-                class="link-underline !text-black !dark:text-neutral-200 hover:text-gold transition-colors pb-1 touch-target-min">Blog</a>
-            </li>
-            <li>
-              <a routerLink="/o-nas"
-                class="link-underline !text-black !dark:text-neutral-200 hover:text-gold transition-colors pb-1 touch-target-min">O
-                nás</a>
-            </li>
-            <li>
-              <a routerLink="/kontakt"
-                class="link-underline !text-black !dark:text-neutral-200 hover:text-gold transition-colors pb-1 touch-target-min">Kontakt</a>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Social Links -->
-        <div class="flex space-x-6 justify-center items-center pt-4">
-          <!-- Instagram -->
-          <a [href]="socialLinks.instagram" target="_blank" rel="noopener noreferrer"
-            class="social-icon w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-black dark:text-white hover:bg-gold hover:text-black transition-all duration-300 drop-shadow-sm border border-black/5 dark:border-white/10"
-            aria-label="Sledujte nás na Instagrame">
-            <i class="fab fa-instagram text-xl"></i>
+      <ul class="social" aria-label="Sociálne siete">
+        <li>
+          <a [href]="contact.social.instagram" target="_blank" rel="noopener" aria-label="Instagram PAPI HAIR DESIGN">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+              stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="5" />
+              <circle cx="12" cy="12" r="4" />
+              <circle cx="17.5" cy="6.5" r="0.75" fill="currentColor" />
+            </svg>
           </a>
-
-          <!-- Facebook -->
-          <a [href]="socialLinks.facebook" target="_blank" rel="noopener noreferrer"
-            class="social-icon w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-black dark:text-white hover:bg-gold hover:text-black transition-all duration-300 drop-shadow-sm border border-black/5 dark:border-white/10"
-            aria-label="Sledujte nás na Facebook">
-            <i class="fab fa-facebook-f text-xl"></i>
+        </li>
+        <li>
+          <a [href]="contact.social.facebook" target="_blank" rel="noopener" aria-label="Facebook PAPI HAIR DESIGN">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M13.5 21v-7.5h2.5l.4-3h-2.9V8.6c0-.9.3-1.5 1.5-1.5h1.5V4.4c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8v2.4H8v3h2.6V21h2.9z" />
+            </svg>
           </a>
-
-          <!-- TikTok -->
-          <a [href]="socialLinks.tiktok" target="_blank" rel="noopener noreferrer"
-            class="social-icon w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-black dark:text-white hover:bg-gold hover:text-black transition-all duration-300 drop-shadow-sm border border-black/5 dark:border-white/10"
-            aria-label="Sledujte nás na TikTok">
-            <i class="fab fa-tiktok text-xl"></i>
+        </li>
+        <li>
+          <a [href]="contact.social.tiktok" target="_blank" rel="noopener" aria-label="TikTok PAPI HAIR DESIGN">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M16.6 5.8A4.3 4.3 0 0115.5 3h-3.1v12.4a2.6 2.6 0 11-2.6-2.6c.3 0 .5 0 .8.1V9.7a5.7 5.7 0 00-.8-.1 5.7 5.7 0 105.7 5.7V9a7.3 7.3 0 004.3 1.4V7.3a4.3 4.3 0 01-3.2-1.5z" />
+            </svg>
           </a>
-        </div>
-      </div>
-
-      <!-- About Section (Now Last) -->
-      <div>
-        <div class="space-y-1 text-black font-medium dark:text-neutral-200 drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)]">
-          <p class="text-gold font-serif text-lg tracking-wide uppercase font-bold">Hair studio & Barber</p>
-          <p>Predaj vlasovej kozmetiky</p>
-          <p class="mt-4">Trieda SNP 61 (Spoločenský pavilon)<br>Košice, Slovensko</p>
-        </div>
-        <a href="tel:+421949459624"
-          class="block mt-2 !text-black font-medium !dark:text-neutral-200 hover:text-gold dark:hover:text-gold transition-colors drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)] touch-target-min">tel:
-          +421 949 459 624</a>
-        <a href="mailto:papihairdesign@gmail.com"
-          class="block !text-black font-medium !dark:text-neutral-200 hover:text-gold dark:hover:text-gold transition-colors drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)] touch-target-min">papihairdesign@gmail.com</a>
-      </div>
-    </div>
-
+        </li>
+      </ul>
+    </section>
   </div>
-  <div class="text-center border-t border-neutral-200 dark:border-white/10 pt-6 mt-8">
-    <p class="text-neutral-600 dark:text-neutral-400">&copy; {{ currentYear }} PAPI HAIR DESIGN. All Rights Reserved.
+
+  <div class="footer-bottom">
+    <p class="footer-consult">
+      Na prvú rezerváciu k Róbertovi Papcunovi „PAPI“ je potrebná krátka konzultácia –
+      dohodnete si ju na <a [href]="contact.phoneHref">{{ contact.phoneDisplay }}</a>.
     </p>
-    <p class="text-black dark:text-neutral-200 text-[11px] py-1 text-center font-medium tracking-wide mt-2">
-      Rezervácie k Róbertovi Papcunovi "PAPI" je potrebná konzultácia, ktorú si viete dohodnúť na tel.č: <a
-        href="tel:+421949459624"
-        class="!text-black !dark:text-neutral-200 hover:text-gold dark:hover:text-gold transition-colors underline">+421
-        949 459
-        624</a>
-    </p>
+    <p>&copy; {{ currentYear }} PAPI HAIR DESIGN. Všetky práva vyhradené.</p>
   </div>
 </footer>

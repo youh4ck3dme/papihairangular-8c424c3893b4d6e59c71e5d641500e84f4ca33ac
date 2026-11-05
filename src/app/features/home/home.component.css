@@ -1,162 +1,574 @@
-/* Center hero logo horizontally */
-.hero-logo-center {
+/* =========================================================
+   HOME – theme-aware (light default, .dark na <html>)
+   Tokeny: --home-* menia celú stránku naraz.
+   ========================================================= */
+:host {
+  --home-bg: #ffffff;
+  --home-bg-alt: #f7f5f0;
+  --home-text: #171717;
+  --home-muted: #52525b;
+  --home-border: rgba(23, 23, 23, 0.1);
+  --home-card: #ffffff;
+  /* Tmavšie zlato pre text na bielej – kontrast 5.1:1 (WCAG AA). #c59d24 malo len 2.3:1 */
+  --home-accent: #8a6a12;
+  --gold: #d4af37;
+
   display: block;
-  margin-left: auto;
-  margin-right: auto;
-  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
+  /* <main> má container + px-4 + py-8 – home je full-bleed, sekcie si riešia šírku samy */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-top: -2rem;
+  margin-bottom: -2rem;
+  /* miesto pre mobilnú lepkavú CTA – s pozadím, inak presvitá čierny layout */
+  padding-bottom: 4.5rem;
+  background: var(--home-bg);
 }
 
-/* Fade-in animation for logo */
+:host-context(.dark) {
+  --home-bg: #0a0a0a;
+  --home-bg-alt: #121212;
+  --home-text: #f5f5f5;
+  --home-muted: #a1a1aa;
+  --home-border: rgba(212, 175, 55, 0.15);
+  --home-card: #171717;
+  --home-accent: #d4af37;
+}
+
+@media (min-width: 768px) {
+  :host {
+    padding-bottom: 0;
+  }
+}
+
+.text-accent {
+  color: var(--home-accent);
+}
+
+.eyebrow {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+/* ---------- Layout ---------- */
+.section {
+  padding: clamp(4rem, 9vw, 7rem) 1.25rem;
+  color: var(--home-text);
+  scroll-margin-top: 5rem;
+}
+
+.section-base {
+  background: var(--home-bg);
+}
+
+.section-alt {
+  background: var(--home-bg-alt);
+}
+
+.container-narrow {
+  max-width: 48rem;
+  margin: 0 auto;
+}
+
+.container-wide {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: clamp(1.875rem, 3vw + 1rem, 3rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-align: center;
+  margin-bottom: 1.25rem;
+  color: var(--home-text);
+}
+
+.section-title.text-left {
+  text-align: left;
+}
+
+.section-lead {
+  font-size: clamp(1.0625rem, 0.6vw + 1rem, 1.25rem);
+  line-height: 1.7;
+  color: var(--home-muted);
+  text-align: center;
+  max-width: 40rem;
+  margin: 0 auto 2.5rem;
+}
+
+.body-text {
+  line-height: 1.75;
+  color: var(--home-muted);
+  margin-bottom: 1.25rem;
+}
+
+.body-text strong,
+.section-lead strong {
+  color: var(--home-text);
+  font-weight: 600;
+}
+
+.inline-link {
+  color: var(--home-accent);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 48px;
+  padding: 0.75rem 1.75rem;
+  border-radius: 9999px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.btn-primary {
+  background: var(--gold);
+  color: #111;
+  box-shadow: 0 8px 24px -8px rgba(212, 175, 55, 0.6);
+}
+
+.btn-primary:hover {
+  background: #e6c35c;
+}
+
+.btn-outline {
+  border: 2px solid var(--home-accent);
+  color: var(--home-accent);
+}
+
+.btn-outline:hover {
+  background: var(--home-accent);
+  color: var(--home-bg);
+}
+
+.btn-ghost-light {
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #fff;
+  backdrop-filter: blur(6px);
+}
+
+.btn-ghost-light:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.btn-ghost-dark {
+  border: 1px solid var(--home-border);
+  color: var(--home-text);
+  padding-inline: 1rem;
+}
+
+/* ---------- Hero ---------- */
+.hero-section {
+  position: relative;
+  /* posun pod sticky header (výška ~5rem) */
+  margin-top: -5rem;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7rem 1.25rem 5rem;
+  color: #fff;
+  text-align: center;
+  background: #0a0a0a url("/assets/salon-interior.webp") center / cover no-repeat;
+  overflow: hidden;
+}
+
+/* parallax len na desktope – na iOS je fixed rozbitý a na mobile drahý */
+@media (min-width: 1024px) and (hover: hover) {
+  .hero-section {
+    background-attachment: fixed;
+  }
+}
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.7) 60%, rgba(0, 0, 0, 0.85) 100%);
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 48rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-logo {
+  width: auto;
+  height: clamp(5rem, 14vw, 9rem);
+  object-fit: contain;
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+}
+
+.hero-title {
+  font-size: clamp(2rem, 4.5vw + 1rem, 4.75rem);
+  overflow-wrap: anywhere;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #fff;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+  margin-bottom: 1.25rem;
+}
+
+.hero-title-sub {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.38em;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+}
+
+.hero-lead {
+  font-size: clamp(1.0625rem, 0.8vw + 0.9rem, 1.3rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.88);
+  max-width: 38rem;
+  margin-bottom: 2rem;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.875rem;
+  justify-content: center;
+  margin-bottom: 2.75rem;
+}
+
+.hero-highlights {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 34rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.hero-highlights li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.hero-highlight-value {
+  font-size: clamp(1.25rem, 2vw + 0.75rem, 1.75rem);
+  font-weight: 800;
+  color: var(--gold);
+}
+
+.hero-highlight-label {
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.hero-scroll {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 0.5rem;
+  animation: bob 2.4s ease-in-out infinite;
+}
+
+@keyframes bob {
+  50% {
+    transform: translate(-50%, 6px);
+  }
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translateY(12px);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
   }
 }
 
 .animate-fade-in {
-  animation: fadeIn 1s ease-out;
+  animation: fadeIn 0.8s ease-out both;
 }
 
-/* Text shadow for hero headline */
-.hero-headline-shadow {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+/* ---------- About ---------- */
+.credentials {
+  display: grid;
+  gap: 0.875rem;
+  margin: 0 0 2rem;
+  padding: 1.5rem;
+  border: 1px solid var(--home-border);
+  border-radius: 1rem;
+  background: var(--home-bg-alt);
 }
 
-/* Text shadow for hero perex */
-.hero-perex-shadow {
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
-}
-
-.hero-section {
-  /* Full-bleed container breakout */
-  width: 100vw;
-  position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-  overflow: hidden; /* Ensure animation doesn't cause scrollbars */
-}
-
-/* Background Image with Ken Burns Effect */
-.hero-section::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url("/assets/salon-interior.webp");
-  background-size: cover;
-  background-position: center;
-  z-index: 0; /* Behind content but same level as overlay */
-  
-  /* Micro-animation: Slow Zoom (Ken Burns) */
-  animation: ken-burns 20s ease-in-out infinite alternate;
-}
-
-@keyframes ken-burns {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(1.1);
+@media (min-width: 640px) {
+  .credentials {
+    grid-template-columns: 1fr 1fr;
   }
 }
 
-/* Add a dark overlay for better text readability */
-.hero-section::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 1;
+.credentials li {
+  display: flex;
+  gap: 0.625rem;
+  align-items: flex-start;
+  line-height: 1.5;
 }
 
-@keyframes pulse-shadow {
+.quote {
+  margin-top: 2.5rem;
+  padding-left: 1.25rem;
+  border-left: 3px solid var(--gold);
+  font-size: clamp(1.25rem, 1vw + 1rem, 1.6rem);
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--home-text);
+}
 
-  0%,
-  100% {
-    /* Corresponds to shadow-lg with gold color */
-    box-shadow: 0 10px 15px -3px rgba(212, 175, 55, 0.2),
-      0 4px 6px -4px rgba(212, 175, 55, 0.2);
+/* ---------- Gold Haircare ---------- */
+.gold-grid {
+  display: grid;
+  gap: 3rem;
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .gold-grid {
+    grid-template-columns: 1.2fr 1fr;
+    gap: 4rem;
   }
+}
 
-  50% {
-    /* A slightly larger, more intense shadow */
-    box-shadow: 0 20px 25px -5px rgba(212, 175, 55, 0.3),
-      0 8px 10px -6px rgba(212, 175, 55, 0.3);
+.read-more summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--home-accent);
+  margin-bottom: 0.75rem;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ---------- Cards ---------- */
+.feature-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.product-grid {
+  display: grid;
+  gap: 1.25rem;
+  margin-bottom: 2.75rem;
+}
+
+@media (min-width: 640px) {
+  .product-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
-.btn-pulse-shadow {
-  animation: pulse-shadow 3s ease-in-out infinite;
+.feature-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  background: var(--home-card);
+  border: 1px solid var(--home-border);
+  transition: border-color 0.2s ease, transform 0.2s ease;
 }
 
-/* FAQ Styles */
-details {
-  transition: all 0.3s ease;
+.feature-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-2px);
 }
 
-details[open] {
-  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.15);
+.feature-card-row {
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  text-align: left;
 }
 
-details summary {
+.feature-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 9999px;
+  background: rgba(212, 175, 55, 0.12);
+  color: var(--home-accent);
+  margin-bottom: 0.5rem;
+}
+
+.feature-card-row .feature-icon {
+  margin-bottom: 0;
+}
+
+.feature-title {
+  display: block;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--home-text);
+}
+
+.feature-text {
+  display: block;
+  font-size: 0.9375rem;
+  color: var(--home-muted);
+}
+
+/* ---------- FAQ ---------- */
+.faq-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.faq-item {
+  border: 1px solid var(--home-border);
+  border-radius: 0.875rem;
+  background: var(--home-card);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.faq-item[open] {
+  border-color: var(--gold);
+  box-shadow: 0 6px 20px -10px rgba(212, 175, 55, 0.5);
+}
+
+.faq-item summary {
   list-style: none;
-  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.125rem 1.25rem;
+  min-height: 56px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1.0625rem;
+  color: var(--home-text);
 }
 
-details summary::-webkit-details-marker {
+.faq-item summary::-webkit-details-marker {
   display: none;
 }
 
-details summary::after {
-  content: "+";
-  position: absolute;
+.faq-item summary:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: -3px;
+  border-radius: 0.875rem;
+}
+
+.faq-chevron {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+  color: var(--home-accent);
+  transition: transform 0.25s ease;
+}
+
+.faq-item[open] .faq-chevron {
+  transform: rotate(180deg);
+}
+
+.faq-answer {
+  padding: 0 1.25rem 1.25rem;
+  color: var(--home-muted);
+  line-height: 1.7;
+}
+
+.faq-answer p + p,
+.faq-answer ul + p {
+  margin-top: 0.75rem;
+}
+
+.faq-answer ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+}
+
+.contact-cta {
+  margin-top: 2.5rem;
+  padding: 1.75rem;
+  border-radius: 1rem;
+  text-align: center;
+  background: var(--home-bg-alt);
+  border: 1px solid var(--home-border);
+}
+
+.contact-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+/* ---------- Mobile sticky CTA ---------- */
+.mobile-cta {
+  position: fixed;
+  left: 0;
   right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #d4af37;
-  transition: transform 0.3s ease;
+  bottom: 0;
+  z-index: 40;
+  display: flex;
+  gap: 0.625rem;
+  padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom));
+  background: color-mix(in srgb, var(--home-bg) 92%, transparent);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--home-border);
 }
 
-details[open] summary::after {
-  content: "−";
-  transform: translateY(-50%) rotate(0deg);
+@media (min-width: 768px) {
+  .mobile-cta {
+    display: none;
+  }
 }
 
-details summary:hover::after {
-  transform: translateY(-50%) scale(1.1);
-}
+@media (prefers-reduced-motion: reduce) {
 
-details[open] summary::after {
-  transform: translateY(-50%) scale(1.1);
-}
+  .animate-fade-in,
+  .hero-scroll {
+    animation: none;
+  }
 
-/* Hero Text Branding */
-.parallax-3d-text {
-  position: relative;
-  display: inline-block;
-  color: #D4AF37; /* PAPI Gold */
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-  letter-spacing: 0.15em;
-  font-weight: 800;
-  text-transform: uppercase;
-}
-
-.parallax-3d-text:hover {
-  color: #FFFFFF;
-  transition: color 0.3s ease;
+  .btn:hover,
+  .feature-card:hover {
+    transform: none;
+  }
 }

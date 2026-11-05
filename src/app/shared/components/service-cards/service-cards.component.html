@@ -1,31 +1,39 @@
-<div class="cards-container">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto px-4">
-        @for (service of services(); track service.id) {
-        <a #card class="card group" [attr.data-id]="service.id" [routerLink]="service.external ? null : service.link"
-            [href]="service.external ? service.link : null" [target]="service.external ? '_blank' : null"
-            [rel]="service.external ? 'noopener noreferrer' : null">
-            <div class="card-glow" aria-hidden="true"></div>
-            <div class="card-border" aria-hidden="true"></div>
-            <div class="card-content">
-                <div class="card-icon-wrapper">
-                    <img src="assets/logo-icon.webp" alt="PAPI Logo" class="card-icon-img">
-                </div>
-                <div class="text-content">
-                    <h3 class="card-title font-heading">{{ service.title }}</h3>
-                    <p class="card-subtitle font-primary">{{ service.subtitle }}</p>
-                    <p class="card-description font-primary">{{ service.description }}</p>
-                    <ul class="card-benefits mt-3 space-y-1">
-                        @for (benefit of service.benefits; track benefit) {
-                        <li class="flex items-center gap-2 text-sm text-brand-light/80">
-                            <span class="inline-block h-1.5 w-1.5 rounded-full bg-gold"></span>
-                            {{ benefit }}
-                        </li>
-                        }
-                    </ul>
-                </div>
-
-            </div>
+<ul class="cards-grid" role="list">
+    @for (service of services; track service.id) {
+    <li>
+        @if (service.external) {
+        <a class="card group" [href]="service.link" target="_blank" rel="noopener sponsored"
+            (pointermove)="onPointerMove($event)">
+            <ng-container *ngTemplateOutlet="content; context: { $implicit: service }" />
+        </a>
+        } @else {
+        <a class="card group" [routerLink]="service.link" (pointermove)="onPointerMove($event)">
+            <ng-container *ngTemplateOutlet="content; context: { $implicit: service }" />
         </a>
         }
+    </li>
+    }
+</ul>
+
+<ng-template #content let-service>
+    <div class="card-glow" aria-hidden="true"></div>
+    <div class="card-content">
+        <span class="card-icon" aria-hidden="true" [innerHTML]="service.safeIcon"></span>
+        <p class="card-subtitle">{{ service.subtitle }}</p>
+        <h3 class="card-title">{{ service.title }}</h3>
+        <p class="card-description">{{ service.description }}</p>
+        <ul class="card-benefits">
+            @for (benefit of service.benefits; track benefit) {
+            <li>{{ benefit }}</li>
+            }
+        </ul>
+        <span class="card-action">
+            {{ service.external ? 'Do e-shopu' : 'Viac o službe' }}
+            <svg aria-hidden="true" class="arrow-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+            @if (service.external) { <span class="sr-only">(otvorí sa v novom okne)</span> }
+        </span>
     </div>
-</div>
+</ng-template>
