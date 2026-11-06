@@ -3,125 +3,87 @@
   "installCommand": "pnpm install --frozen-lockfile",
   "buildCommand": "node scripts/ensure-env.mjs && pnpm run build:prod",
   "outputDirectory": "dist/app/browser",
-  "headers": [
+  "routes": [
     {
-      "source": "/ngsw.json",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-cache, no-store, must-revalidate"
-        }
-      ]
+      "src": "^/(.+)/$",
+      "status": 308,
+      "headers": {
+        "Location": "/$1"
+      }
     },
     {
-      "source": "/ngsw-worker.js",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-cache"
-        }
-      ]
+      "src": "^/booking$",
+      "status": 302,
+      "headers": {
+        "Location": "https://services.bookio.com/papi-hair-design/widget?lang=sk"
+      }
     },
     {
-      "source": "/((?:main|chunk|polyfills|styles)-[A-Z0-9]+\\.(?:js|css))",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
+      "src": "^/shop$",
+      "status": 302,
+      "headers": {
+        "Location": "https://www.goldhaircare.sk/affiliate/2208"
+      }
     },
     {
-      "source": "/media/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
+      "src": "^/(?:ai-studio|ai-stylista|virtualny-stylista|virtual-salon|diagnostika|admin)(?:/.*)?$",
+      "status": 301,
+      "headers": {
+        "Location": "/"
+      }
     },
     {
-      "source": "/assets/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=604800"
-        }
-      ]
+      "src": "^/ngsw\\.json$",
+      "headers": {
+        "Cache-Control": "no-cache, no-store, must-revalidate"
+      },
+      "continue": true
+    },
+    {
+      "src": "^/ngsw-worker\\.js$",
+      "headers": {
+        "Cache-Control": "no-cache"
+      },
+      "continue": true
+    },
+    {
+      "src": "^/(?:main|chunk|polyfills|styles)-[A-Z0-9]+\\.(?:js|css)$",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      },
+      "continue": true
+    },
+    {
+      "src": "^/media/.*$",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      },
+      "continue": true
+    },
+    {
+      "src": "^/(?:assets|images)/.*$",
+      "headers": {
+        "Cache-Control": "public, max-age=604800"
+      },
+      "continue": true
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "^/(cennik|o-nas|kontakt|blog)$",
+      "dest": "/$1/index.html",
+      "check": true
+    },
+    {
+      "src": "^/(blog|sluzby)/([^/]+)$",
+      "dest": "/$1/$2/index.html",
+      "check": true
+    },
+    {
+      "src": "^/.*$",
+      "status": 404,
+      "dest": "/404.html"
     }
-  ],
-  "rewrites": [
-    {
-      "source": "/cennik",
-      "destination": "/cennik/index.html"
-    },
-    {
-      "source": "/o-nas",
-      "destination": "/o-nas/index.html"
-    },
-    {
-      "source": "/kontakt",
-      "destination": "/kontakt/index.html"
-    },
-    {
-      "source": "/blog",
-      "destination": "/blog/index.html"
-    },
-    {
-      "source": "/blog/:slug",
-      "destination": "/blog/:slug/index.html"
-    },
-    {
-      "source": "/sluzby/:slug",
-      "destination": "/sluzby/:slug/index.html"
-    }
-  ],
-  "redirects": [
-    {
-      "source": "/booking",
-      "destination": "https://services.bookio.com/papi-hair-design/widget?lang=sk",
-      "permanent": false
-    },
-    {
-      "source": "/shop",
-      "destination": "https://www.goldhaircare.sk/affiliate/2208",
-      "permanent": false
-    },
-    {
-      "source": "/ai-studio",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/ai-stylista",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/virtualny-stylista",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/virtual-salon",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/diagnostika",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/admin/:path*",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/admin",
-      "destination": "/",
-      "permanent": true
-    }
-  ],
-  "trailingSlash": false
+  ]
 }

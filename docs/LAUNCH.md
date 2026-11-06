@@ -29,6 +29,9 @@ kontrolný zoznam pre spustenie a údržbu.
 - [ ] Cloudflare DNS: nastaviť záznamy presne podľa toho, čo zobrazí Vercel pri doméne
   (zvyčajne `A @ 76.76.21.21` a `CNAME www cname.vercel-dns.com`), proxy (oranžový obláčik) **vypnúť** – SSL vydá Vercel.
 - [ ] Deployment Protection: preview zostáva chránený, produkčná doména musí byť verejná.
+- Pozn.: `vercel.json` používa `routes` (nie `rewrites`). Vercel podľa závislosti `@angular/cli` automaticky pridá
+  SPA fallback `/(.*) → /index.html`; po prerenderingu by tak neznáme adresy vracali domovskú stránku so statusom 200.
+  Vlastné `routes` končia pravidlom `404 → /404.html`, ktoré má prednosť pred týmto fallbackom.
 
 **B) Súčasný FORPSI VPS (nginx)**
 - [ ] `./scripts/deploy-forpsi.sh` – skript je upravený pre predgenerované stránky
