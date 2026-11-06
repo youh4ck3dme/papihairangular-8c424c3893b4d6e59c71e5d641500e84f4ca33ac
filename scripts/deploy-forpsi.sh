@@ -150,9 +150,18 @@ server {
     add_header X-XSS-Protection "1; mode=block";
     add_header X-Content-Type-Options "nosniff";
 
+    # presmerovania (rovnaké ako vercel.json)
+    location = /booking { return 302 https://services.bookio.com/papi-hair-design/widget?lang=sk; }
+    location = /shop { return 302 https://www.goldhaircare.sk/affiliate/2208; }
+    location ~ ^/(ai-studio|ai-stylista|virtualny-stylista|virtual-salon|diagnostika|admin)(/.*)?\\\$ { return 301 /; }
+    rewrite ^/(.+)/\\\$ /\\\$1 permanent;
+
+    # predgenerované stránky (Angular prerendering): /cennik -> /cennik/index.html,
+    # neznáma URL -> 404.html so statusom 404 (fallback na /index.html by vrátil domovskú stránku)
     location / {
-        try_files \\\$uri \\\$uri/ /index.html;
+        try_files \\\$uri \\\$uri/index.html =404;
     }
+    error_page 404 /404.html;
 
     # Cache pre statické súbory
     location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|webp|woff|woff2|ttf|eot)$ {
