@@ -9,7 +9,7 @@ import { Stylist } from '../models';
 const SALON_STYLISTS: Stylist[] = [
   {
     id: 'papi',
-    name: 'Róbert "Papi" Papcun',
+    name: 'Róbert „Papi“ Papcun',
     title: 'Founder & Creative Director',
     imageUrl: '/images/papi.webp',
     services: [],

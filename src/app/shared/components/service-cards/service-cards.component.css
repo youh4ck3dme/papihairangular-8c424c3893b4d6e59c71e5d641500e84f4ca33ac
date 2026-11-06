@@ -207,7 +207,7 @@
 
 .card:hover .arrow-icon { transform: translateX(4px); }
 
-/* ---------- Tablet: 2×3 bez popisu a benefitov ---------- */
+/* ---------- Tablet: 2×3, popis na 2 riadky, bez benefitov ---------- */
 @media (min-width: 768px) {
     .cards-grid {
         max-height: none;
@@ -226,7 +226,11 @@
 
     .card { border-radius: 24px; }
 
-    .card-description,
+    .card-description {
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+    }
+
     .card-benefits { display: none; }
 }
 
@@ -235,12 +239,6 @@
     .cards-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
         grid-template-rows: repeat(2, minmax(0, 1fr));
-    }
-
-    .card-description {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        line-clamp: 2;
     }
 
     /* 1 riadok štítkov – čo sa nezmestí, skryje sa celé (nie orezané v polovici slova) */

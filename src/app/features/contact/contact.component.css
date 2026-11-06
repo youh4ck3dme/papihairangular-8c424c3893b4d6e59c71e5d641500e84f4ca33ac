@@ -141,7 +141,7 @@ html.dark .field-error { color: #f87171; }
   text-align: center;
 }
 
-.map-pin { width: 40px; height: 40px; color: var(--accent); }
+.map-pin { width: 40px; height: 40px; flex-shrink: 0; color: var(--accent); }
 
 .map-actions {
   display: flex;
@@ -154,4 +154,11 @@ html.dark .field-error { color: #f87171; }
   margin: 8px 0 0;
   font-size: 13px;
   color: var(--muted);
+}
+
+/* mobil: box rastie s obsahom (16:9 pri šírke telefónu orezávalo ikonu a tlačidlá) */
+@media (max-width: 767px) {
+  .map-box { aspect-ratio: auto; }
+  .map-placeholder { box-sizing: border-box; min-height: 320px; }
+  .map-box iframe { height: 360px; }
 }

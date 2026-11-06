@@ -389,12 +389,13 @@ summary:focus-visible {
     align-content: center;
   }
 
+  /* fotka vyplní svoj stĺpec (predtým bola širšia a prekrývala text vedľa) */
   .about-photo {
     flex: none;
-    max-height: none;
+    width: 100%;
+    height: auto;
     aspect-ratio: 4 / 5;
-    height: min(calc(100dvh - var(--header-h) - 128px), 640px);
-    justify-self: center;
+    max-height: min(calc(100dvh - var(--header-h) - 128px), 640px);
   }
 
   .about-photo img { object-position: center top; }
@@ -584,33 +585,23 @@ summary:focus-visible {
 
   .gold-para { -webkit-line-clamp: 5; line-clamp: 5; }
 
+  /* obrázok a pod ním tri karty – bez prekrývania a tieňov, rovnako ako na mobile */
   .gold-media {
-    position: relative;
     flex: none;
-    display: block;
-    /* miesto pre karty presahujúce o 50 % pod obrázok */
-    padding-bottom: 48px;
+    gap: 12px;
   }
 
   .gold-img {
-    max-height: min(560px, calc(100dvh - var(--header-h) - 96px - 64px));
-    aspect-ratio: 1 / 1;
+    flex: none;
+    max-height: min(480px, calc(100dvh - var(--header-h) - 96px - 64px - 112px));
+    aspect-ratio: 4 / 3;
     height: auto;
     width: 100%;
   }
 
-  .gold-features {
-    position: absolute;
-    left: 16px;
-    right: 16px;
-    bottom: 0;
-    gap: 12px;
-  }
+  .gold-features { gap: 12px; }
 
-  .gold-feature {
-    padding: 16px 8px;
-    box-shadow: 0 16px 32px -16px rgba(0, 0, 0, 0.35);
-  }
+  .gold-feature { padding: 16px 4px; }
 
   .gold-feature .feature-icon {
     width: 40px;
@@ -618,13 +609,20 @@ summary:focus-visible {
   }
 
   .gold-feature-title {
-    font-size: 16px;
-    line-height: 20px;
+    font-size: 13px;
+    line-height: 16px;
   }
 }
 
 @media (min-width: 1024px) {
   .gold-grid { gap: 64px; }
+
+  .gold-feature { padding: 16px 8px; }
+
+  .gold-feature-title {
+    font-size: 15px;
+    line-height: 20px;
+  }
 }
 
 /* =========================================================

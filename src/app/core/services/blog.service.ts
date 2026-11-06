@@ -13,10 +13,50 @@ export class BlogService {
     {
       id: "0",
       slug: "pribeh-znacky",
-      title: "From Streets to World Stages: Príbeh Róberta Papcuna",
+      title: "Z ulice na svetové pódiá: príbeh Róberta Papcuna",
       subtitle: "Príbeh chlapca z košického sídliska, ktorý vybudoval svetovú značku na vášni a odhodlaní.",
       perex: "Volám sa Róbert Papcun a toto je môj príbeh. Od strihania kamarátov v kočikárni až po pódiá na svetových Fashion Weekoch v Prahe a Taliansku. Zistite, ako vzniklo PAPI HAIR DESIGN a prečo verím, že sny sa plnia len vtedy, keď vezmete nožnice do ruky.",
-      content: [], // Content is handled by a dedicated component for this special story
+      content: [
+        { type: 'paragraph', text: 'Volám sa <strong>Róbert Papcun</strong>, pochádzam z Košíc a dnes mám 35 rokov. Moja cesta ku kaderníctvu sa začala už v detstve – rád som sledoval, ako strihajú mojich rodičov. Ako tínedžer som chodil s kamarátmi do salónov, čakal ich a sledoval, ako ich farbia a strihajú. Už vtedy som vedel, že tento svet ma priťahuje.' },
+        { type: 'quote', text: 'Fascinovalo ma, ako sa ľudia menia pred mojimi očami. Nielen výzorom, ale aj sebavedomím.' },
+        { type: 'paragraph', text: 'Po večeroch som sa často modlil, aby som bol stále lepší a rástol v tom, čo milujem.' },
+
+        { type: 'heading', text: 'Začiatky na ulici (2007 – 2011)' },
+        { type: 'heading-level-3', text: 'Kočikáreň a ulica' },
+        { type: 'paragraph', text: 'Amatérsky som strihal rodičov a kamarátov – v kočikárni, v blokoch a dokonca aj pod bránami na ulici. Tam som sa učil to najdôležitejšie: <strong>improvizovať</strong>.' },
+        { type: 'paragraph', text: 'V roku <strong>2009</strong> som nastúpil do prvého salónu. Z kurzu som si veľa neodniesol, tak som improvizoval. Naučil som sa však lekciu života: <em>úsmev a komunikácia sú rovnako ostré zbrane ako nožnice.</em>' },
+        { type: 'paragraph', text: '<strong>2010:</strong> Stal som sa najmladším kaderníkom v lepšom salóne. Keďže dámske strihy mi ešte nešli, vrhol som sa na pánske účesy a barbering.' },
+        { type: 'heading-level-3', text: '2011: Taliansko a návrat domov' },
+        { type: 'paragraph', text: 'Odišiel som do Talianska splniť si sen. Prácu som nenašiel, ale tých 10 mesiacov ma naučilo <strong>húževnatosti</strong>. Vrátil som sa domov s jasným plánom: dostať sa do najlepšieho salónu v meste.' },
+        { type: 'quote', text: 'Na pohovor som vošiel sebavedome, s „talianskym prízvukom“, aby som pôsobil svetovo. Šéf ma posadil k prvému klientovi… a prijali ma hneď v ten deň.' },
+
+        { type: 'heading', text: 'Módne prehliadky a vlastný salón (2012 – 2019)' },
+        { type: 'list', items: [
+          '<strong>2012 – štúdium:</strong> V najprestížnejšom salóne v Košiciach som pochopil, že talent nestačí. Investoval som čas a vlastné peniaze do kurzov po celej Európe.',
+          '<strong>2014 – pódium:</strong> Začal som česať módne prehliadky – od Košice Fashion Week až po <strong>Praha Fashion Week</strong>. Mal som vlastné minúty na pódiu, kde som prezentoval trendy.',
+          '<strong>2015 – sen:</strong> Mal som veľkú klientelu a sen o vlastnom priestore. Prestal som míňať, šetril som každý cent a sústredil sa iba na cieľ – otvoriť si raz svoj salón.'
+        ] },
+        { type: 'image', url: 'assets/papi-blog.webp', alt: 'Róbert Papcun pri česaní na módnej prehliadke', width: 600, height: 389 },
+        { type: 'heading-level-3', text: '2018: PAPI HAIR DESIGN' },
+        { type: 'paragraph', text: 'Otvoril som bez investorov. Bez finančnej pomoci. Iba z našetrených peňazí a s čistou víziou. Miesto, kde sa nielen strihá, ale aj inšpiruje.' },
+        { type: 'image', url: 'assets/salon-interior-mirrored.jpg', alt: 'Interiér salónu PAPI HAIR DESIGN', caption: 'Interiér salónu – dizajn, ktorý dýcha atmosférou', width: 477, height: 540 },
+        { type: 'paragraph', text: '<strong>2019:</strong> Začal som sa venovať rozvoju tímu. Lokálne eventy, festivaly a budovanie reputácie značky.' },
+
+        { type: 'heading', text: 'Ambasádor GOLD Haircare (2020 – 2024)' },
+        { type: 'paragraph', text: 'Reprezentujem značku <strong>GOLD Haircare</strong> po celom svete.' },
+        { type: 'list', items: [
+          '<strong>2021:</strong> Učím mladé talenty v bratislavskej akadémii a odovzdávam skúsenosti, tak ako to robili moji mentori pre mňa.',
+          '<strong>2022:</strong> Vystupujem na pódiu na Malorke – jeden z mojich najväčších životných momentov.',
+          '<strong>2023:</strong> Tvoríme vlasové trendy a fotíme kolekcie v európskych metropolách. Salón dostáva nový, reprezentatívny vizuál hodný ambasádora.'
+        ] },
+        { type: 'heading-level-3', text: '2024: Odkaz pre ďalšiu generáciu' },
+        { type: 'quote', text: 'Do salónu som prijal mladého chalana, ktorý <strong>nikdy nedržal nožnice v ruke</strong>. Učil som ho všetko od nuly a sledoval každý deň. Do roka sa z neho stal plnohodnotný barber. Toto je pre mňa úspech – vidieť rásť iných.' },
+
+        { type: 'heading', text: 'Dnes: líder, mentor a inšpirácia' },
+        { type: 'paragraph', text: 'Dnes vediem silný tím a mám radosť z toho, že viacerí ľudia, ktorí u mňa začínali, majú dnes vlastné salóny. Viem, že ich môj príbeh inšpiroval.' },
+        { type: 'paragraph', text: 'Motivujem mladých a školím po celom Česku a Slovensku. Rodina je môj pevný základ – zdroj energie na nové výzvy.' },
+        { type: 'quote', text: 'Sny sa neplnia tým, že čakáš. Plnia sa tým, že vezmeš nožnice do ruky a začneš strihať svoj vlastný osud.' }
+      ],
       imageUrl: "assets/papi.webp",
       author: "Róbert Papcun",
       authorRole: "Founder & Creative Director",

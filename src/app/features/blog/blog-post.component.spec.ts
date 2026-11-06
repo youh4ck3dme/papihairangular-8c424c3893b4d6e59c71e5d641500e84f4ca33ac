@@ -73,7 +73,7 @@ describe('BlogPostComponent', () => {
 
     it('should render post title', () => {
         const compiled = fixture.nativeElement as HTMLElement;
-        const title = compiled.querySelector('h1.title');
+        const title = compiled.querySelector('h1');
         expect(title?.textContent).toContain('Test Post');
     });
 });

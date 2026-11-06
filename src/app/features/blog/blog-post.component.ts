@@ -3,14 +3,12 @@ import {
   ChangeDetectionStrategy,
   inject,
   signal,
-  HostListener,
 } from "@angular/core";
 import { CommonModule, NgOptimizedImage } from "@angular/common";
 import { ActivatedRoute, RouterLink } from "@angular/router";
 import { BlogService } from "../../core/services/blog.service";
 import { BlogPost, ContentBlock } from "../../core/models/blog-post.interface";
 import { SeoService } from "../../core/services/seo.service";
-import { fadeSlideIn, slideInLeft, slideInRight, fadeIn } from "../../core/animations";
 import { SALON_CONTACT } from "../../core/config/salon-contact";
 import { SafeHtmlPipe } from "../../shared/pipes/safe-html.pipe";
 
@@ -21,7 +19,6 @@ import { SafeHtmlPipe } from "../../shared/pipes/safe-html.pipe";
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, RouterLink, SafeHtmlPipe, NgOptimizedImage],
-  animations: [fadeSlideIn, slideInLeft, slideInRight, fadeIn],
 })
 export class BlogPostComponent {
   readonly bookingUrl = SALON_CONTACT.bookingUrl;
@@ -34,17 +31,6 @@ export class BlogPostComponent {
   relatedPosts = signal<BlogPost[]>([]);
   nextPost = signal<BlogPost | undefined>(undefined);
   prevPost = signal<BlogPost | undefined>(undefined);
-  readingProgress = signal(0);
-
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
-    const doc = document.documentElement;
-    const winScroll = doc.scrollTop || document.body.scrollTop;
-    const height = doc.scrollHeight - doc.clientHeight;
-    if (height > 0) {
-      this.readingProgress.set((winScroll / height) * 100);
-    }
-  }
 
   constructor() {
     this.route.paramMap.subscribe(params => {
@@ -56,7 +42,6 @@ export class BlogPostComponent {
   }
 
   processedContent = signal<ContentBlock[]>([]);
-  // ... existing signals
 
   private loadPost(slug: string): void {
     const foundPost = this.blogService.getPostBySlug(slug);

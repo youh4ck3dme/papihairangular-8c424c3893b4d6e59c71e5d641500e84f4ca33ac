@@ -1,40 +1,47 @@
-/* Theme-aware pätička (light default, .dark na <html>) */
+/* Pätička – farby z globálnych tokenov (svetlá aj tmavá téma) */
 :host {
-    --f-bg: #fafaf9;
-    --f-text: #171717;
-    --f-muted: #52525b;
-    --f-border: rgba(23, 23, 23, 0.1);
-    --f-accent: #8a6a12;
-    --gold: #d4af37;
+    --f-bg: var(--surface-alt);
+    --f-text: var(--text);
+    --f-muted: var(--muted);
+    --f-border: var(--border);
+    --f-accent: var(--accent);
     display: block;
-}
-
-:host-context(.dark) {
-    --f-bg: #050505;
-    --f-text: #f5f5f5;
-    --f-muted: #a1a1aa;
-    --f-border: rgba(212, 175, 55, 0.15);
-    --f-accent: #d4af37;
 }
 
 .site-footer {
     background: var(--f-bg);
     color: var(--f-text);
     border-top: 1px solid var(--f-border);
+    padding: 0 var(--pad-x);
 }
 
 .footer-grid {
     display: grid;
     gap: 2.5rem;
-    max-width: 72rem;
+    max-width: var(--container);
     margin: 0 auto;
-    padding: 3.5rem 1.25rem 2.5rem;
+    padding: 3.5rem 0 2.5rem;
 }
 
+/* tablet: kontakt + hodiny vedľa seba, odkazy pod nimi; desktop: 3 stĺpce */
 @media (min-width: 768px) {
     .footer-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 3rem;
+    }
+
+    .footer-grid > section:last-child {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (min-width: 1024px) {
+    .footer-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .footer-grid > section:last-child {
+        grid-column: auto;
     }
 }
 
@@ -220,9 +227,9 @@ a:focus-visible {
 
 /* ---- Bottom ---- */
 .footer-bottom {
-    max-width: 72rem;
+    max-width: var(--container);
     margin: 0 auto;
-    padding: 1.5rem 1.25rem 2rem;
+    padding: 1.5rem 0 2rem;
     border-top: 1px solid var(--f-border);
     text-align: center;
     font-size: 0.875rem;

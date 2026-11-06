@@ -250,10 +250,60 @@ html.dark .status-pill.is-open { color: #4ade80; }
   background: currentColor;
 }
 
+/* ---------- Karta článku (zoznam blogu + súvisiace články) ---------- */
+.post-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.post-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-2px);
+}
+
+.post-card-title {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+
+.post-card-title a:hover {
+  color: var(--accent);
+}
+
+.post-card-perex {
+  flex-grow: 1;
+  margin: 0 0 16px;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--muted);
+}
+
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  margin: 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--muted);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .btn:hover,
   a.feature-card:hover,
-  .feature-card.is-interactive:hover { transform: none; }
+  .feature-card.is-interactive:hover,
+  .post-card:hover { transform: none; }
 }
 
 /* ---------- Full-bleed obal podstránky ----------
@@ -281,6 +331,9 @@ html.dark .status-pill.is-open { color: #4ade80; }
 app-blog-post .text-gold,
 app-blog-post .post-body a {
   color: var(--accent);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 /* Obsah vždy aspoň na výšku okna – päta sa neposúva, kým sa načíta lenivá stránka (CLS) */

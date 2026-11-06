@@ -75,14 +75,12 @@ správe PR. Limity: výkon ≥ 90, prístupnosť ≥ 95, best practices ≥ 95, 
 
 1. **Sekcia recenzií** (Bookio + Google, posúvanie sprava doľava) ešte nie je – zadanie je v projekte (`prompt-recenzie.md`).
    Servisné stránky zatiaľ zobrazujú statický výber recenzií z Bookio (`src/app/core/data/curated-reviews.ts`).
-2. **Príbeh značky** (`/blog/pribeh-znacky`) ešte načítava písma Playfair/Montserrat z Google Fonts a GSAP z cdnjs –
-   kvôli GDPR a rýchlosti ich hostovať lokálne.
-3. **Fotky balíčkov v cenníku** (lookbook) pôsobia ako generované – nahradiť skutočnými fotkami zo salónu.
-4. **Kontaktný formulár** otvára e-mailového klienta (mailto) – bez servera; ak treba odosielanie priamo z webu,
+2. **Fotky balíčkov v cenníku** (lookbook) pôsobia ako generované – nahradiť skutočnými fotkami zo salónu.
+3. **Kontaktný formulár** otvára e-mailového klienta (mailto) – bez servera; ak treba odosielanie priamo z webu,
    doplniť serverovú funkciu (napr. Vercel Function + e-mailová služba).
-5. **Domovská stránka – LCP** ~2,6 s na simulovanom pomalom 4G (cieľ 2,5 s). Ďalšie zlepšenie: menší nadpis/písmo v hero,
+4. **Domovská stránka – LCP** ~2,6 s na simulovanom pomalom 4G (cieľ 2,5 s). Ďalšie zlepšenie: menší nadpis/písmo v hero,
    prípadne odložiť načítanie časti JavaScriptu.
-6. Push notifikácie (VAPID) sú v kóde pripravené, ale nepoužívajú sa.
+5. Push notifikácie (VAPID) sú v kóde pripravené, ale nepoužívajú sa.
 
 ## Návrat späť
 - Vercel: Deployments → predchádzajúci produkčný deployment → „Instant Rollback“.

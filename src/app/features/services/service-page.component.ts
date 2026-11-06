@@ -65,7 +65,8 @@ export interface ServicePageConfig {
       </section>
 
       <section class="page-section" aria-labelledby="prices-title">
-        <div class="container-site prices-wrap">
+        <div class="container-site">
+          <div class="prices-wrap">
           <h2 id="prices-title" class="h2">Ceny</h2>
           <ul class="feature-card service-prices">
             @for (i of items(); track i.name) {
@@ -77,6 +78,7 @@ export interface ServicePageConfig {
           </ul>
           <p class="sp-note">{{ c.priceNote || 'Ceny sú orientačné, konečnú cenu upresníme pri konzultácii.' }}
             <a routerLink="/cennik" class="inline-link">Celý cenník</a></p>
+          </div>
         </div>
       </section>
 
@@ -115,7 +117,7 @@ export interface ServicePageConfig {
     .from-price strong { margin-left: 6px; font-size: 24px; color: var(--text); }
     .intro { display: grid; gap: 32px; align-items: center; }
     .intro-img { width: 100%; max-width: 480px; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius); display: block; }
-    @media (min-width: 900px) { .intro { grid-template-columns: 7fr 5fr; gap: 64px; } .intro-img { max-width: none; } }
+    @media (min-width: 1024px) { .intro { grid-template-columns: 7fr 5fr; gap: 64px; } .intro-img { max-width: none; } }
     .benefits { display: grid; gap: 16px; margin-top: 24px; }
     @media (min-width: 768px) { .benefits { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; } }
     .benefit-text { margin: 0; font-size: 15px; line-height: 24px; }
