@@ -1,33 +1,18 @@
-# Multi-stage build for Angular application
+# PAPI HAIR DESIGN – statický web (Angular prerendering) servovaný cez nginx.
 
-# Stage 1: Build the Angular app
-FROM node:18-alpine AS build
-
+# 1) build
+FROM node:22-alpine AS build
 WORKDIR /app
-
-# Copy package files
-COPY package*.json ./
-
-# Install dependencies
-RUN npm ci
-
-# Copy source code
+RUN corepack enable && corepack prepare pnpm@8.15.0 --activate
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
 COPY . .
+# environment súbory (len verejné hodnoty) + sitemap + build + 404.html
+RUN node scripts/ensure-env.mjs && pnpm run build:prod
 
-# Build the application
-RUN npm run build
-
-# Stage 2: Serve with nginx
+# 2) nginx
 FROM nginx:alpine
-
-# Copy built app from build stage
-COPY --from=build /app/dist /usr/share/nginx/html
-
-# Copy custom nginx configuration
+COPY --from=build /app/dist/app/browser /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-# Expose port 80
-EXPOSE 80
-
-# Start nginx
+EXPOSE 80 443
 CMD ["nginx", "-g", "daemon off;"]

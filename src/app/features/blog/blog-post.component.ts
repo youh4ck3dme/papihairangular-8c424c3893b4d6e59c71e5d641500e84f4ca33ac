@@ -3,18 +3,14 @@ import {
   ChangeDetectionStrategy,
   inject,
   signal,
-  HostListener,
 } from "@angular/core";
 import { CommonModule, NgOptimizedImage } from "@angular/common";
 import { ActivatedRoute, RouterLink } from "@angular/router";
 import { BlogService } from "../../core/services/blog.service";
 import { BlogPost, ContentBlock } from "../../core/models/blog-post.interface";
 import { SeoService } from "../../core/services/seo.service";
-import { fadeSlideIn, slideInLeft, slideInRight, fadeIn } from "../../core/animations";
-import { BlogComments } from "./blog-comments/blog-comments";
-import { LazyImageDirective } from "../../shared/directives";
+import { SALON_CONTACT } from "../../core/config/salon-contact";
 import { SafeHtmlPipe } from "../../shared/pipes/safe-html.pipe";
-import { effect } from "@angular/core";
 
 @Component({
   selector: "app-blog-post",
@@ -22,10 +18,10 @@ import { effect } from "@angular/core";
   styleUrls: ["./blog-post.component.css"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, RouterLink, BlogComments, LazyImageDirective, SafeHtmlPipe, NgOptimizedImage],
-  animations: [fadeSlideIn, slideInLeft, slideInRight, fadeIn],
+  imports: [CommonModule, RouterLink, SafeHtmlPipe, NgOptimizedImage],
 })
 export class BlogPostComponent {
+  readonly bookingUrl = SALON_CONTACT.bookingUrl;
   private route = inject(ActivatedRoute);
   private blogService = inject(BlogService);
   private seoService = inject(SeoService);
@@ -35,32 +31,8 @@ export class BlogPostComponent {
   relatedPosts = signal<BlogPost[]>([]);
   nextPost = signal<BlogPost | undefined>(undefined);
   prevPost = signal<BlogPost | undefined>(undefined);
-  readingProgress = signal(0);
-
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
-    const doc = document.documentElement;
-    const winScroll = doc.scrollTop || document.body.scrollTop;
-    const height = doc.scrollHeight - doc.clientHeight;
-    if (height > 0) {
-      this.readingProgress.set((winScroll / height) * 100);
-    }
-  }
 
   constructor() {
-    // Re-load post when slug changes
-    effect(() => {
-      const params = this.route.snapshot.paramMap;
-      const slug = params.get("slug");
-
-      if (slug) {
-        this.loadPost(slug);
-      }
-    }, { allowSignalWrites: true });
-
-    // Fallback if effect doesn't catch initial load correctly in some edge cases
-    // but snapshot in constructor usually works for first hit.
-    // Better: use paramMap observable if we stay on same component.
     this.route.paramMap.subscribe(params => {
       const slug = params.get("slug");
       if (slug) {
@@ -70,7 +42,6 @@ export class BlogPostComponent {
   }
 
   processedContent = signal<ContentBlock[]>([]);
-  // ... existing signals
 
   private loadPost(slug: string): void {
     const foundPost = this.blogService.getPostBySlug(slug);
@@ -104,25 +75,25 @@ export class BlogPostComponent {
       this.relatedPosts.set(this.blogService.getRelatedPosts(slug, 3));
       this.nextPost.set(this.blogService.getNextPost(slug));
       this.prevPost.set(this.blogService.getPrevPost(slug));
-
-      // Scroll to top on navigation
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }
 
+  /** Kanonická URL článku – rovnaká pri prerenderingu aj v prehliadači (žiadne window.location) */
+  private shareUrl(): string {
+    const slug = this.post()?.slug;
+    return encodeURIComponent(`${SALON_CONTACT.siteUrl}/blog/${slug ?? ''}`);
+  }
+
   getFacebookShareUrl(): string {
-    const url = encodeURIComponent(window.location.href);
-    return `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+    return `https://www.facebook.com/sharer/sharer.php?u=${this.shareUrl()}`;
   }
 
   getTwitterShareUrl(): string {
-    const url = encodeURIComponent(window.location.href);
     const text = encodeURIComponent(this.post()?.title || '');
-    return `https://twitter.com/intent/tweet?url=${url}&text=${text}`;
+    return `https://twitter.com/intent/tweet?url=${this.shareUrl()}&text=${text}`;
   }
 
   getWhatsAppShareUrl(): string {
-    const url = encodeURIComponent(window.location.href);
-    return `https://wa.me/?text=${url}`;
+    return `https://wa.me/?text=${this.shareUrl()}`;
   }
 }

@@ -79,17 +79,6 @@ ssh "${VPS_USER}@${VPS_HOST}" << EOF
     fi
 EOF
 
-# --- 3b. PRÍPRAVA PROXY (LOCAL) ---
-log_info "3b/5) Príprava Proxy (Local)..."
-if [ -f "src/proxy/chat.php" ]; then
-    log_success "Proxy skript 'src/proxy/chat.php' existuje."
-    # Simulácia kopírovania
-    mkdir -p "${LOCAL_DIST}/proxy"
-    cp src/proxy/chat.php "${LOCAL_DIST}/proxy/"
-else
-    log_error "Proxy skript chýba!"
-fi
-
 # --- 4. SIMULÁCIA RSYNC (DRY RUN) ---
 log_info "4/5) Simulácia prenosu súborov (rsync --dry-run)..."
 # --dry-run nevykoná žiadne zmeny, len vypíše čo by sa stalo

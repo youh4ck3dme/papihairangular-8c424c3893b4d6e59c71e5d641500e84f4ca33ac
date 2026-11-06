@@ -1,637 +1,344 @@
-/* Blog post styles */
-
-.post-detail {
-  font-family: "Inter", sans-serif;
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 1.5rem;
-
-  /* White card style */
-  background: #ffffff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e5e7eb;
-
-  opacity: 0;
-  animation: fadeIn 0.6s ease forwards;
+/* Článok blogu – rovnaký mriežkový systém a typografia ako podstránky (tokens + components.css) */
+:host {
+  display: block;
 }
 
-/* 
-   Explicitly reduced heading sizes for Blog Post Only 
-   (User Request: reduce by ~15px)
-*/
-
-/* 3D Text Shadow Definition */
-/* Creates a deep, static parallax-like depth effect (Reduced by 30%) */
-.post-header .title,
-.post-body h2.title,
-.post-body h3.title,
-.post-body h4.title {
-  text-shadow:
-    0 1px 0 #ccc,
-    0 2px 0 #c9c9c9,
-    0 3px 0 #bbb,
-    /* Reduced depth layers */
-    0 4px 1px rgba(0, 0, 0, .1),
-    0 0 5px rgba(0, 0, 0, .1),
-    0 1px 3px rgba(0, 0, 0, .3),
-    0 3px 5px rgba(0, 0, 0, .2),
-    0 7px 7px rgba(0, 0, 0, .2),
-    0 14px 14px rgba(0, 0, 0, .15);
-  transform: translateY(-3px);
-  /* Reduced lift from -5px to -3px */
-  /* Lift text slightly to enhance 3D effect */
-  transition: all 0.3s ease;
+/* stĺpec na čítanie (~70 znakov na riadok), zarovnaný na stred kontajnera */
+.post-column {
+  max-width: 720px;
+  margin: 0 auto;
 }
 
-/* H1 (Main Title) */
-.post-header .title {
-  font-size: 2.5rem;
-  line-height: 1.2;
-  margin-bottom: 0.5rem;
-  color: #000000;
-  /* Pure Black */
-  font-family: var(--font-primary, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
-  font-weight: 700;
-  letter-spacing: -0.02em;
+/* ---------- Hlavička ---------- */
+.post-hero {
+  background: var(--surface-alt);
+  padding: 32px 0 40px;
 }
 
-/* H2 */
-.post-body h2.title {
-  font-size: 1.75rem;
-  line-height: 1.3;
-  margin-top: 2.5rem;
-  margin-bottom: 1.25rem;
-  color: #000000;
-  /* Pure Black */
-  font-family: var(--font-primary, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--muted);
+}
+
+.breadcrumbs a:hover {
+  color: var(--accent);
+}
+
+.breadcrumbs .current {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--text);
+  font-weight: 600;
+}
+
+.post-title {
+  font-family: var(--font-heading);
+  font-size: 32px;
+  line-height: 38px;
   font-weight: 700;
   letter-spacing: -0.01em;
+  margin: 0 0 16px;
+  color: var(--text);
 }
 
-/* H3 */
-.post-body h3.title {
-  font-size: 1.25rem;
-  line-height: 1.4;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  color: #000000;
-  /* Pure Black */
-  font-family: var(--font-primary, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+.post-lead {
+  font-size: 18px;
+  line-height: 28px;
+  color: var(--muted);
+  margin: 0 0 16px;
+}
+
+.post-byline {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--muted);
+}
+
+.post-byline .name {
   font-weight: 600;
+  color: var(--text);
 }
 
-/* H4 */
-.post-body h4.title {
-  font-size: 1rem;
-  line-height: 1.5;
-  margin-top: 1.5rem;
-  margin-bottom: 0.75rem;
-  color: #000000;
-  /* Pure Black- */
-  font-family: var(--font-primary, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+/* ---------- Obsah ---------- */
+.post-main {
+  padding-top: 32px;
+  padding-bottom: 64px;
+}
+
+.post-image {
+  position: relative;
+  max-width: 960px;
+  margin: 0 auto 40px;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radius);
+}
+
+/* portréty (napr. fotka autora) – tvár je v hornej tretine */
+.post-image img {
+  object-position: center 15%;
+}
+
+.post-body {
+  font-size: 17px;
+  line-height: 28px;
+  color: var(--text);
+}
+
+.post-body p,
+.post-body ul {
+  font-size: inherit;
+  line-height: inherit;
+  margin: 0 0 20px;
+}
+
+.post-body h2 {
+  font-family: var(--font-heading);
+  font-size: 24px;
+  line-height: 30px;
+  font-weight: 700;
+  margin: 48px 0 16px;
+}
+
+.post-body h3 {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 700;
+  margin: 32px 0 12px;
+}
+
+.post-body h4 {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 24px;
+  font-weight: 700;
+  margin: 24px 0 8px;
+}
+
+.post-body ul {
+  padding-left: 0;
+  list-style: none;
+}
+
+.post-body li {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 10px;
+}
+
+.post-body li::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 12px;
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--gold);
+}
+
+.post-body .quote {
+  margin: 32px 0;
+}
+
+.tip-box {
+  padding: 16px 20px;
+  border-left: 3px solid var(--gold);
+  border-radius: 0 12px 12px 0;
+  background: var(--surface-alt);
+}
+
+.post-body figure {
+  margin: 32px 0;
+}
+
+.post-body figure img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+}
+
+.post-body figcaption {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--muted);
+}
+
+/* ---------- Štítky, CTA, zdieľanie ---------- */
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 32px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.post-tags li {
+  padding: 4px 12px;
+  border-radius: 9999px;
+  border: 1px solid var(--border);
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--muted);
+}
+
+.post-cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 40px;
+  padding: 24px;
+  border-radius: var(--radius);
+  background: var(--surface-alt);
+}
+
+.post-cta-text {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 20px;
+  line-height: 26px;
   font-weight: 700;
 }
 
-
-.post-meta {
-  font-size: 0.9rem;
-  color: #4b5563;
-  margin-bottom: 1.5rem;
-}
-
-.post-img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  margin-bottom: 1.5rem;
-  object-fit: cover;
-}
-
-.post-content {
-  line-height: 1.6;
-  color: #1f2937;
-}
-
-.back-link {
-  display: inline-block;
-  margin-top: 2rem;
-  color: #b8860b;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.back-link:hover {
-  text-decoration: underline;
-}
-
-.not-found {
-  font-size: 1.2rem;
-  color: #e74c3c;
-}
-
-.tags {
+.post-share {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  align-items: center;
+  gap: 8px;
+  margin-top: 32px;
 }
 
-.tag {
-  background: rgba(212, 175, 55, 0.1);
-  color: #78350f;
-  /* yellow-900 for contrast */
-  padding: 0.25rem 0.75rem;
-  border-radius: 1rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  border: 1px solid rgba(212, 175, 55, 0.3);
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.tag:hover {
-  background: rgba(212, 175, 55, 0.2);
-  border-color: #78350f;
-}
-
-.related-posts {
-  margin-top: 3rem;
-  padding-top: 2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.related-posts h3 {
-  font-size: 1.5rem;
-  color: #111827;
-  margin-bottom: 1.5rem;
-  text-align: center;
-}
-
-.related-posts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
-}
-
-.related-post-card {
-  display: block;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: var(--radius);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  text-decoration: none;
-  color: inherit;
-}
-
-.related-post-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-}
-
-.related-post-card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  display: block;
-}
-
-.related-post-card h4 {
-  font-size: 1.1rem;
-  margin: 1rem;
-  color: #111827;
-  line-height: 1.4;
-}
-
-.related-post-card p {
-  font-size: 0.9rem;
-  margin: 0 1rem 1rem;
-  color: #4b5563;
-  line-height: 1.5;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.social-share {
-  margin-top: 2rem;
-  padding: 1.5rem;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: var(--radius);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  text-align: center;
-}
-
-.social-share h3 {
-  font-size: 1.25rem;
-  color: #111827;
-  margin-bottom: 1rem;
+.post-share-label {
+  margin-right: 4px;
+  font-size: 14px;
   font-weight: 600;
-}
-
-.share-buttons {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
+  color: var(--muted);
 }
 
 .share-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1rem;
-  background: #f3f4f6;
-  border: 1px solid #d1d5db;
-  border-radius: 0.5rem;
-  color: #374151;
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 9999px;
+  border: 1px solid var(--border);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  transition: border-color 0.2s ease, color 0.2s ease;
 }
 
 .share-btn:hover {
-  background: rgba(255, 215, 0, 0.1);
-  border-color: #ffd700;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border-color: var(--gold);
+  color: var(--accent);
 }
 
-.share-btn.facebook:hover {
-  background: #1877f2;
-  color: white;
-}
-
-.share-btn.twitter:hover {
-  background: #1da1f2;
-  color: white;
-}
-
-.share-btn.instagram:hover {
-  background: linear-gradient(45deg,
-      #f09433 0%,
-      #e6683c 25%,
-      #dc2743 50%,
-      #cc2366 75%,
-      #bc1888 100%);
-  color: white;
-}
-
-.share-btn.whatsapp:hover {
-  background: #25d366;
-  color: white;
-}
-
-.share-btn svg {
-  flex-shrink: 0;
-}
-
-/* Video container for responsive YouTube embeds */
-.video-container {
-  position: relative;
-  padding-bottom: 56.25%;
-  /* 16:9 aspect ratio */
-  height: 0;
-  overflow: hidden;
-  max-width: 100%;
-  margin: 1.5rem 0;
-  border-radius: var(--radius);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.video-container iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-  border-radius: var(--radius);
-}
-
-/* Image gallery styles */
-.image-gallery {
+/* ---------- Predchádzajúci / nasledujúci ---------- */
+.post-nav {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
-  margin: 1.5rem 0;
-  border-radius: var(--radius);
-  overflow: hidden;
+  gap: 16px;
+  margin-top: 48px;
 }
 
-.gallery-image {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: var(--radius);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: var(--shadow-glass);
+.post-nav-card {
+  gap: 4px;
 }
 
-.gallery-image:hover {
-  transform: scale(1.02);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+.post-nav-card.is-next {
+  text-align: right;
 }
 
-/* Content image styles */
-.content-image {
-  width: 100%;
-  max-width: 600px;
-  height: auto;
-  border-radius: var(--radius);
-  margin: 1.5rem 0;
-  box-shadow: var(--shadow-glass);
-  display: block;
+.post-nav-label {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
 }
 
-/* Enhanced responsive design */
-@media (max-width: 640px) {
-  .blog-container {
-    padding: 1rem;
-  }
-
-  .post-header {
-    text-align: center;
-  }
-
-  /* Reduce sizes further on mobile */
-  .post-header .title {
-    font-size: 2rem;
-  }
-
-  .post-body h2.title {
-    font-size: 1.5rem;
-  }
-
-  .post-body h3.title {
-    font-size: 1.15rem;
-  }
-
-  .author-block {
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .social-share {
-    padding: 1rem;
-  }
-
-  .share-buttons {
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .related-posts-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-
-  .related-post-card {
-    padding: 1rem;
-  }
+.post-nav-title {
+  font-weight: 600;
+  line-height: 24px;
 }
 
-@media (min-width: 768px) and (max-width: 1024px) {
-  .blog-container {
-    max-width: 90%;
+/* ---------- Súvisiace články ---------- */
+.related {
+  margin-top: 64px;
+  padding-top: 48px;
+  border-top: 1px solid var(--border);
+}
+
+.related-grid {
+  display: grid;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+/* ---------- Načítavanie / nenájdené ---------- */
+.skeleton {
+  border-radius: 8px;
+  background: var(--border);
+}
+
+.post-missing {
+  padding: 48px 0;
+}
+
+@media (min-width: 768px) {
+  .post-hero {
+    padding: 48px 0 56px;
   }
 
-  .related-posts-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .post-title {
+    font-size: 44px;
+    line-height: 50px;
+  }
+
+  .post-main {
+    padding-top: 48px;
+    padding-bottom: 96px;
+  }
+
+  .post-body {
+    font-size: 18px;
+    line-height: 30px;
+  }
+
+  .post-body h2 {
+    font-size: 28px;
+    line-height: 34px;
+  }
+
+  .post-nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .post-nav-card.is-next:only-child {
+    grid-column: 2;
+  }
+
+  .related-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (min-width: 1024px) {
-  .related-posts-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-/* Smooth transitions for all elements */
-.blog-container,
-.post-header,
-.post-body,
-.social-share,
-.related-post-card,
-.share-btn,
-.tag {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Enhanced hover effects */
-.related-post-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-}
-
-.share-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-}
-
-/* Loading state improvements */
-.animate-pulse {
-  animation: enhanced-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-@keyframes enhanced-pulse {
-
-  0%,
-  100% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0.6;
-  }
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .image-gallery {
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
-  }
-
-  .gallery-image {
-    height: 150px;
-  }
-
-  .video-container {
-    margin: 1rem 0;
-  }
-
-  .content-image {
-    margin: 1rem 0;
-  }
-}
-
-/* Post Navigation Styles */
-.post-navigation {
-  display: flex;
-  justify-content: space-between;
-  gap: 1.5rem;
-  margin-top: 4rem;
-  padding-top: 2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.nav-card {
-  flex: 1;
-  min-width: 240px;
-  background: #f9fafb;
-  border: 1px solid #e5e7eb;
-  padding: 1.5rem;
-  border-radius: 1rem;
-  text-decoration: none;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.nav-card:hover {
-  background: #f3f4f6;
-  border-color: #b8860b;
-  transform: translateY(-4px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
-
-.nav-label {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: #6b7280;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.nav-title {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #111827;
-  line-height: 1.4;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.nav-card.next {
-  text-align: right;
-  align-items: flex-end;
-}
-
-/* Content List Styles */
-.content-list {
-  margin: 1.5rem 0;
-  padding-left: 1.5rem;
-  list-style: none;
-}
-
-.content-list li {
-  position: relative;
-  margin-bottom: 0.75rem;
-  padding-left: 1.5rem;
-  line-height: 1.6;
-}
-
-.content-list li::before {
-  content: "•";
-  position: absolute;
-  left: 0;
-  color: #b8860b;
-  font-weight: bold;
-}
-
-/* Image Block Styles */
-.post-image-block {
-  margin: 2.5rem 0;
-}
-
-.post-image-block figcaption {
-  font-size: 0.9rem;
-  color: #6b7280;
-  text-align: center;
-  margin-top: 0.75rem;
-  font-style: italic;
-}
-
-.content-image {
-  width: 100%;
-  border-radius: 1rem;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-}
-
-/* Reading Progress Bar */
-.reading-progress-container {
-  position: fixed;
-  top: 80px;
-  /* Under fixed header */
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background: transparent;
-  z-index: 1000;
-  pointer-events: none;
-}
-
-.reading-progress-bar {
-  height: 100%;
-  background: linear-gradient(to right, var(--gold-dark), var(--gold-light));
-  box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
-  transition: width 0.1s ease-out;
-}
-
-/* Breadcrumbs */
-.breadcrumbs {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.875rem;
-  color: #6b7280;
-  margin-bottom: 2rem;
-}
-
-.breadcrumbs a {
-  color: #6b7280;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.breadcrumbs a:hover {
-  color: #b8860b;
-}
-
-.breadcrumbs .separator {
-  color: #9ca3af;
-}
-
-.breadcrumbs .current {
-  color: #111827;
-  font-weight: 600;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 200px;
-}
-
-@media (max-width: 768px) {
-  .reading-progress-container {
-    top: 64px;
-    /* Mobile header height */
-  }
-
-  .breadcrumbs .current {
-    max-width: 150px;
+  .related-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }

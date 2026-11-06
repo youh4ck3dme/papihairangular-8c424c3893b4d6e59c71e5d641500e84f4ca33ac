@@ -1,182 +1,261 @@
+/* Karty služieb – mobil: karusel, tablet: 2×3, desktop: 3×2. Výška = výška rodiča (100dvh sekcia). */
 :host {
-    display: block;
-    width: 100%;
-    padding: 4rem 0;
-}
-
-.cards-container {
-    perspective: 1000px;
-}
-
-.card {
-    position: relative;
-    background-color: rgba(20, 20, 20, 0.6);
-    border-radius: 16px;
-    cursor: pointer;
-    height: 100%;
-    min-height: 320px;
+    --card-bg: #ffffff;
+    --card-border: rgba(23, 23, 23, 0.1);
+    --card-text: #171717;
+    --card-muted: #52525b;
+    --card-accent: #8a6a12;
+    --gold: #d4af37;
     display: flex;
     flex-direction: column;
+    min-height: 0;
+}
+
+:host-context(.dark) {
+    --card-bg: #171717;
+    --card-border: rgba(212, 175, 55, 0.15);
+    --card-text: #f5f5f5;
+    --card-muted: #a1a1aa;
+    --card-accent: #d4af37;
+}
+
+/* ---------- Mobil: horizontálny karusel ---------- */
+.cards-grid {
+    flex: 1 1 0;
+    min-height: 0;
+    max-height: 56dvh;
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0 20px;
+    padding: 0 20px;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+}
+
+.cards-grid::-webkit-scrollbar { display: none; }
+
+.cards-grid:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: -3px;
+}
+
+.card-slot {
+    flex: 0 0 82vw;
+    scroll-snap-align: start;
+    min-height: 0;
+}
+
+.dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding-top: 16px;
+    flex: 0 0 auto;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 9999px;
+    background: var(--card-border);
+    transition: width 0.25s ease, background-color 0.25s ease;
+}
+
+:host-context(.dark) .dot { background: rgba(255, 255, 255, 0.2); }
+
+.dot.is-active {
+    width: 24px;
+    background: var(--gold);
+}
+
+/* ---------- Karta ---------- */
+.card {
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    height: 100%;
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    color: var(--card-text);
+    text-align: left;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    transform: translateY(-4px);
+    border-color: var(--gold);
+    box-shadow: 0 16px 40px -20px rgba(0, 0, 0, 0.35);
 }
 
-/* Glow Effect */
+.card:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: -3px;
+}
+
 .card-glow {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y),
-            rgba(212, 175, 55, 0.15),
-            transparent 40%);
+    inset: 0;
+    background: radial-gradient(500px circle at var(--mouse-x, 50%) var(--mouse-y, 0), rgba(212, 175, 55, 0.12), transparent 40%);
     opacity: 0;
     transition: opacity 0.3s;
     pointer-events: none;
-    z-index: 1;
 }
 
-.card:hover .card-glow {
-    opacity: 1;
-}
-
-/* Border Glow */
-.card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y),
-            rgba(212, 175, 55, 0.4),
-            transparent 40%);
-    opacity: 0;
-    transition: opacity 0.3s;
-    z-index: 0;
-    border-radius: inherit;
-    padding: 1px;
-    /* Border width */
-    -webkit-mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-    mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-}
-
-.card:hover::before {
-    opacity: 1;
-}
+.card:hover .card-glow { opacity: 1; }
 
 .card-content {
     position: relative;
-    z-index: 2;
-    padding: 2.5rem;
-    /* Increased padding for better breathing room */
-    height: 100%;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    background: linear-gradient(180deg, rgba(30, 30, 30, 0.4) 0%, rgba(10, 10, 10, 0.8) 100%);
-    border-radius: 15px;
-    /* Slightly less than parent to fit border */
+    gap: 12px;
+    width: 100%;
+    min-height: 0;
+    padding: 24px;
 }
 
-.card-icon-wrapper {
-    margin-bottom: 2rem;
-    /* Increased spacing below icon */
-    width: 64px;
-    /* Slightly larger icon wrapper */
-    height: 64px;
+.card-head {
     display: flex;
     align-items: center;
+    gap: 12px;
+}
+
+.card-icon {
+    display: inline-flex;
+    align-items: center;
     justify-content: center;
-    background: rgba(212, 175, 55, 0.1);
-    border-radius: 50%;
-    border: 1px solid rgba(212, 175, 55, 0.2);
-    transition: all 0.3s ease;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 9999px;
+    background: rgba(212, 175, 55, 0.14);
+    color: var(--card-accent);
 }
 
-.card:hover .card-icon-wrapper {
-    background: rgba(212, 175, 55, 0.2);
-    transform: scale(1.1);
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
-}
-
-.card-icon-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-    padding: 2px;
-}
-
-.text-content {
-    flex-grow: 1;
-}
-
-.card-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 0.5rem;
-    background: linear-gradient(90deg, #fff, #D4AF37);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+.card-head-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
 }
 
 .card-subtitle {
-    font-size: 0.875rem;
-    color: #D4AF37;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 1.25rem;
-    /* Increased spacing */
-    font-weight: 600;
+    color: var(--card-accent);
+}
+
+.card-title {
+    font-size: 22px;
+    line-height: 28px;
+    font-weight: 700;
+    color: var(--card-text);
 }
 
 .card-description {
-    font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.7);
-    line-height: 1.75;
-    /* Improved readability */
+    font-size: 15px;
+    line-height: 22px;
+    color: var(--card-muted);
+    margin: 0;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    overflow: hidden;
+}
+
+.card-benefits {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+}
+
+.card-benefits li {
+    font-size: 12px;
+    line-height: 16px;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    border: 1px solid var(--card-border);
+    color: var(--card-text);
+    white-space: nowrap;
 }
 
 .card-action {
-    margin-top: 1.5rem;
-    display: flex;
+    margin-top: auto;
+    display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    color: #D4AF37;
+    gap: 6px;
+    min-height: 24px;
+    font-size: 15px;
     font-weight: 600;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.3s ease;
-}
-
-.card:hover .card-action {
-    opacity: 1;
-    transform: translateY(0);
+    color: var(--card-accent);
 }
 
 .arrow-icon {
-    width: 20px;
-    height: 20px;
-    transition: transform 0.3s ease;
+    width: 18px;
+    height: 18px;
+    transition: transform 0.25s ease;
 }
 
-.card:hover .arrow-icon {
-    transform: translateX(5px);
+.card:hover .arrow-icon { transform: translateX(4px); }
+
+/* ---------- Tablet: 2×3, popis na 2 riadky, bez benefitov ---------- */
+@media (min-width: 768px) {
+    .cards-grid {
+        max-height: none;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: repeat(3, minmax(0, 1fr));
+        gap: 24px;
+        overflow: visible;
+        padding: 0;
+        scroll-snap-type: none;
+    }
+
+    .card-slot { min-height: 0; }
+
+    .dots { display: none; }
+
+    .card { border-radius: 24px; }
+
+    .card-description {
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+    }
+
+    .card-benefits { display: none; }
+}
+
+/* ---------- Desktop: 3×2 ---------- */
+@media (min-width: 1024px) {
+    .cards-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-rows: repeat(2, minmax(0, 1fr));
+    }
+
+    /* 1 riadok štítkov – čo sa nezmestí, skryje sa celé (nie orezané v polovici slova) */
+    .card-benefits {
+        display: flex;
+        flex-wrap: wrap;
+        height: 24px;
+        overflow: hidden;
+    }
+}
+
+/* nižšie desktopy – benefity sa nezmestia */
+@media (min-width: 1024px) and (max-height: 820px) {
+    .card-benefits { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .card:hover,
+    .card:hover .arrow-icon { transform: none; }
 }

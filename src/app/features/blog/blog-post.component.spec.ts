@@ -33,17 +33,11 @@ describe('BlogPostComponent', () => {
             'getRelatedPosts',
             'getNextPost',
             'getPrevPost',
-            'getComments',
-            'addComment',
-            'deleteComment'
         ]);
         blogServiceSpy.getPostBySlug.and.returnValue(mockPost);
         blogServiceSpy.getRelatedPosts.and.returnValue([]);
         blogServiceSpy.getNextPost.and.returnValue(undefined);
         blogServiceSpy.getPrevPost.and.returnValue(undefined);
-        blogServiceSpy.getComments.and.returnValue(of([]));
-        blogServiceSpy.addComment.and.returnValue(of('mock-id'));
-        blogServiceSpy.deleteComment.and.returnValue(of(void 0));
 
         const seoServiceSpy = jasmine.createSpyObj('SeoService', ['setBlogPostSeo']);
 
@@ -79,7 +73,7 @@ describe('BlogPostComponent', () => {
 
     it('should render post title', () => {
         const compiled = fixture.nativeElement as HTMLElement;
-        const title = compiled.querySelector('h1.title');
+        const title = compiled.querySelector('h1');
         expect(title?.textContent).toContain('Test Post');
     });
 });

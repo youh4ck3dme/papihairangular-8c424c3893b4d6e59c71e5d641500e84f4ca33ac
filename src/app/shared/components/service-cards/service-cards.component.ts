@@ -1,6 +1,7 @@
-import { Component, ElementRef, ViewChildren, QueryList, AfterViewInit, ChangeDetectionStrategy, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, ChangeDetectionStrategy, inject, signal, ElementRef, viewChild, afterNextRender, DestroyRef } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
+import { NgTemplateOutlet } from '@angular/common';
 
 interface ServiceCard {
     id: number;
@@ -16,15 +17,34 @@ interface ServiceCard {
 @Component({
     selector: 'app-service-cards',
     standalone: true,
-    imports: [CommonModule, RouterLink],
+    imports: [RouterLink, NgTemplateOutlet],
     templateUrl: './service-cards.component.html',
     styleUrls: ['./service-cards.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ServiceCardsComponent implements AfterViewInit {
-    @ViewChildren('card') cards!: QueryList<ElementRef>;
+export class ServiceCardsComponent {
+    private readonly sanitizer = inject(DomSanitizer);
+    private readonly destroyRef = inject(DestroyRef);
+    private readonly scroller = viewChild.required<ElementRef<HTMLElement>>('scroller');
 
-    services = signal<ServiceCard[]>([
+    /** Index karty viditeľnej v mobilnom karuseli (bodky). */
+    readonly active = signal(0);
+
+    constructor() {
+        // afterNextRender beží iba v prehliadači → SSR-safe
+        afterNextRender(() => {
+            const root = this.scroller().nativeElement;
+            const io = new IntersectionObserver(entries => {
+                for (const e of entries) {
+                    if (e.isIntersecting) this.active.set(Number((e.target as HTMLElement).dataset['index']));
+                }
+            }, { root, threshold: 0.6 });
+            root.querySelectorAll('.card-slot').forEach(el => io.observe(el));
+            this.destroyRef.onDestroy(() => io.disconnect());
+        });
+    }
+
+    private readonly data: ServiceCard[] = [
         {
             id: 1,
             icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scissors"><circle cx="6" cy="7" r="3"/><path d="M8.12 8.12 12 12"/><path d="M20 4 8.12 15.88"/><circle cx="6" cy="17" r="3"/><path d="M14.47 14.48 20 20"/><path d="M8.12 15.88 12 12"/></svg>`,
@@ -32,7 +52,7 @@ export class ServiceCardsComponent implements AfterViewInit {
             subtitle: 'Precízny styling',
             description: 'Individuálny prístup k vašim vlasom. Od klasiky po najnovšie trendy, vytvoríme strih, ktorý podčiarkne vašu osobnosť.',
             benefits: ['Konzultácia zdarma', 'Umývanie a styling', 'Profesionálne produkty'],
-            link: '/damske-strihy',
+            link: '/sluzby/damske-strihy',
             external: false
         },
         {
@@ -42,7 +62,7 @@ export class ServiceCardsComponent implements AfterViewInit {
             subtitle: 'Umenie farieb',
             description: 'Špecializujeme sa na techniky Balayage, AirTouch a korekcie farieb. Používame prémiové farby pre zdravý lesk.',
             benefits: ['Balayage & AirTouch', 'Korekcia farieb', 'Prémiové farby'],
-            link: '/damske-strihy',
+            link: '/sluzby/ombre-farbenie',
             external: false
         },
         {
@@ -52,7 +72,7 @@ export class ServiceCardsComponent implements AfterViewInit {
             subtitle: 'Gentleman\'s choice',
             description: 'Kompletná starostlivosť pre mužov. Precízne strihy, úprava brady a rituál s horúcim uterákom.',
             benefits: ['Hot Towel rituál', 'Úprava brady', 'Káva zdarma'],
-            link: '/panske-strihy',
+            link: '/sluzby/panske-strihy',
             external: false
         },
         {
@@ -62,7 +82,7 @@ export class ServiceCardsComponent implements AfterViewInit {
             subtitle: 'Regenerácia',
             description: 'Hĺbková regenerácia pre poškodené vlasy. Keratín, Nová Kúra a hydratačné kúry pre okamžitý efekt.',
             benefits: ['Keratínová kúra', 'Proteínová kúra', 'Hydratačná kúra'],
-            link: '/damske-strihy',
+            link: '/sluzby/damske-strihy',
             external: false
         },
         {
@@ -72,7 +92,7 @@ export class ServiceCardsComponent implements AfterViewInit {
             subtitle: 'Pre výnimočné chvíle',
             description: 'Svadobné a spoločenské účesy, ktoré vydržia celú noc. Skúška účesu a konzultácia v cene.',
             benefits: ['Skúška účesu', 'Dlhotrvajúca fixácia', 'Konzultácia v cene'],
-            link: '/damske-strihy',
+            link: '/sluzby/damske-strihy',
             external: false
         },
         {
@@ -82,25 +102,26 @@ export class ServiceCardsComponent implements AfterViewInit {
             subtitle: 'Domáca starostlivosť',
             description: 'Poradíme vám s výberom profesionálnej kozmetiky na doma, aby vaše vlasy boli krásne každý deň.',
             benefits: ['Gold Haircare', 'Profesionálna kozmetika', 'Odborné poradenstvo'],
-            link: 'http://www.goldhaircare.sk/affiliate/2208',
+            link: 'https://www.goldhaircare.sk/affiliate/2208',
             external: true
         }
-    ]);
+    ];
 
-    ngAfterViewInit() {
-        // Mouse move effect for glow
-        const cardsArray = this.cards.toArray();
+    /**
+     * SVG ikony sú statické reťazce z tohto súboru (nie užívateľský vstup),
+     * preto je bypass bezpečný. Bez neho Angular sanitizer <svg> zahodí –
+     * preto sa predtým na všetkých kartách zobrazovalo rovnaké logo.
+     */
+    readonly services = this.data.map(s => ({
+        ...s,
+        safeIcon: this.sanitizer.bypassSecurityTrustHtml(s.icon) as SafeHtml,
+    }));
 
-        document.addEventListener('mousemove', (e) => {
-            cardsArray.forEach(cardRef => {
-                const card = cardRef.nativeElement;
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-
-                card.style.setProperty('--mouse-x', `${x}px`);
-                card.style.setProperty('--mouse-y', `${y}px`);
-            });
-        });
+    /** Glow efekt len pre kartu pod kurzorom – žiadny globálny document listener (SSR-safe, bez leaku). */
+    onPointerMove(event: PointerEvent): void {
+        const card = event.currentTarget as HTMLElement;
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--mouse-x', `${event.clientX - rect.left}px`);
+        card.style.setProperty('--mouse-y', `${event.clientY - rect.top}px`);
     }
 }

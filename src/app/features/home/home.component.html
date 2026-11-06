@@ -1,426 +1,253 @@
-<div class="text-center">
-
-  <!-- Main Hero Section (Original) -->
-  <section
-    class="hero-section relative min-h-screen flex flex-col items-center justify-center -mt-20 text-white overflow-hidden">
-
-    <div
-      class="relative z-10 max-w-4xl mx-auto px-4 flex-grow flex flex-col items-center justify-center w-full py-10 animate-fade-in">
-      <div class="w-full flex flex-col items-center justify-center mb-6">
-        <!-- Logo -->
-        <img src="/images/logo-header.webp" alt="PAPI HAIR DESIGN Logo"
-          class="hero-logo-center h-auto w-auto max-h-[46vh] md:max-h-[18.4cm] max-w-full -mb-32 md:-mb-32 animate-fade-in object-contain" />
-
-        <h1
-          class="text-4xl md:text-6xl font-bold tracking-wider text-white drop-shadow-lg mb-4 hero-headline-shadow text-center flex flex-col gap-1">
-          <span class="block">Profesionálne</span>
-          <span class="block">Kaderníctvo Košice</span>
-          <!-- <span class="block parallax-3d-text mt-4">PAPI HAIR DESIGN</span> -->
-        </h1>
-
-        <!-- Action Buttons -->
-        <div class="mt-4 mb-8 animate-fade-in-up flex flex-col sm:flex-row gap-4 items-center justify-center">
-          <!-- Reservation Button -->
-          <a href="https://services.bookio.com/papi-hair-design/widget?lang=sk" target="_blank"
-            class="inline-flex items-center gap-2 bg-gold text-brand-dark px-8 py-3 rounded-full font-bold text-lg hover:bg-white transition-all duration-300 shadow-lg hover:shadow-gold/50 transform hover:-translate-y-1">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-            REZERVÁCIE ONLINE
-          </a>
-        </div>
-      </div>
-      <p class="text-lg md:text-xl text-brand-light/90 max-w-2xl mb-8 hero-perex-shadow">
-        Objavte luxusné kaderníctvo v Košiciach, kde sa stretáva precízne remeslo s moderným dizajnom. Ponúkame dámske
-        strihy, farbenie, barber služby a profesionálne produkty pre váš osobný štýl.
+<!-- ============ S1 HERO ============ -->
+<section class="screen hero" aria-labelledby="hero-title">
+  <picture>
+    <source type="image/avif" sizes="100vw"
+      srcset="/assets/hero/salon-interior-768.avif 768w, /assets/hero/salon-interior-1170.avif 1170w" />
+    <source type="image/webp" sizes="100vw"
+      srcset="/assets/hero/salon-interior-768.webp 768w, /assets/hero/salon-interior-1170.webp 1170w" />
+    <img class="hero-bg" src="/assets/hero/salon-interior-1170.webp" alt="" aria-hidden="true" width="1170"
+      height="1324" fetchpriority="high" decoding="async" />
+  </picture>
+  <div class="hero-inner">
+    <div class="hero-stack animate-fade-in">
+      <img src="/images/logo-white.png" alt="" aria-hidden="true" width="394" height="114" class="hero-logo" />
+      <p class="eyebrow hero-eyebrow">Hair studio &amp; Barber · Košice</p>
+      <h1 id="hero-title" class="hero-title">Kaderníctvo Košice</h1>
+      <p class="hero-sub">PAPI HAIR DESIGN</p>
+      <p class="hero-lead">
+        Precízne remeslo a moderný dizajn. Dámske strihy, farbenie, barber a regenerácia vlasov
+        s prémiovými produktmi Gold Haircare.
       </p>
-      <p class="text-base md:text-lg text-brand-light/80 max-w-2xl mb-8 hero-perex-shadow">
-        Viac ako 10 rokov skúseností • Prémiové produkty Gold Haircare • Individuálny prístup • Rezervácie 24/7
-      </p>
-    </div>
-  </section>
-
-  <!-- Hair Diagnosis CTA (Temporarily Hidden)
-  <section
-    class="py-12 bg-gradient-to-r from-brand-dark to-black text-white border-b border-gold/10 relative overflow-hidden">
-    <div class="absolute top-0 right-0 w-64 h-64 bg-gold/5 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none">
-    </div>
-
-    <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
-      <div class="text-center md:text-left">
-        <div class="flex items-center justify-center md:justify-start gap-3 mb-2">
-          <span class="text-2xl">✨</span>
-          <h2 class="text-2xl md:text-3xl font-serif text-gold">Neviete akú službu si vybrať?</h2>
-        </div>
-        <p class="text-brand-light/80 text-lg">Skúste našu online diagnostiku a získajte odporúčanie na mieru za 30
-          sekúnd.</p>
-      </div>
-      <a routerLink="/diagnostika"
-        class="px-8 py-4 bg-white/5 border border-gold/50 text-gold hover:bg-gold hover:text-black font-bold uppercase tracking-widest rounded-xl transition-all transform hover:scale-105 shadow-lg flex items-center gap-2">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-        </svg>
-        Spustiť Diagnostiku
-      </a>
-    </div>
-  </section>
-  -->
-
-  <!-- Profile / About Section -->
-  <section class="min-h-screen flex items-center justify-center bg-black/95 text-white py-20">
-    <div class="max-w-4xl mx-auto px-6 text-center space-y-8">
-      <h2 class="text-3xl md:text-5xl font-bold text-gold mb-2 tracking-wider">PAPI HAIR DESIGN</h2>
-
-      <p class="text-xl md:text-2xl leading-relaxed font-light">
-        Vašou návštevou vás bude sprevádzať <span class="text-gold font-bold">Róbert Papcun</span> – Ambasádor GOLD
-        Haircare Slovakia.
-        S dlhoročnými skúsenosťami, vyškolený elitnými európskymi školiteľmi.
-      </p>
-
-      <p class="text-lg md:text-xl text-brand-light/90 leading-relaxed">
-        Účastník zahraničných školení i kongresov. Súťažiaci, finalista a výherca lokálnych i zahraničných súťaží.
-        Realizátor vlasových šou, módnych prehliadok, reklamných i módnych spotov, kampaní.
-        Školiteľ dámskych i pánskych strihov.
-      </p>
-
-      <p class="text-lg md:text-xl text-brand-light/90 leading-relaxed">
-        Ponúkame vám kadernícke služby nielen pre dámy ale aj pre pánov – <span class="text-gold">BARBERING</span>.
-        Riešenia poškodených vlasov či vlasovej pokožky. Individuálny prístup a vlasové poradenstvo je súčasťou našich
-        služieb.
-        Pracujeme výhradne s vlasovou kozmetikou značky <span class="text-gold">GOLD Haircare</span>, ktorú si môžete aj
-        osobne zakúpiť.
-      </p>
-
-      <p class="text-2xl md:text-3xl font-serif text-gold italic mt-8">
-        "PAPI HAIR DESIGN vás osloví pozitívnou atmosférou a príjemným prostredím, v ktorom si určite oddýchnete."
-      </p>
-    </div>
-  </section>
-
-  <!-- Real Transformations Section (Temporarily Hidden)
-  <section class="py-20 bg-black text-white border-t border-gold/10">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-16">
-        <h2 class="text-3xl md:text-5xl font-bold text-gold mb-4 tracking-wider">SKUTOČNÉ PREMENY</h2>
-        <p class="text-lg text-brand-light/80 max-w-2xl mx-auto">
-          Pozrite sa, čo dokáže správny strih a farba. Posúvajte slider a objavte zmenu.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-        <div class="space-y-4">
-          <app-before-after-slider beforeImage="assets/images/transformations/blonde-before.webp"
-            afterImage="assets/images/transformations/blonde-after.webp" title="Ice Blonde Correction">
-          </app-before-after-slider>
-          <p class="text-sm text-center text-brand-light/60 italic">
-            "Z mosazných tónov na dokonalú platinovú blond s hĺbkou pri korienkoch."
-          </p>
-        </div>
-
-        <div class="space-y-4">
-          <app-before-after-slider beforeImage="assets/images/transformations/brunette-before.webp"
-            afterImage="assets/images/transformations/brunette-after.webp" title="Caramel Melt">
-          </app-before-after-slider>
-          <p class="text-sm text-center text-brand-light/60 italic">
-            "Dodanie života a dimenzie matným hnedým vlasom pomocou techniky balayage."
-          </p>
-        </div>
-
-        <div class="space-y-4">
-          <app-before-after-slider beforeImage="assets/images/transformations/copper-before.webp"
-            afterImage="assets/images/transformations/copper-after.webp" title="Vibrant Copper">
-          </app-before-after-slider>
-          <p class="text-sm text-center text-brand-light/60 italic">
-            "Výrazná zmena na žiarivú medenú, ktorá rozžiari celú tvár."
-          </p>
-        </div>
-
-      </div>
-
-      <div class="mt-16 text-center">
-        <a routerLink="/cennik"
-          class="inline-block text-gold hover:text-white border-b border-gold hover:border-white transition-colors pb-1">
-          Pozrieť celý cenník premien &rarr;
+      <div class="hero-actions">
+        <a [href]="contact.bookingUrl" target="_blank" rel="noopener" class="btn btn-primary">
+          <svg aria-hidden="true" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          Rezervovať online
+          <span class="sr-only">(otvorí sa v novom okne)</span>
+        </a>
+        <a [href]="contact.phoneHref" class="btn btn-ghost-light">
+          <ng-container *ngTemplateOutlet="icon; context: { $implicit: 'phone' }" />
+          {{ contact.phoneDisplay }}
         </a>
       </div>
     </div>
-  </section>
-  -->
 
-  <!-- Services Section with Glow Cards -->
-  <section
-    class="min-h-screen flex flex-col items-center justify-center bg-black/95 text-white py-20 border-t border-gold/10">
-    <div class="max-w-7xl mx-auto px-6 text-center mb-12">
-      <h2 class="text-3xl md:text-5xl font-bold text-gold mb-6 tracking-wider">NAŠE SLUŽBY</h2>
-      <p class="text-lg md:text-xl text-brand-light/90 max-w-3xl mx-auto">
-        Objavte svet luxusnej starostlivosti. Každá služba je zážitkom, ktorý podčiarkne vašu jedinečnosť.
-      </p>
-    </div>
-
-    <app-service-cards></app-service-cards>
-  </section>
-
-  <!-- Gold Haircare Section -->
-  <section class="min-h-screen flex items-center justify-center bg-black text-white py-20 border-t border-gold/10">
-    <div class="max-w-4xl mx-auto px-6 text-center space-y-8">
-      <h2 class="text-3xl md:text-5xl font-bold text-gold mb-6 tracking-wider">PAPI HAIR DESIGN & GOLD HAIRCARE</h2>
-
-      <p class="text-lg md:text-xl text-brand-light/90 leading-relaxed">
-        Salón a zároveň značka Papi Hair Design vznikla v roku 2017, kaderníkom Róbertom Papcunom, ktorý sa venuje
-        tomuto remeslu od roku 2009.
-      </p>
-
-      <p class="text-lg md:text-xl text-brand-light/90 leading-relaxed">
-        Jeho dlhoročná vášeň ku kaderníckemu umeniu spojila sily so škandinávskou značkou <span class="text-gold">Gold
-          Professional Haircare</span>.
-      </p>
-
-      <p class="text-lg md:text-xl text-brand-light/90 leading-relaxed">
-        V roku 2021 sa tak stal ambasádorom pre Československý trh. Taktiež je tvorcom vlasových kolekcií a súčasťou
-        medzinárodného kreatívneho tímu ambasádorov značky Gold Hair Care Professional.
-      </p>
-    </div>
-  </section>
-
-  <!-- Gold Haircare Story Section -->
-  <section class="min-h-screen flex items-center justify-center bg-black/95 text-white py-20 border-t border-gold/10">
-    <div class="max-w-4xl mx-auto px-6 text-center space-y-8">
-      <h2 class="text-3xl md:text-5xl font-bold text-gold mb-6 tracking-wider">GOLD HAIRCARE</h2>
-
-      <p class="text-lg md:text-xl text-brand-light/90 leading-relaxed">
-        V roku 2009 dánski vizionári – <span class="text-gold">Victor Moreno a Marco Merie</span> – vyzvali svet módy a
-        krásy na zmenu.
-        Vytvorili úplne novú definíciu kvality vlasových produktov – <span class="text-gold">Gold Professional
-          Haircare</span>.
-      </p>
-
-      <p class="text-lg md:text-xl text-brand-light/90 leading-relaxed">
-        Tisíce stylistov po celom svete si vybralo práve značku Gold pre jej výnimočnosť, najvyššiu triedu kvality a
-        značku,
-        ktorá jediná spomedzi ostatných spĺňa prísne opatrenia pre ochranu životného prostredia.
-        Príroda má pre nás zásadný význam, preto všetky jej zložky pochádzajú výlučne z obnoviteľných a udržateľných
-        zdrojov.
-      </p>
-
-      <p class="text-lg md:text-xl text-brand-light/90 leading-relaxed">
-        Gold Professional Haircare je vášňou a poctou kaderníckemu umeniu. Dlhodobý proces neustáleho zlepšovania
-        produktov
-        podporovaný skúsenými škandinávskymi biotechnológmi a kaderníkmi umožnil realizovať spoločnú víziu
-        starostlivosti o vlasy
-        a ich farbenia do budúcnosti.
-      </p>
-
-      <p class="text-lg md:text-xl text-brand-light/90 leading-relaxed">
-        Výrobky šetrné k životnému prostrediu zaručujú krásu, silu a vynikajúcu ochranu vlasov, ktoré sú vystavované
-        dynamickej zmene trendov.
-      </p>
-
-      <!-- Gold Haircare Icons -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-        <div
-          class="flex flex-col items-center space-y-3 p-4 bg-white/5 rounded-lg border border-gold/10 hover:border-gold/30 transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gold" fill="none" viewBox="0 0 24 24"
-            stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-              d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <h3 class="text-xl font-semibold text-gold">Medzinárodná Kvalita</h3>
-          <p class="text-sm text-brand-light/80">Škandinávska precíznosť a svetové štandardy</p>
-        </div>
-        <div
-          class="flex flex-col items-center space-y-3 p-4 bg-white/5 rounded-lg border border-gold/10 hover:border-gold/30 transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gold" fill="none" viewBox="0 0 24 24"
-            stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-              d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-          </svg>
-          <h3 class="text-xl font-semibold text-gold">Prémiové Produkty</h3>
-          <p class="text-sm text-brand-light/80">Exkluzívna starostlivosť pre vaše vlasy</p>
-        </div>
-        <div
-          class="flex flex-col items-center space-y-3 p-4 bg-white/5 rounded-lg border border-gold/10 hover:border-gold/30 transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gold" fill="none" viewBox="0 0 24 24"
-            stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-          </svg>
-          <h3 class="text-xl font-semibold text-gold">Udržateľnosť</h3>
-          <p class="text-sm text-brand-light/80">Ekologické zloženie a ochrana prírody</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Online Store Section -->
-  <section class="py-20 bg-gradient-to-b from-black to-brand-dark text-white border-t border-gold/10">
-    <div class="max-w-4xl mx-auto px-6 text-center">
-      <h2 class="text-3xl md:text-5xl font-bold text-gold mb-8 tracking-wider">PRÉMIOVÁ STAROSTLIVOSŤ</h2>
-
-      <p class="text-lg md:text-xl text-brand-light/90 leading-relaxed mb-12 max-w-3xl mx-auto">
-        Doprajte svojim vlasom profesionálnu starostlivosť aj doma. Ponúkame produkty renomovaných značiek,
-        <span class="text-gold">šampóny, kondicionéry, stylingové produkty</span> a mnoho ďalšieho.
-      </p>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-        <div
-          class="bg-white/5 p-6 rounded-lg border border-gold/10 hover:border-gold/30 transition-all hover:transform hover:-translate-y-1">
-          <div class="h-16 w-16 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gold" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-            </svg>
-          </div>
-          <h3 class="text-lg font-semibold text-white mb-2">Šampóny</h3>
-          <p class="text-sm text-brand-light/70">Pre všetky typy vlasov</p>
-        </div>
-
-        <div
-          class="bg-white/5 p-6 rounded-lg border border-gold/10 hover:border-gold/30 transition-all hover:transform hover:-translate-y-1">
-          <div class="h-16 w-16 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gold" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
-          </div>
-          <h3 class="text-lg font-semibold text-white mb-2">Kondicionéry</h3>
-          <p class="text-sm text-brand-light/70">Hĺbková výživa a lesk</p>
-        </div>
-
-        <div
-          class="bg-white/5 p-6 rounded-lg border border-gold/10 hover:border-gold/30 transition-all hover:transform hover:-translate-y-1">
-          <div class="h-16 w-16 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gold" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-            </svg>
-          </div>
-          <h3 class="text-lg font-semibold text-white mb-2">Styling</h3>
-          <p class="text-sm text-brand-light/70">Pre dokonalý účes</p>
-        </div>
-      </div>
-
-      <a href="http://www.goldhaircare.sk/affiliate/2208" target="_blank"
-        class="inline-flex items-center gap-2 bg-transparent border-2 border-gold text-gold px-8 py-3 rounded-full font-bold text-lg hover:bg-gold hover:text-brand-dark transition-all duration-300">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+    <div class="hero-bottom">
+      <ul class="hero-highlights" aria-label="Prečo PAPI HAIR DESIGN">
+        @for (item of highlights; track item.label) {
+        <li>
+          <span class="hero-highlight-value">{{ item.value }}</span>
+          <span class="hero-highlight-label">{{ item.label }}</span>
+        </li>
+        }
+      </ul>
+      <a href="#o-nas" class="hero-scroll" aria-label="Pokračovať na obsah">
+        <svg aria-hidden="true" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+          stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
         </svg>
-        NAVŠTÍVIŤ E-SHOP
       </a>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- FAQ Section -->
-  <section class="py-20 bg-brand-dark text-white">
-    <div class="max-w-4xl mx-auto px-4">
-      <h2 class="text-3xl md:text-4xl font-bold text-gold text-center mb-12">Často kladené otázky - Kaderníctvo Košice
-      </h2>
+<!-- ============ S2 RÓBERT PAPCUN ============ -->
+<section id="o-nas" class="screen section-base" aria-labelledby="about-title">
+  <div class="screen-inner about-grid">
+    <figure class="about-photo">
+      <img src="/assets/papi.webp" alt="Róbert Papcun – PAPI HAIR DESIGN" width="800" height="1000" loading="lazy"
+        decoding="async" />
+    </figure>
+    <div class="about-text">
+      <p class="eyebrow text-accent">Váš stylista</p>
+      <h2 id="about-title" class="h2">Róbert Papcun „PAPI“</h2>
+      <p class="lead clamp-3">
+        Ambasádor <strong>GOLD Haircare</strong> pre Česko a Slovensko, vyškolený elitnými európskymi
+        školiteľmi. Návštevou vás bude sprevádzať osobne.
+      </p>
+      <ul class="credentials">
+        @for (item of credentials; track item) {
+        <li>
+          <svg aria-hidden="true" class="cred-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+          <span>{{ item }}</span>
+        </li>
+        }
+      </ul>
+      <p class="body about-extra">
+        Strihy pre dámy aj pánov vrátane <strong>barberingu</strong>, riešenia poškodených vlasov a vlasovej pokožky.
+        Pracujeme výhradne s kozmetikou <strong>GOLD Haircare</strong>, ktorú si môžete zakúpiť aj v salóne.
+      </p>
+      <blockquote class="quote">
+        PAPI HAIR DESIGN vás osloví pozitívnou atmosférou a príjemným prostredím, v ktorom si určite oddýchnete.
+      </blockquote>
+    </div>
+  </div>
+</section>
 
-      <div class="space-y-4">
-        <details class="bg-white/10 rounded-lg p-6 border border-gold/20">
-          <summary class="text-xl font-semibold text-gold cursor-pointer hover:text-gold/80 transition-colors">
-            Čo je PAPI HAIR DESIGN v Košiciach?
+<!-- ============ S3 SLUŽBY ============ -->
+<section id="sluzby" class="screen section-alt" aria-labelledby="services-title">
+  <div class="screen-inner services-layout">
+    <header class="services-head">
+      <p class="eyebrow text-accent">Služby</p>
+      <h2 id="services-title" class="h2">Čo pre vás urobíme</h2>
+      <p class="lead services-lead">
+        Každá služba začína konzultáciou. Ceny nájdete v <a routerLink="/cennik" class="inline-link">cenníku</a>.
+      </p>
+    </header>
+    <app-service-cards class="services-cards" />
+  </div>
+</section>
+
+<!-- ============ S4 GOLD HAIRCARE ============ -->
+<section id="gold-haircare" class="screen section-base" aria-labelledby="gold-title">
+  <div class="screen-inner gold-grid">
+    <div class="gold-text">
+      <p class="eyebrow text-accent">Partnerstvo od 2021</p>
+      <h2 id="gold-title" class="h2">PAPI HAIR DESIGN &amp; GOLD Haircare</h2>
+      <p class="body gold-para">
+        Salón a značku PAPI HAIR DESIGN založil v roku 2017 Róbert Papcun, ktorý sa kaderníctvu venuje od roku 2009.
+        V roku 2021 sa stal ambasádorom škandinávskej značky <strong>Gold Professional Haircare</strong> pre
+        československý trh, tvorí vlasové kolekcie a je súčasťou jej medzinárodného kreatívneho tímu.
+      </p>
+      <details class="read-more">
+        <summary>Príbeh značky Gold Haircare</summary>
+        <p class="body">
+          Značku založili v roku 2009 dánski vizionári Victor Moreno a Marco Merie. Vybrali si ju tisíce stylistov po
+          celom svete pre najvyššiu triedu kvality a prísny prístup k ochrane životného prostredia – všetky zložky
+          pochádzajú z obnoviteľných a udržateľných zdrojov.
+        </p>
+      </details>
+    </div>
+
+    <div class="gold-media">
+      <img class="gold-img" src="/assets/salon-interior-mirrored.jpg" alt="Interiér salónu PAPI HAIR DESIGN"
+        width="1200" height="1200" loading="lazy" decoding="async" />
+      <ul class="gold-features">
+        @for (f of goldFeatures; track f.title) {
+        <li class="gold-feature">
+          <span class="feature-icon">
+            <ng-container *ngTemplateOutlet="icon; context: { $implicit: f.icon }" />
+          </span>
+          <span class="gold-feature-title">{{ f.title }}</span>
+        </li>
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ S5 PRODUKTY ============ -->
+<section id="produkty" class="screen section-alt" aria-labelledby="shop-title">
+  <div class="screen-inner products-layout">
+    <p class="eyebrow text-accent">Domáca starostlivosť</p>
+    <h2 id="shop-title" class="h2">Prémiová starostlivosť aj doma</h2>
+    <p class="lead clamp-3 products-lead">
+      Šampóny, kondicionéry a stylingové produkty, ktoré používame v salóne. Poradíme, čo sa hodí práve vašim vlasom.
+    </p>
+    <ul class="product-grid">
+      @for (p of productCategories; track p.title) {
+      <li class="product-card">
+        <span class="feature-icon product-icon">
+          <ng-container *ngTemplateOutlet="icon; context: { $implicit: p.icon }" />
+        </span>
+        <span class="product-body">
+          <span class="product-title">{{ p.title }}</span>
+          <span class="product-text">{{ p.text }}</span>
+        </span>
+      </li>
+      }
+    </ul>
+    <a [href]="contact.shopUrl" target="_blank" rel="noopener sponsored" class="btn btn-outline products-btn">
+      <ng-container *ngTemplateOutlet="icon; context: { $implicit: 'bag' }" />
+      Navštíviť e-shop
+      <span class="sr-only">(otvorí sa v novom okne)</span>
+    </a>
+  </div>
+</section>
+
+<!-- ============ S6 FAQ + KONTAKT ============ -->
+<section id="faq" class="screen section-base" aria-labelledby="faq-title">
+  <div class="screen-inner faq-grid">
+    <div class="faq-col">
+      <p class="eyebrow text-accent">FAQ</p>
+      <h2 id="faq-title" class="h2">Časté otázky</h2>
+      <div class="faq-list">
+        @for (faq of faqs; track faq.question) {
+        <details class="faq-item" name="faq">
+          <summary>
+            <span class="clamp-2">{{ faq.question }}</span>
+            <svg aria-hidden="true" class="faq-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+              stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
           </summary>
-          <div class="mt-4 text-brand-light/90">
-            <p>PAPI HAIR DESIGN je moderné kaderníctvo v Košiciach, kde sa stretáva precízne remeslo s kreatívnym
-              dizajnom. Zakladateľ Róbert Papcun s viac ako 10 rokmi skúseností a jeho tím vytvárajú viac než len účesy
-              – tvoria váš osobný štýl a sebavedomie pomocou prémiových produktov Gold Haircare.</p>
-          </div>
-        </details>
-
-        <details class="bg-white/10 rounded-lg p-6 border border-gold/20">
-          <summary class="text-xl font-semibold text-gold cursor-pointer hover:text-gold/80 transition-colors">
-            Aké služby ponúkate v kaderníctve Košice?
-          </summary>
-          <div class="mt-4 text-brand-light/90">
-            <p>Ponúkame kompletný rozsah kaderníckych služieb v Košiciach: dámske strihy, pánske strihy (barber),
-              farbenie vlasov vrátane balayage a ombré, spoločenské účesy pre svadby, keratínové kúry, regeneráciu
-              poškodených vlasov a profesionálne produkty na starostlivosť o vlasy doma.</p>
-          </div>
-        </details>
-
-        <details class="bg-white/10 rounded-lg p-6 border border-gold/20">
-          <summary class="text-xl font-semibold text-gold cursor-pointer hover:text-gold/80 transition-colors">
-            Ako si môžem objednať termín v kaderníctve PAPI HAIR DESIGN Košice?
-          </summary>
-          <div class="mt-4 text-brand-light/90">
-            <p class="mb-4">Termín v našom kaderníctve v Košiciach si môžete objednať online cez Bookio systém,
-              telefonicky na +421 949 459 624 alebo osobne v salóne. Odporúčame online rezerváciu, kde si môžete vybrať
-              kaderníka, službu a čas, ktorý vám vyhovuje.</p>
-            <p>Pre komplexnejšie služby ako farbenie alebo balayage odporúčame osobnú konzultáciu pred rezerváciou
-              termínu.</p>
-          </div>
-        </details>
-
-        <details class="bg-white/10 rounded-lg p-6 border border-gold/20">
-          <summary class="text-xl font-semibold text-gold cursor-pointer hover:text-gold/80 transition-colors">
-            Aké sú otváracie hodiny kaderníctva v Košiciach?
-          </summary>
-          <div class="mt-4 text-brand-light/90">
-            <p>Otváracie hodiny nášho kaderníctva v Košiciach:</p>
-            <ul class="mt-2 space-y-1">
-              <li>Pondelok - Piatok: 8:00 - 17:00</li>
-              <li>Sobota: podľa objednávok (kontaktujte nás vopred)</li>
-              <li>Nedeľa: zatvorené</li>
+          <div class="faq-answer">
+            @if (faq.list) {
+            <ul>
+              @for (row of faq.list; track row) { <li>{{ row }}</li> }
             </ul>
-            <p class="mt-2">Pre večerné termíny alebo víkendové svadobné účesy nás kontaktujte vopred na telefóne +421
-              949 459 624.</p>
+            }
+            @for (p of faq.answer; track p) { <p>{{ p }}</p> }
           </div>
         </details>
-
-        <details class="bg-white/10 rounded-lg p-6 border border-gold/20">
-          <summary class="text-xl font-semibold text-gold cursor-pointer hover:text-gold/80 transition-colors">
-            Koľko stojí strih vlasov v PAPI HAIR DESIGN Košice?
-          </summary>
-          <div class="mt-4 text-brand-light/90">
-            <p>Ceny našich služieb v kaderníctve Košice začínajú od 15 € za pánsky strih pre deti, 19 € za pánsky strih
-              a 30 € za dámsky strih. Komplexné farbenie stojí od 70 €, balayage od 150 €. Presné ceny závisia od typu
-              služby, dĺžky vlasov a spotreby materiálu. Konečnú cenu vám radi upresníme pri konzultácii.</p>
-          </div>
-        </details>
-
-        <details class="bg-white/10 rounded-lg p-6 border border-gold/20">
-          <summary class="text-xl font-semibold text-gold cursor-pointer hover:text-gold/80 transition-colors">
-            Ponúkate farbenie vlasov a balayage v Košiciach?
-          </summary>
-          <div class="mt-4 text-brand-light/90">
-            <p>Áno, špecializujeme sa na profesionálne farbenie vlasov vrátane moderných techník ako balayage, ombré a
-              melír. Používame prémiové farby Gold Haircare, ktoré sú šetrné k vlasom a poskytujú dlhotrvácny výsledok.
-              Každé farbenie začína diagnostikou stavu vlasov a individuálnym poradenstvom.</p>
-          </div>
-        </details>
-
-        <details class="bg-white/10 rounded-lg p-6 border border-gold/20">
-          <summary class="text-xl font-semibold text-gold cursor-pointer hover:text-gold/80 transition-colors">
-            Máte skúsenosti s regeneráciou poškodených vlasov?
-          </summary>
-          <div class="mt-4 text-brand-light/90">
-            <p>Určite! Regenerácia poškodených vlasov je jedna z našich špecialít v kaderníctve Košice. Ponúkame
-              keratínové kúry, Nová Kúra pre vlasy, hydratačné ošetrenia a profesionálne produkty na domácu
-              starostlivosť.
-              Pomáhame klientom s vlasmi poškodenými farbením, slnkom alebo tepelným stylingom.</p>
-          </div>
-        </details>
-
-        <details class="bg-white/10 rounded-lg p-6 border border-gold/20">
-          <summary class="text-xl font-semibold text-gold cursor-pointer hover:text-gold/80 transition-colors">
-            Ako môžem kontaktovať kaderníctvo PAPI HAIR DESIGN v Košiciach?
-          </summary>
-          <div class="mt-4 text-brand-light/90">
-            <p>Kontaktujte nás v kaderníctve Košice telefonicky na <a href="tel:+421949459624"
-                class="text-gold hover:underline">+421 949 459 624</a>, emailom na <a
-                href="mailto:info@papihairdesign.sk" class="text-gold hover:underline">info@papihairdesign.sk</a> alebo
-              cez kontaktný formulár na webovej stránke. Sledujte nás na Instagrame <a
-                href="https://www.instagram.com/papi_hair_design/" target="_blank"
-                class="text-gold hover:underline">@papi_hair_design</a> pre najnovšie práce a inšpirácie.</p>
-          </div>
-        </details>
+        }
       </div>
     </div>
-  </section>
+
+    <aside class="contact-card" aria-labelledby="contact-title">
+      <h3 id="contact-title" class="contact-title">Kontakt</h3>
+      @if (isBrowser) {
+      <p class="status-pill" [class.is-open]="status().isOpen">
+        <span class="status-dot" aria-hidden="true"></span>
+        {{ status().isOpen ? 'Práve otvorené' : 'Práve zatvorené' }} · dnes {{ todayLabel() }}
+      </p>
+      }
+      <a [href]="contact.mapsUrl" target="_blank" rel="noopener" class="contact-row">
+        <ng-container *ngTemplateOutlet="icon; context: { $implicit: 'pin' }" />
+        <span>{{ contact.address.street }}, {{ contact.address.city }}</span>
+      </a>
+      <a [href]="contact.phoneHref" class="contact-row">
+        <ng-container *ngTemplateOutlet="icon; context: { $implicit: 'phone' }" />
+        <span>{{ contact.phoneDisplay }}</span>
+      </a>
+      <a [href]="'mailto:' + contact.email" class="contact-row">
+        <ng-container *ngTemplateOutlet="icon; context: { $implicit: 'mail' }" />
+        <span>{{ contact.email }}</span>
+      </a>
+      <div class="contact-actions">
+        <a [href]="contact.phoneHref" class="btn btn-outline">Zavolať</a>
+        <a [href]="contact.bookingUrl" target="_blank" rel="noopener" class="btn btn-primary">
+          Rezervovať<span class="sr-only"> (otvorí sa v novom okne)</span>
+        </a>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- Mobilná sticky CTA -->
+<div class="mobile-cta" role="region" aria-label="Rýchla rezervácia">
+  <a [href]="contact.bookingUrl" target="_blank" rel="noopener" class="btn btn-primary flex-1">Rezervovať</a>
+  <a [href]="contact.phoneHref" class="btn btn-ghost-dark" aria-label="Zavolať do salónu">
+    <ng-container *ngTemplateOutlet="icon; context: { $implicit: 'phone' }" />
+  </a>
 </div>
+
+<ng-template #icon let-name>
+  @switch (name) {
+  @case ('globe') { <svg aria-hidden="true" class="ico" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18" /></svg> }
+  @case ('sparkles') { <svg aria-hidden="true" class="ico" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4z" /><path d="M5 3v4M3 5h4M19 17v4M17 19h4" /></svg> }
+  @case ('leaf') { <svg aria-hidden="true" class="ico" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 019.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10z" /><path d="M2 21c0-3 1.9-5.4 5.1-6" /></svg> }
+  @case ('flask') { <svg aria-hidden="true" class="ico" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6L4.5 18.5A1.6 1.6 0 006 21h12a1.6 1.6 0 001.5-2.5L14 9V3" /><path d="M7 15h10" /></svg> }
+  @case ('bolt') { <svg aria-hidden="true" class="ico" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7z" /></svg> }
+  @case ('bag') { <svg aria-hidden="true" class="ico" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" /><path d="M3 6h18M16 10a4 4 0 01-8 0" /></svg> }
+  @case ('phone') { <svg aria-hidden="true" class="ico" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg> }
+  @case ('pin') { <svg aria-hidden="true" class="ico" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg> }
+  @case ('mail') { <svg aria-hidden="true" class="ico" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg> }
+  }
+</ng-template>

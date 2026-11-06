@@ -2,13 +2,22 @@
 
 ## Project Description
 
-PAPI HAIR DESIGN is a modern, responsive web application built with Angular for a premium hair salon located in Košice, Slovakia. The application serves as a comprehensive digital platform for the salon, offering clients an intuitive way to explore services, book appointments, view stylist profiles, browse the gallery, read blog posts, and interact with the salon's social media presence. The project emphasizes user experience with a sleek, mobile-first design using TailwindCSS, and incorporates advanced features like virtual try-on capabilities and AI-powered services through Google Gemini integration.
+PAPI HAIR DESIGN is a modern, responsive web application built with Angular for a premium hair salon located in Košice, Slovakia. The application serves as a comprehensive digital platform for the salon, offering clients an intuitive way to explore services, book appointments, view stylist profiles, browse the gallery, read blog posts, and interact with the salon's social media presence. The project emphasizes user experience with a sleek, mobile-first design using TailwindCSS. Every public page is prerendered to static HTML at build time (fast first paint, full content for search engines) and hydrated in the browser. Booking is handled by Bookio.
 
 ## Repository
 
 **GitHub**: [https://github.com/youh4ck3dme/papihairdesign-angular](https://github.com/youh4ck3dme/papihairdesign-angular)
 
 ## Recent Updates
+
+### Version 3.0.0 - Redesign, Prerendering & AI Removal (November 2026)
+
+- **AI removed**: AI Studio / virtual stylist / diagnostics and all Gemini, OpenAI, Hugging Face and Replicate integrations were deleted. Old URLs (`/ai-studio`, `/ai-stylista`, `/virtualny-stylista`, `/virtual-salon`, `/diagnostika`, `/admin`) redirect 301 to `/`.
+- **Prerendering**: `@angular/build:application` with `outputMode: "static"` – 12 public routes are generated as HTML (`dist/app/browser/<route>/index.html`), unknown URLs get `404.html` with status 404.
+- **Performance**: zoneless change detection, lazy animations, self-hosted fonts (Inter + Syne, Slovak subset), AVIF/WebP hero. Lighthouse mobile: Performance 93–98, Accessibility / Best Practices / SEO 100.
+- **SEO**: unique titles/descriptions, canonical URLs, JSON-LD `HairSalon`, sitemap generated from routes.
+- **Design**: home page in 100dvh sections; all subpages (pricing, about, contact, service pages, blog) use the same design system in light and dark mode.
+- **Tests**: Playwright suite `pnpm run test:site` (security, SEO, prerender, interactions, routes, a11y/axe, home 100dvh) and Lighthouse CI `pnpm run lh`. See [docs/LAUNCH.md](docs/LAUNCH.md).
 
 ### Version 2.0.0 - VPS Migration & AI Studio (January 2026)
 
@@ -62,22 +71,20 @@ PAPI HAIR DESIGN is a modern, responsive web application built with Angular for 
 - **Home Page**: Hero section with salon introduction, Instagram feed integration, and navigation to key sections.
 - **Services & Pricing**: Comprehensive pricing list for women's and men's services.
 - **About Us**: Salon philosophy, team profiles, and company story.
-- **Blog System**: Full archive, individual posts with SEO optimization, and a comment system.
-- **Virtual Try-On**: AI-powered hair styling preview (Currently Disabled).
+- **Blog System**: Full archive and individual posts with SEO optimization.
+- **Service pages**: Ladies' cuts, men's cuts, ombre & balayage – prices from the single price list.
 
 ### Advanced Technology
 
-- **AI Integration**: Google Gemini AI, OpenAI, and Hugging Face integration.
+- **Prerendering + hydration**: static HTML for every public route, hydrated with event replay.
 - **Theme System**: Dynamic light/dark toggle with localStorage persistence (Default: Light).
 - **Service Worker**: PWA capabilities for offline functionality and caching.
-- **Push Notifications**: Browser-based appointment reminders.
 
 ## Technologies Used
 
 - **Framework**: Angular 20.3.x (Standalone Components)
 - **Styling**: TailwindCSS & Vanilla CSS
-- **AI Services**: Google Gemini, OpenAI, Hugging Face
-- **Build Tools**: Angular CLI with esbuild
+- **Build Tools**: Angular CLI (`@angular/build:application`, esbuild, static prerendering)
 - **Infrastructure**: Nginx Reverse Proxy on Ubuntu VPS
 
 ## Development Guide
@@ -104,14 +111,20 @@ To start the local development server with SSL (required for some PWA features):
 pnpm run dev
 
 # Specific evaluation port (Port 6767)
-pnpm ng serve --ssl --proxy-config proxy.conf.json --port 6767
+pnpm ng serve --ssl --port 6767
 ```
 
 ### Building for Production
 
 ```bash
-pnpm run build:prod
+pnpm run build:prod      # sitemap + prerendered build + 404.html → dist/app/browser
+pnpm run serve:dist      # local static server that behaves like Vercel/nginx (port 4300)
+pnpm run test:site       # Playwright: security, SEO, prerender, interactions, routes, a11y, 100dvh
+pnpm run lh              # Lighthouse CI (mobile) on /, /cennik, /kontakt, /sluzby/damske-strihy
 ```
+
+> Static hosting must serve `/<route>/index.html` for `/<route>` and `404.html` (status 404) for unknown URLs –
+> never fall back to `/index.html` (that is the prerendered home page). See `vercel.json` and `nginx.conf`.
 
 ## Deployment
 

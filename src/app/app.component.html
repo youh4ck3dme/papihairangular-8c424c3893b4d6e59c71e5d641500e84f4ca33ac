@@ -1,16 +1,12 @@
-<aside aria-label="Reading progress">
+<aside aria-label="Priebeh čítania">
   <app-scroll-progress></app-scroll-progress>
 </aside>
-<div class="flex flex-col min-h-screen bg-brand-dark pt-safe pb-safe pl-safe pr-safe">
-  @if (showLayout()) {
+<div class="app-shell flex flex-col min-h-screen pt-safe pb-safe pl-safe pr-safe">
   <app-header></app-header>
-  }
-  <main class="flex-grow container mx-auto px-4 py-8 flex flex-col">
+  <main class="app-main flex-grow container mx-auto px-4 py-8 flex flex-col">
     <router-outlet></router-outlet>
   </main>
-  @if (showLayout()) {
   <app-footer></app-footer>
-  }
   <app-notification></app-notification>
   <app-scroll-to-top></app-scroll-to-top>
 </div>

@@ -7,8 +7,9 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Lato', 'sans-serif'],
-                serif: ['Playfair Display', 'serif'],
+                // Inter (text) a Syne (nadpisy) sa načítavajú v index.html; Lato/Playfair sa nikdy nenačítavali
+                sans: ['Inter', 'system-ui', 'sans-serif'],
+                heading: ['Syne', 'Inter', 'system-ui', 'sans-serif'],
             },
             colors: {
                 'gold': '#c59d24', // Slightly darker for better text contrast (orig D4AF37)

@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, DOCUMENT } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
@@ -11,7 +11,20 @@ export interface SeoData {
   keywords?: string;
   ogImage?: string;
   ogType?: string;
+  /** napr. 'noindex, follow' pre 404; predvolene 'index, follow' */
+  robots?: string;
   faqs?: FaqItem[];
+}
+
+const SITE_URL = 'https://papihairdesign.sk';
+const DEFAULT_OG_IMAGE = `${SITE_URL}/images/og-default.jpg`;
+
+/** Skráti text na max. dĺžku na hranici slova (meta description ≤ 155 znakov). */
+function clip(text: string, max: number): string {
+  const t = text.replace(/\s+/g, ' ').trim();
+  if (t.length <= max) return t;
+  const cut = t.slice(0, max - 1);
+  return cut.slice(0, Math.max(cut.lastIndexOf(' '), max - 30)).replace(/[,;:–-]\s*$/, '') + '…';
 }
 
 export interface FaqItem {
@@ -27,6 +40,7 @@ export class SeoService {
   private title = inject(Title);
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
+  private document = inject(DOCUMENT);
 
   private jsonLdElements: HTMLElement[] = [];
 
@@ -44,9 +58,14 @@ export class SeoService {
         mergeMap(route => route.data)
       )
       .subscribe((data: RouteData) => {
-        if (data.seo) {
-          this.setSeoData(data.seo);
-        }
+        // Každá route dostane og:title/description/canonical/robots – aj keď nemá data.seo
+        // (title z route definície, inak by zdieľané odkazy mali titulok domovskej stránky).
+        let snap = this.router.routerState.snapshot.root;
+        while (snap.firstChild) snap = snap.firstChild;
+        // Routes bez seo dát aj bez title (napr. /blog/:slug) si SEO nastavujú v komponente – neprepisovať.
+        if (!data.seo && !snap.title) return;
+        const seo = data.seo ?? {};
+        this.setSeoData({ ...seo, title: seo.title ?? snap.title ?? undefined });
       });
   }
 
@@ -61,23 +80,25 @@ export class SeoService {
     }
 
     if (seoData.description) {
-      this.meta.updateTag({ name: 'description', content: seoData.description });
-      this.meta.updateTag({ property: 'og:description', content: seoData.description });
-      this.meta.updateTag({ name: 'twitter:description', content: seoData.description });
+      const description = clip(seoData.description, 155);
+      this.meta.updateTag({ name: 'description', content: description });
+      this.meta.updateTag({ property: 'og:description', content: description });
+      this.meta.updateTag({ name: 'twitter:description', content: description });
     }
 
     if (seoData.keywords) {
       this.meta.updateTag({ name: 'keywords', content: seoData.keywords });
     }
 
-    if (seoData.ogImage) {
-      this.meta.updateTag({ property: 'og:image', content: seoData.ogImage });
-      this.meta.updateTag({ name: 'twitter:image', content: seoData.ogImage });
-    }
+    const ogImage = seoData.ogImage || DEFAULT_OG_IMAGE;
+    this.meta.updateTag({ property: 'og:image', content: ogImage });
+    this.meta.updateTag({ name: 'twitter:image', content: ogImage });
 
-    // Nastavenie spoločných meta tagov
-    const currentUrl = this.router.url;
-    const fullUrl = `https://papihairdesign.sk${currentUrl}`;
+    this.meta.updateTag({ name: 'robots', content: seoData.robots || 'index, follow' });
+
+    // Canonical bez query parametrov a fragmentu
+    const path = this.router.url.split(/[?#]/)[0];
+    const fullUrl = `${SITE_URL}${path === '/' ? '/' : path.replace(/\/$/, '')}`;
     this.meta.updateTag({ property: 'og:url', content: fullUrl });
     this.meta.updateTag({ property: 'og:type', content: seoData.ogType || 'website' });
     this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
@@ -90,11 +111,11 @@ export class SeoService {
    * Nastaví canonical URL pre správne indexovanie
    */
   setCanonicalUrl(url: string): void {
-    let link = document.querySelector("link[rel='canonical']") as HTMLLinkElement;
+    let link = this.document.querySelector("link[rel='canonical']") as HTMLLinkElement;
     if (!link) {
-      link = document.createElement('link');
+      link = this.document.createElement('link');
       link.setAttribute('rel', 'canonical');
-      document.head.appendChild(link);
+      this.document.head.appendChild(link);
     }
     link.setAttribute('href', url);
   }
@@ -106,10 +127,10 @@ export class SeoService {
     // Odstrániť predchádzajúce JSON-LD elementy
     this.removeJsonLd();
 
-    const script = document.createElement('script');
+    const script = this.document.createElement('script');
     script.type = 'application/ld+json';
     script.text = JSON.stringify(data);
-    document.head.appendChild(script);
+    this.document.head.appendChild(script);
 
     this.jsonLdElements.push(script);
   }
@@ -140,8 +161,9 @@ export class SeoService {
     const baseUrl = 'https://papihairdesign.sk/';
     const absoluteImageUrl = post.imageUrl.startsWith('http') ? post.imageUrl : baseUrl + post.imageUrl;
 
+    const fullTitle = `${post.title} | PAPI HAIR DESIGN`;
     const seoData: SeoData = {
-      title: `${post.title} | PAPI HAIR DESIGN`,
+      title: fullTitle.length <= 60 ? fullTitle : clip(post.title, 60),
       description: post.perex,
       keywords: post.tags.join(', '),
       ogImage: absoluteImageUrl,
@@ -226,7 +248,7 @@ export class SeoService {
    */
   setBlogListSeo(): void {
     const seoData: SeoData = {
-      title: 'Blog | PAPI HAIR DESIGN',
+      title: 'Blog – trendy a tipy na vlasy | PAPI HAIR DESIGN',
       description: 'Objavte najnovšie trendy vo vlasoch, tipy na starostlivosť a inšpiráciu od našich kaderníkov v PAPI HAIR DESIGN.',
       keywords: 'blog, vlasy, kaderníctvo, trendy, tipy, PAPI HAIR DESIGN',
       ogType: 'website'

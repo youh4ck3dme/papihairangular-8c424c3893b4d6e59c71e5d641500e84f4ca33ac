@@ -50,3 +50,13 @@ src/proxy/rate-limit.json
 # .env.production
 # .env.development
 .env*.local
+
+# screenshoty z home-dvh testu
+e2e/screens/
+
+# Lighthouse CI výstupy
+.lighthouseci/
+
+# Playwright výstupy
+test-results/
+playwright-report/

@@ -1,36 +1,26 @@
-import { Component, ChangeDetectionStrategy, inject, PLATFORM_ID, signal } from "@angular/core";
-import { CommonModule, isPlatformBrowser } from "@angular/common";
+import { Component, ChangeDetectionStrategy, inject, PLATFORM_ID } from "@angular/core";
+import { isPlatformBrowser } from "@angular/common";
 import { RouterLink } from "@angular/router";
 import { BusinessHoursService } from "../../../core/services/business-hours.service";
+import { SALON_CONTACT } from "../../../core/config/salon-contact";
 
 @Component({
   selector: "app-footer",
   templateUrl: "./footer.component.html",
   styleUrls: ["./footer.component.css"],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, RouterLink],
+  imports: [RouterLink],
 })
 export class FooterComponent {
-  businessHoursService = inject(BusinessHoursService);
-  platformId = inject(PLATFORM_ID);
+  private readonly businessHoursService = inject(BusinessHoursService);
 
-  openingHours = this.businessHoursService.openingHours;
-  currentStatus = this.businessHoursService.currentStatus;
-  todayIndex = this.businessHoursService.todayIndex;
+  readonly contact = SALON_CONTACT;
+  readonly openingHours = this.businessHoursService.openingHours;
+  readonly currentStatus = this.businessHoursService.currentStatus;
+  readonly todayIndex = this.businessHoursService.todayIndex;
+  /** Stav „otvorené/zatvorené“ a dnešný deň počítame len v prehliadači (SSR by ukázal čas servera). */
+  readonly isBrowser = () => this._isBrowser;
+  private readonly _isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
-  isBrowser = signal(false);
-
-  constructor() {
-    if (isPlatformBrowser(this.platformId)) {
-      this.isBrowser.set(true);
-    }
-  }
-
-  currentYear = new Date().getFullYear();
-
-  socialLinks = {
-    instagram: "https://www.instagram.com/papi_hair_design/",
-    facebook: "https://www.facebook.com/papihairdesign/",
-    tiktok: "https://www.tiktok.com/@papi_hair_design",
-  };
+  readonly currentYear = new Date().getFullYear();
 }

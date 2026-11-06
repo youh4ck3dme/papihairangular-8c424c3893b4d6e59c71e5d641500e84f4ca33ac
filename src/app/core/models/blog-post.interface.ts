@@ -15,11 +15,14 @@ export interface BlogPost {
 }
 
 export interface ContentBlock {
-  type: 'paragraph' | 'heading' | 'heading-level-2' | 'heading-level-3' | 'heading-level-4' | 'image' | 'list' | 'list-item' | 'tip-box';
+  type: 'paragraph' | 'heading' | 'heading-level-2' | 'heading-level-3' | 'heading-level-4' | 'image' | 'quote' | 'list' | 'list-item' | 'tip-box';
   data?: string;
   text?: string;
   items?: string[];
   url?: string;
   alt?: string;
   caption?: string;
+  /** rozmery obrázka (bez nich obsah pri načítaní poskakuje) */
+  width?: number;
+  height?: number;
 }

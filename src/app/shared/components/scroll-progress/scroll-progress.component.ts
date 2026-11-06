@@ -7,18 +7,20 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   template: `
     <div class="scroll-progress-container">
-      <div 
+      <div
         class="scroll-progress-bar"
-        [style.width.%]="scrollProgress()"
+        [style.transform]="'scaleX(' + scrollProgress() / 100 + ')'"
         role="progressbar"
-        [attr.aria-valuenow]="scrollProgress()"
+        [attr.aria-valuenow]="scrollProgress() | number: '1.0-0'"
         aria-valuemin="0"
         aria-valuemax="100"
-        aria-label="Reading progress"
+        aria-label="Priebeh čítania"
       ></div>
     </div>
   `,
   styles: [`
+    /* Iba transform (kompozitor) – žiadna nekonečná animácia ani backdrop-filter,
+       ktoré predtým prekresľovali stránku v každom snímku (TBT). */
     .scroll-progress-container {
       position: fixed;
       top: 0;
@@ -27,33 +29,20 @@ import { CommonModule } from '@angular/common';
       height: 4px;
       background: rgba(0, 0, 0, 0.1);
       z-index: 9999;
-      backdrop-filter: blur(10px);
+      pointer-events: none;
     }
 
     .scroll-progress-bar {
       height: 100%;
-      background: linear-gradient(
-        90deg,
-        #d4af37 0%,
-        #f4c542 25%,
-        #d4af37 50%,
-        #c9a961 75%,
-        #d4af37 100%
-      );
-      background-size: 200% 100%;
-      animation: shimmer 3s linear infinite;
-      transition: width 0.1s ease-out;
-      box-shadow: 0 0 10px rgba(212, 175, 55, 0.5),
-                  0 0 20px rgba(212, 175, 55, 0.3);
+      background: linear-gradient(90deg, #d4af37 0%, #f4c542 50%, #c9a961 100%);
+      transform-origin: 0 50%;
+      transform: scaleX(0);
+      transition: transform 0.1s ease-out;
+      will-change: transform;
     }
 
-    @keyframes shimmer {
-      0% {
-        background-position: 200% 0;
-      }
-      100% {
-        background-position: -200% 0;
-      }
+    @media (prefers-reduced-motion: reduce) {
+      .scroll-progress-bar { transition: none; }
     }
 
     /* Dark mode support */

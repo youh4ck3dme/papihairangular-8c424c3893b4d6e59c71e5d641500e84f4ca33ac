@@ -1,162 +1,915 @@
-/* Center hero logo horizontally */
-.hero-logo-center {
+/* =========================================================
+   HOME – 1 sekcia = 1 obrazovka (100dvh), mriežka 8px
+   --header-h a --cta-h sú v src/styles.css (:root)
+   ========================================================= */
+:host {
+  /* aliasy na globálne tokeny zo src/styles/tokens.css (light/dark sa prepína tam) */
+  --home-bg: var(--surface);
+  --home-bg-alt: var(--surface-alt);
+  --home-text: var(--text);
+  --home-muted: var(--muted);
+  --home-border: var(--border);
+  --home-card: var(--card);
+  --home-accent: var(--accent);
+  --pad-x: 20px;
+  --pad-y: 24px;
+  --radius: 16px;
+
   display: block;
-  margin-left: auto;
-  margin-right: auto;
-  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
-}
-
-/* Fade-in animation for logo */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in {
-  animation: fadeIn 1s ease-out;
-}
-
-/* Text shadow for hero headline */
-.hero-headline-shadow {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-}
-
-/* Text shadow for hero perex */
-.hero-perex-shadow {
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
-}
-
-.hero-section {
-  /* Full-bleed container breakout */
+  /* <main> má container + px-4 + py-8 → full-bleed a vytiahnutie pod sticky header */
   width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-top: calc(-2rem - var(--header-h));
+  margin-bottom: -2rem;
+  background: var(--home-bg);
+}
+
+@media (min-width: 768px) {
+  :host {
+    --pad-x: 48px;
+    --pad-y: 48px;
+    --radius: 24px;
+  }
+}
+
+/* ---------- Screen (sekcia) ---------- */
+.screen {
   position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-  overflow: hidden; /* Ensure animation doesn't cause scrollbars */
+  box-sizing: border-box;
+  height: 100vh;
+  height: 100dvh;
+  padding-top: var(--header-h);
+  padding-bottom: calc(var(--cta-h) + env(safe-area-inset-bottom));
+  overflow: hidden;
+  display: flex;
+  scroll-snap-align: start;
+  color: var(--home-text);
 }
 
-/* Background Image with Ken Burns Effect */
-.hero-section::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url("/assets/salon-interior.webp");
-  background-size: cover;
-  background-position: center;
-  z-index: 0; /* Behind content but same level as overlay */
-  
-  /* Micro-animation: Slow Zoom (Ken Burns) */
-  animation: ken-burns 20s ease-in-out infinite alternate;
-}
-
-@keyframes ken-burns {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(1.1);
+@media (min-width: 768px) {
+  .screen {
+    padding-bottom: 0;
   }
 }
 
-/* Add a dark overlay for better text readability */
-.hero-section::before {
+/* nízke obrazovky (landscape mobil) – radšej rast ako orezanie */
+@media (max-height: 640px) {
+  .screen {
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: visible;
+  }
+}
+
+.section-base {
+  background: var(--home-bg);
+}
+
+.section-alt {
+  background: var(--home-bg-alt);
+}
+
+.screen-inner {
+  box-sizing: border-box;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  max-width: calc(1200px + 2 * var(--pad-x));
+  margin: 0 auto;
+  padding: var(--pad-y) var(--pad-x);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Typografia (.eyebrow, .h2, .lead, .body, .clamp-*) a tlačidlá (.btn, .btn-primary,
+   .btn-outline) sú globálne v src/styles/components.css. Tu sú len varianty pre home. */
+a:focus-visible,
+summary:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.btn-ghost-light {
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  color: #fff;
+  backdrop-filter: blur(6px);
+}
+
+.btn-ghost-light:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.btn-ghost-dark {
+  border: 1px solid var(--home-border);
+  color: var(--home-text);
+  width: 48px;
+  padding: 0;
+}
+
+/* =========================================================
+   S1 HERO
+   ========================================================= */
+.hero {
+  color: #fff;
+  background: #0a0a0a;
+  text-align: center;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
+  inset: 0;
   z-index: 1;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.85) 100%);
 }
 
-@keyframes pulse-shadow {
-
-  0%,
-  100% {
-    /* Corresponds to shadow-lg with gold color */
-    box-shadow: 0 10px 15px -3px rgba(212, 175, 55, 0.2),
-      0 4px 6px -4px rgba(212, 175, 55, 0.2);
-  }
-
-  50% {
-    /* A slightly larger, more intense shadow */
-    box-shadow: 0 20px 25px -5px rgba(212, 175, 55, 0.3),
-      0 8px 10px -6px rgba(212, 175, 55, 0.3);
-  }
-}
-
-.btn-pulse-shadow {
-  animation: pulse-shadow 3s ease-in-out infinite;
-}
-
-/* FAQ Styles */
-details {
-  transition: all 0.3s ease;
-}
-
-details[open] {
-  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.15);
-}
-
-details summary {
-  list-style: none;
+.hero-inner {
   position: relative;
+  z-index: 2;
+  box-sizing: border-box;
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  padding: 16px var(--pad-x) 24px;
 }
 
-details summary::-webkit-details-marker {
+.hero-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-logo {
+  height: 56px;
+  width: auto;
+  object-fit: contain;
+  margin-bottom: 16px;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+}
+
+.hero-eyebrow {
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+
+.hero-title {
+  /* 40px podľa zadania; na 360px je Syne široký → max 9vw, aby „Kaderníctvo“ nepretieklo */
+  font-size: min(40px, 9vw);
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #fff;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+  margin: 0 0 8px;
+}
+
+.hero-sub {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  margin: 0 0 16px;
+}
+
+.hero-lead {
+  max-width: 340px;
+  font-size: 16px;
+  line-height: 26px;
+  color: rgba(255, 255, 255, 0.88);
+  margin: 0 0 24px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+}
+
+.hero-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 340px;
+}
+
+.hero-actions .btn {
+  width: 100%;
+}
+
+.hero-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero-highlights {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  width: 100%;
+  max-width: 560px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.hero-highlights li {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hero-highlight-value {
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 800;
+  color: var(--gold);
+}
+
+.hero-highlight-label {
+  font-size: 12px;
+  line-height: 16px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.hero-scroll {
+  display: none;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 8px;
+  animation: bob 2.4s ease-in-out infinite;
+}
+
+@media (min-width: 768px) {
+  .hero-logo { height: 96px; }
+
+  .hero-title {
+    font-size: 56px;
+    line-height: 60px;
+  }
+
+  .hero-lead {
+    max-width: 600px;
+    font-size: 18px;
+    line-height: 30px;
+  }
+
+  .hero-actions {
+    flex-direction: row;
+    justify-content: center;
+    gap: 16px;
+    max-width: none;
+  }
+
+  .hero-actions .btn { width: auto; }
+
+  .hero-highlight-value {
+    font-size: 28px;
+    line-height: 32px;
+  }
+
+  .hero-highlight-label {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .hero-scroll { display: inline-flex; }
+}
+
+@media (min-width: 1024px) {
+  .hero-title {
+    font-size: 72px;
+    line-height: 76px;
+    white-space: nowrap;
+  }
+}
+
+@keyframes bob {
+  50% { transform: translateY(6px); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+
+.animate-fade-in { animation: fadeIn 0.8s ease-out both; }
+
+/* =========================================================
+   S2 RÓBERT PAPCUN
+   ========================================================= */
+.about-grid {
+  justify-content: flex-start;
+  gap: 16px;
+}
+
+.about-photo {
+  flex: 1 1 0;
+  min-height: 96px;
+  max-height: 34dvh;
+  margin: 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.about-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  display: block;
+}
+
+.about-text {
+  flex: 0 0 auto;
+}
+
+.credentials {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 0;
+}
+
+.credentials li {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--home-bg-alt);
+  border: 1px solid var(--home-border);
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.cred-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--home-accent);
+}
+
+.about-extra,
+.quote {
   display: none;
 }
 
-details summary::after {
-  content: "+";
-  position: absolute;
+.quote {
+  margin: 24px 0 0;
+  padding-left: 20px;
+  border-left: 3px solid var(--gold);
+  font-size: 20px;
+  line-height: 30px;
+  font-style: italic;
+  color: var(--home-text);
+}
+
+@media (min-width: 768px) {
+  .about-grid {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: 48px;
+    align-items: center;
+    align-content: center;
+  }
+
+  /* fotka vyplní svoj stĺpec (predtým bola širšia a prekrývala text vedľa) */
+  .about-photo {
+    flex: none;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    max-height: min(calc(100dvh - var(--header-h) - 128px), 640px);
+  }
+
+  .about-photo img { object-position: center top; }
+
+  .credentials { gap: 12px; }
+
+  .credentials li {
+    padding: 16px;
+    font-size: 15px;
+    line-height: 22px;
+  }
+
+  .quote { display: block; }
+}
+
+@media (min-width: 1024px) {
+  .about-grid { gap: 64px; }
+
+  .credentials li {
+    padding: 24px;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .cred-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .about-extra {
+    display: block;
+    margin: 24px 0 0;
+  }
+}
+
+/* na nižších desktopoch (napr. 1366×768) sa extra odsek nezmestí */
+@media (min-width: 1024px) and (max-height: 900px) {
+  .about-extra { display: none; }
+}
+
+/* =========================================================
+   S3 SLUŽBY
+   ========================================================= */
+.services-layout {
+  justify-content: flex-start;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.services-head {
+  padding: 0 var(--pad-x);
+  text-align: center;
+  flex: 0 0 auto;
+}
+
+.services-head .lead {
+  margin-bottom: 16px;
+}
+
+.services-cards {
+  flex: 1 1 0;
+  min-height: 0;
+}
+
+@media (min-width: 768px) {
+  .services-layout {
+    padding-left: var(--pad-x);
+    padding-right: var(--pad-x);
+  }
+
+  .services-head {
+    padding: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .services-head {
+    box-sizing: border-box;
+    height: 128px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .services-head .h2 { margin-bottom: 8px; }
+
+  .services-head .lead {
+    margin-bottom: 0;
+    font-size: 16px;
+    line-height: 26px;
+    /* 1 riadok na desktope */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+/* =========================================================
+   S4 GOLD HAIRCARE
+   ========================================================= */
+.gold-grid {
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.gold-text .h2 { margin-bottom: 12px; }
+
+.gold-para {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+.read-more summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--home-accent);
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.read-more[open] .body {
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.gold-media {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.gold-img {
+  flex: 1 1 0;
+  min-height: 80px;
+  max-height: 28dvh;
+  width: 100%;
+  object-fit: cover;
+  border-radius: var(--radius);
+  display: block;
+}
+
+.gold-features {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.gold-feature {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 8px;
+  text-align: center;
+  border-radius: 12px;
+  background: var(--home-card);
+  border: 1px solid var(--home-border);
+}
+
+.gold-feature .feature-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.gold-feature-title {
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 700;
+}
+
+@media (min-width: 768px) {
+  .gold-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+    align-content: center;
+  }
+
+  .gold-para { -webkit-line-clamp: 5; line-clamp: 5; }
+
+  /* obrázok a pod ním tri karty – bez prekrývania a tieňov, rovnako ako na mobile */
+  .gold-media {
+    flex: none;
+    gap: 12px;
+  }
+
+  .gold-img {
+    flex: none;
+    max-height: min(480px, calc(100dvh - var(--header-h) - 96px - 64px - 112px));
+    aspect-ratio: 4 / 3;
+    height: auto;
+    width: 100%;
+  }
+
+  .gold-features { gap: 12px; }
+
+  .gold-feature { padding: 16px 4px; }
+
+  .gold-feature .feature-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .gold-feature-title {
+    font-size: 13px;
+    line-height: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .gold-grid { gap: 64px; }
+
+  .gold-feature { padding: 16px 8px; }
+
+  .gold-feature-title {
+    font-size: 15px;
+    line-height: 20px;
+  }
+}
+
+/* =========================================================
+   S5 PRODUKTY
+   ========================================================= */
+.products-layout {
+  text-align: center;
+  align-items: center;
+}
+
+.products-lead {
+  max-width: 640px;
+  margin-bottom: 24px;
+}
+
+.product-grid {
+  display: grid;
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.product-card {
+  box-sizing: border-box;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 16px;
+  text-align: left;
+  border-radius: 12px;
+  background: var(--home-card);
+  border: 1px solid var(--home-border);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.product-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-2px);
+}
+
+.product-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.product-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-title {
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 700;
+  color: var(--home-text);
+}
+
+.product-text {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--home-muted);
+}
+
+.products-btn { width: 100%; }
+
+@media (min-width: 768px) {
+  .products-lead { margin-bottom: 40px; }
+
+  .product-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    max-width: 1000px;
+    margin-bottom: 40px;
+  }
+
+  .product-card {
+    height: 220px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+    text-align: center;
+    border-radius: var(--radius);
+  }
+
+  .product-icon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .product-icon .ico {
+    width: 28px;
+    height: 28px;
+  }
+
+  .product-title {
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  .products-btn { width: auto; }
+}
+
+/* =========================================================
+   S6 FAQ + KONTAKT
+   ========================================================= */
+.faq-grid {
+  justify-content: flex-start;
+}
+
+.faq-col {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.faq-list {
+  flex: 1 1 0;
+  min-height: 0;
+  /* otvorená odpoveď nesmie pretiecť sekciu → scroll v rámci zoznamu */
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 2px;
+}
+
+.faq-item {
+  flex-shrink: 0;
+  border: 1px solid var(--home-border);
+  border-radius: 12px;
+  background: var(--home-card);
+  transition: border-color 0.2s ease;
+}
+
+.faq-item[open] { border-color: var(--gold); }
+
+.faq-item summary {
+  list-style: none;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--home-text);
+}
+
+.faq-item summary::-webkit-details-marker { display: none; }
+
+.faq-chevron {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--home-accent);
+  transition: transform 0.25s ease;
+}
+
+.faq-item[open] .faq-chevron { transform: rotate(180deg); }
+
+.faq-answer {
+  max-height: 160px;
+  overflow-y: auto;
+  padding: 0 16px 16px;
+  font-size: 15px;
+  line-height: 24px;
+  color: var(--home-muted);
+}
+
+.faq-answer p + p,
+.faq-answer ul + p { margin-top: 8px; }
+
+.faq-answer ul {
+  list-style: disc;
+  padding-left: 20px;
+}
+
+.contact-card { display: none; }
+
+@media (min-width: 1024px) {
+  .faq-grid {
+    display: grid;
+    grid-template-columns: 7fr 5fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  .faq-col {
+    flex: none;
+    max-height: 100%;
+  }
+
+  .faq-list { flex: 0 1 auto; }
+
+  .faq-item summary {
+    min-height: 56px;
+    padding: 8px 20px;
+    font-size: 17px;
+    line-height: 24px;
+  }
+
+  .faq-answer {
+    padding: 0 20px 20px;
+    font-size: 16px;
+    line-height: 26px;
+  }
+
+  .contact-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 32px;
+    border-radius: var(--radius);
+    background: var(--home-bg-alt);
+    border: 1px solid var(--home-border);
+  }
+}
+
+.contact-title {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.contact-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  color: var(--home-text);
+}
+
+.contact-row .ico { color: var(--home-accent); }
+
+.contact-row:hover { color: var(--home-accent); }
+
+.contact-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.contact-actions .btn { padding: 0 16px; }
+
+.contact-card .status-pill {
+  align-self: flex-start;
+  margin-bottom: 8px;
+}
+
+/* =========================================================
+   Mobilná sticky CTA (64px + safe-area)
+   ========================================================= */
+.mobile-cta {
+  position: fixed;
+  left: 0;
   right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #d4af37;
-  transition: transform 0.3s ease;
+  bottom: 0;
+  z-index: 40;
+  box-sizing: border-box;
+  height: calc(64px + env(safe-area-inset-bottom));
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px env(safe-area-inset-bottom);
+  background: color-mix(in srgb, var(--home-bg) 92%, transparent);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--home-border);
 }
 
-details[open] summary::after {
-  content: "−";
-  transform: translateY(-50%) rotate(0deg);
+.mobile-cta .btn { height: 48px; }
+
+@media (min-width: 768px) {
+  .mobile-cta { display: none; }
 }
 
-details summary:hover::after {
-  transform: translateY(-50%) scale(1.1);
-}
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .hero-scroll { animation: none; }
 
-details[open] summary::after {
-  transform: translateY(-50%) scale(1.1);
-}
-
-/* Hero Text Branding */
-.parallax-3d-text {
-  position: relative;
-  display: inline-block;
-  color: #D4AF37; /* PAPI Gold */
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-  letter-spacing: 0.15em;
-  font-weight: 800;
-  text-transform: uppercase;
-}
-
-.parallax-3d-text:hover {
-  color: #FFFFFF;
-  transition: color 0.3s ease;
+  .product-card:hover { transform: none; }
 }

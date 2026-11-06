@@ -1,79 +1,253 @@
-/* Footer component – glass‑morphism and fade‑in */
-
-footer {
-    background: white;
-    animation: fadeIn 0.6s ease forwards;
-    padding: 1rem 0;
+/* Pätička – farby z globálnych tokenov (svetlá aj tmavá téma) */
+:host {
+    --f-bg: var(--surface-alt);
+    --f-text: var(--text);
+    --f-muted: var(--muted);
+    --f-border: var(--border);
+    --f-accent: var(--accent);
+    display: block;
 }
 
-/* Logo Breathing Animation */
-/* Logo - Static & Simple */
-.footer-logo {
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+.site-footer {
+    background: var(--f-bg);
+    color: var(--f-text);
+    border-top: 1px solid var(--f-border);
+    padding: 0 var(--pad-x);
 }
 
-
-/* Dark Mode Adjustments */
-:host-context(.dark) .footer-logo {
-    filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.05));
+.footer-grid {
+    display: grid;
+    gap: 2.5rem;
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 3.5rem 0 2.5rem;
 }
 
-
-
-/* Fade In Animation */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
+/* tablet: kontakt + hodiny vedľa seba, odkazy pod nimi; desktop: 3 stĺpce */
+@media (min-width: 768px) {
+    .footer-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 3rem;
     }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
+    .footer-grid > section:last-child {
+        grid-column: 1 / -1;
     }
 }
 
-/* Premium Link Underline Animation */
-.link-underline {
-    position: relative;
-    display: inline-block;
-    text-decoration: none;
-    background-image: linear-gradient(currentColor, currentColor);
-    background-position: 0% 100%;
-    background-repeat: no-repeat;
-    background-size: 0% 2px;
-    transition: background-size 0.3s ease;
+@media (min-width: 1024px) {
+    .footer-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .footer-grid > section:last-child {
+        grid-column: auto;
+    }
 }
 
-.link-underline:hover {
-    background-size: 100% 2px;
+/* Všetko v pätičke je centrované na každom zariadení */
+.footer-grid > section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-width: 0;
 }
 
-/* Social Icon Micro-Interactions */
-.social-icon {
-    position: relative;
-    overflow: hidden;
+.footer-heading {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--f-accent);
+    margin-bottom: 1.25rem;
 }
 
-.social-icon::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
+.footer-address {
+    font-style: normal;
+    display: grid;
+    justify-items: center;
+    gap: 0.25rem;
+}
+
+.footer-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0.75rem;
+    min-height: 44px;
+    padding: 0.5rem 0;
+    line-height: 1.5;
+    color: var(--f-text);
+    transition: color 0.2s;
+}
+
+.footer-row:hover {
+    color: var(--f-accent);
+}
+
+.footer-row-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+    color: var(--f-accent);
+}
+
+.footer-note {
+    margin-top: 0.75rem;
+    font-size: 0.9rem;
+    color: var(--f-muted);
+}
+
+/* ---- Hours ---- */
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.8rem;
+    margin-bottom: 1rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #b91c1c;
+    background: rgba(220, 38, 38, 0.1);
+}
+
+.status-pill.is-open {
+    color: #15803d;
+    background: rgba(22, 163, 74, 0.12);
+}
+
+:host-context(.dark) .status-pill {
+    color: #f87171;
+}
+
+:host-context(.dark) .status-pill.is-open {
+    color: #4ade80;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 9999px;
+    background: currentColor;
+}
+
+.hours {
+    display: grid;
+    gap: 0.125rem;
     width: 100%;
-    height: 100%;
-    background: radial-gradient(circle, rgba(255, 215, 0, 0.4) 0%, transparent 70%);
-    opacity: 0;
-    transform: scale(0.5);
-    transition: all 0.4s ease;
+    max-width: 18rem;
+    margin: 0 auto;
 }
 
-.social-icon:hover::after {
-    opacity: 1;
-    transform: scale(1.5);
+.hours-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.35rem 0.6rem;
+    margin: 0 -0.6rem;
+    border-radius: 0.5rem;
+    color: var(--f-muted);
+    font-variant-numeric: tabular-nums;
 }
 
-.social-icon:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px -10px rgba(212, 175, 55, 0.5);
+.hours-row dt {
+    color: var(--f-text);
 }
+
+.hours-row.is-today {
+    background: rgba(212, 175, 55, 0.14);
+    font-weight: 700;
+}
+
+.hours-row.is-today dd {
+    color: var(--f-text);
+}
+
+/* ---- Links ---- */
+.footer-links {
+    display: grid;
+    justify-items: center;
+    gap: 0.125rem;
+}
+
+.footer-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--f-text);
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 4px;
+    transition: color 0.2s, text-decoration-color 0.2s;
+}
+
+.footer-links a:hover {
+    color: var(--f-accent);
+    text-decoration-color: currentColor;
+}
+
+.social {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+.social a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 9999px;
+    border: 1px solid var(--f-border);
+    color: var(--f-text);
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.social a:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #111;
+}
+
+.social svg {
+    width: 20px;
+    height: 20px;
+}
+
+a:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 2px;
+    border-radius: 0.375rem;
+}
+
+/* ---- Bottom ---- */
+.footer-bottom {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 1.5rem 0 2rem;
+    border-top: 1px solid var(--f-border);
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--f-muted);
+    display: grid;
+    gap: 0.5rem;
+}
+
+.footer-consult a {
+    color: var(--f-text);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    white-space: nowrap;
+}
+
+/* Snap: pätička má prirodzenú výšku */
+.site-footer {
+    scroll-snap-align: end;
+}
+

@@ -9,7 +9,6 @@ set -euo pipefail
 #  - Validates environment (npm, npx, ssh)
 #  - Fallback: Uses scp if rsync is missing (Windows Git Bash friendly)
 #  - Builds Angular (production)
-#  - Prepares PHP proxy files into dist/app/browser/proxy
 #  - Safe deploy to /var/www/papihairdesign.sk on VPS
 #  - Automatic backups on server
 #  - Nginx vhost automation
@@ -133,7 +132,7 @@ fi
 
 log_info "2/6) Building Angular app..."
 rm -rf dist/
-if npx ng build --configuration=production; then
+if pnpm run build:prod; then
   log_success "Build completed."
 else
   log_error "Build failed."
@@ -148,20 +147,6 @@ fi
 #===========================#
 # 5. Prepare Proxy          #
 #===========================#
-
-log_info "3/6) Preparing PHP proxy..."
-mkdir -p "${LOCAL_DIST}/proxy"
-PROXY_SRC="src/proxy"
-PROXY_FILES=("chat.php" "chat_stream.php" "image-job.php" "ai-proxy.php" "image-edit.php")
-
-for f in "${PROXY_FILES[@]}"; do
-  if [[ -f "${PROXY_SRC}/${f}" ]]; then
-    cp "${PROXY_SRC}/${f}" "${LOCAL_DIST}/proxy/"
-    log_success "Copied: ${f}"
-  else
-    log_warn "Missing: ${PROXY_SRC}/${f}"
-  fi
-done
 
 #===========================#
 # 6. Remote Backup          #
@@ -219,16 +204,19 @@ server {
     include             /etc/letsencrypt/options-ssl-nginx.conf;
     ssl_dhparam         /etc/letsencrypt/ssl-dhparams.pem;
 
-    location / {
-        try_files $uri $uri/ /index.html;
-    }
+    # presmerovania (rovnaké ako vercel.json)
+    location = /booking { return 302 https://services.bookio.com/papi-hair-design/widget?lang=sk; }
+    location = /shop { return 302 https://www.goldhaircare.sk/affiliate/2208; }
+    location ~ ^/(ai-studio|ai-stylista|virtualny-stylista|virtual-salon|diagnostika|admin)(/.*)?$ { return 301 /; }
+    rewrite ^/(.+)/$ /$1 permanent;
 
-    location /proxy/ {
-        try_files $uri =404;
-        include fastcgi_params;
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        fastcgi_pass unix:/var/run/php/php__PHP_VERSION__-fpm.sock;
+    # predgenerované stránky (Angular prerendering): /cennik -> /cennik/index.html,
+    # neznáma URL -> 404.html so statusom 404 (fallback na /index.html by vrátil domovskú stránku)
+    location / {
+        try_files $uri $uri/index.html =404;
     }
+    error_page 404 /404.html;
+
 }
 EOF
 )

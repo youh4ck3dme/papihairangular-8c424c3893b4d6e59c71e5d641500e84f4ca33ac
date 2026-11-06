@@ -1,4 +1,5 @@
 import { Injectable, signal, computed } from '@angular/core';
+import { OPENING_HOURS } from '../config/opening-hours';
 
 export interface BusinessHour {
   day: string;
@@ -11,15 +12,7 @@ export interface BusinessHour {
   providedIn: 'root'
 })
 export class BusinessHoursService {
-  private readonly hours: BusinessHour[] = [
-    { day: 'Pondelok', open: '08:00', close: '17:00', dayIndex: 1 },
-    { day: 'Utorok', open: '08:00', close: '17:00', dayIndex: 2 },
-    { day: 'Streda', open: '08:00', close: '17:00', dayIndex: 3 },
-    { day: 'Štvrtok', open: '08:00', close: '17:00', dayIndex: 4 },
-    { day: 'Piatok', open: '08:00', close: '17:00', dayIndex: 5 },
-    { day: 'Sobota', open: 'Podľa objednávok', close: '', dayIndex: 6 },
-    { day: 'Nedeľa', open: 'ZAVRETÉ', close: 'ZAVRETÉ', dayIndex: 0 }
-  ];
+  private readonly hours: BusinessHour[] = OPENING_HOURS.map(({ day, open, close, dayIndex }) => ({ day, open, close, dayIndex }));
 
   openingHours = signal<BusinessHour[]>(this.hours);
 
