@@ -14,11 +14,29 @@
       ]
     },
     {
-      "source": "/index.html",
+      "source": "/ngsw-worker.js",
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "no-cache, no-store, must-revalidate"
+          "value": "no-cache"
+        }
+      ]
+    },
+    {
+      "source": "/((?:main|chunk|polyfills|styles)-[A-Z0-9]+\\.(?:js|css))",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/media/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
         }
       ]
     },
@@ -27,39 +45,35 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
+          "value": "public, max-age=604800"
         }
       ]
     }
   ],
   "rewrites": [
     {
-      "source": "/",
-      "destination": "/index.html"
-    },
-    {
       "source": "/cennik",
-      "destination": "/index.html"
+      "destination": "/cennik/index.html"
     },
     {
       "source": "/o-nas",
-      "destination": "/index.html"
+      "destination": "/o-nas/index.html"
     },
     {
       "source": "/kontakt",
-      "destination": "/index.html"
+      "destination": "/kontakt/index.html"
     },
     {
       "source": "/blog",
-      "destination": "/index.html"
+      "destination": "/blog/index.html"
     },
     {
       "source": "/blog/:slug",
-      "destination": "/index.html"
+      "destination": "/blog/:slug/index.html"
     },
     {
       "source": "/sluzby/:slug",
-      "destination": "/index.html"
+      "destination": "/sluzby/:slug/index.html"
     }
   ],
   "redirects": [
@@ -108,5 +122,6 @@
       "destination": "/",
       "permanent": true
     }
-  ]
+  ],
+  "trailingSlash": false
 }

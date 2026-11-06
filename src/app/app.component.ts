@@ -9,7 +9,6 @@ import { ScrollToTopComponent } from "./shared/components/scroll-to-top/scroll-t
 import { ScrollProgressComponent } from "./shared/components/scroll-progress/scroll-progress.component";
 import { SeoService } from "./core/services/seo.service";
 import { ThemeService } from "./core/services/theme.service";
-import { PushNotificationService } from "./core/services/push-notification.service";
 
 @Component({
   selector: "app-root",
@@ -30,22 +29,17 @@ import { PushNotificationService } from "./core/services/push-notification.servi
 export class AppComponent {
   private seoService = inject(SeoService);
   private themeService = inject(ThemeService);
-  private pushService = inject(PushNotificationService);
   private router = inject(Router);
 
   // Tracks if global layout (header/footer) should be visible
   showLayout = signal(true);
 
   constructor() {
-    // Auto-request removed to prevent crash on invalid VAPID key
-    // this.pushService.requestSubscription().subscribe();
-
     // Listen to route changes to handle scrolling, theme and layout visibility
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
-      // Scroll to top
-      window.scrollTo(0, 0);
+      // Scroll na začiatok/kotvy rieši withInMemoryScrolling v app.config.ts
 
       const url = this.router.url;
       const isImmersiveStory = url.includes('/blog/pribeh-znacky');

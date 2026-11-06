@@ -18,11 +18,12 @@ const FORBIDDEN = [
 function walk(dir: string): string[] {
     return readdirSync(dir).flatMap(f => {
         const p = join(dir, f);
-        return statSync(p).isDirectory() ? walk(p) : p.endsWith('.js') ? [p] : [];
+        // JS, predgenerované HTML aj konfigurácia service workera (ngsw.json)
+        return statSync(p).isDirectory() ? walk(p) : /\.(js|mjs|html|json|webmanifest)$/.test(p) ? [p] : [];
     });
 }
 
-test('verejný JS bundle neobsahuje tajné kľúče ani AI endpointy', () => {
+test('verejný bundle (JS, HTML, ngsw.json) neobsahuje tajné kľúče ani AI endpointy', () => {
     test.skip(!existsSync(DIST), 'najprv spusti ng build --configuration production');
     const files = walk(DIST);
     expect(files.length).toBeGreaterThan(0);

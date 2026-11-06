@@ -1,0 +1,78 @@
+{
+  "ci": {
+    "collect": {
+      "url": [
+        "http://127.0.0.1:4310/",
+        "http://127.0.0.1:4310/cennik",
+        "http://127.0.0.1:4310/kontakt",
+        "http://127.0.0.1:4310/sluzby/damske-strihy"
+      ],
+      "numberOfRuns": 3,
+      "settings": {
+        "chromeFlags": "--headless=new --no-sandbox --disable-dev-shm-usage",
+        "skipAudits": [
+          "uses-http2"
+        ]
+      },
+      "startServerCommand": "node scripts/serve-dist.mjs 4310",
+      "startServerReadyPattern": "serve-dist"
+    },
+    "assert": {
+      "assertions": {
+        "categories:performance": [
+          "error",
+          {
+            "minScore": 0.9,
+            "aggregationMethod": "median"
+          }
+        ],
+        "categories:accessibility": [
+          "error",
+          {
+            "minScore": 0.95,
+            "aggregationMethod": "median"
+          }
+        ],
+        "categories:best-practices": [
+          "error",
+          {
+            "minScore": 0.95,
+            "aggregationMethod": "median"
+          }
+        ],
+        "categories:seo": [
+          "error",
+          {
+            "minScore": 1,
+            "aggregationMethod": "median"
+          }
+        ],
+        "largest-contentful-paint": [
+          "warn",
+          {
+            "maxNumericValue": 2500,
+            "aggregationMethod": "median"
+          }
+        ],
+        "cumulative-layout-shift": [
+          "error",
+          {
+            "maxNumericValue": 0.05,
+            "aggregationMethod": "median"
+          }
+        ],
+        "total-blocking-time": [
+          "warn",
+          {
+            "maxNumericValue": 200,
+            "aggregationMethod": "median"
+          }
+        ]
+      }
+    },
+    "upload": {
+      "target": "filesystem",
+      "outputDir": ".lighthouseci"
+    }
+  }
+}

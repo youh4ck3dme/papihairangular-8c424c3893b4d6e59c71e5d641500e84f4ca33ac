@@ -31,6 +31,10 @@ module.exports = function (config) {
         },
         reporters: ['progress', 'kjhtml'],
         browsers: ['Chrome', 'ChromeHeadless'],
+        // CI / kontajner (root): `pnpm ng test --watch=false --browsers=ChromeHeadlessCI` (CHROME_BIN = cesta k Chrome)
+        customLaunchers: {
+            ChromeHeadlessCI: { base: 'ChromeHeadless', flags: ['--no-sandbox', '--disable-dev-shm-usage'] },
+        },
         restartOnFileChange: true
     });
 };

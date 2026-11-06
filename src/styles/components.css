@@ -275,3 +275,13 @@ html.dark .status-pill.is-open { color: #4ade80; }
   background: var(--surface);
   color: var(--text);
 }
+
+/* Obsah článkov sa vkladá cez innerHTML (bez Angular enkapsulácie) – zlatá #c59d24
+   na bielej má len 2,3:1, preto odkazy v článku používajú --accent (AA v oboch témach). */
+app-blog-post .text-gold,
+app-blog-post .post-body a {
+  color: var(--accent);
+}
+
+/* Obsah vždy aspoň na výšku okna – päta sa neposúva, kým sa načíta lenivá stránka (CLS) */
+.app-main { min-height: calc(100vh - var(--header-h)); }

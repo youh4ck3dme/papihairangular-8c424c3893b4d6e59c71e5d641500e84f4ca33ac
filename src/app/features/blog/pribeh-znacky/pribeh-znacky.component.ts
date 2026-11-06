@@ -15,6 +15,8 @@ import { fadeSlideIn } from '../../../core/animations';
 declare const gsap: unknown;
 declare const ScrollTrigger: unknown;
 
+import { SALON_CONTACT } from '../../../core/config/salon-contact';
+
 @Component({
     selector: 'app-pribeh-znacky',
     templateUrl: './pribeh-znacky.component.html',
@@ -31,12 +33,15 @@ export class PribehZnackyComponent implements AfterViewInit, OnDestroy {
     readingProgress = signal(0);
     private scrollHandler: (() => void) | null = null;
 
+    readonly contact = SALON_CONTACT;
+    readonly year = new Date().getFullYear();
+
     images = {
         hero: 'assets/papi.webp',
         abstract: '/images/DBB9AE05-73B8-44A5-9776-13B1FE68F777_4_5005_c.jpeg',
         oldSchool: 'assets/images/camera.webp',
         interior: 'assets/salon-interior-mirrored.jpg',
-        team: 'assets/papi-blog.png',
+        team: 'assets/papi-blog.webp',
         logo: '/images/DBB9AE05-73B8-44A5-9776-13B1FE68F777_4_5005_c.jpeg',
     };
 
@@ -160,14 +165,11 @@ export class PribehZnackyComponent implements AfterViewInit, OnDestroy {
     }
 
     getFacebookShareUrl(): string {
-        if (isPlatformBrowser(this.platformId)) {
-            return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`;
-        }
-        return '';
+        return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`${SALON_CONTACT.siteUrl}/blog/pribeh-znacky`)}`;
     }
 
     getInstagramUrl(): string {
-        return 'https://www.instagram.com/papihairdesign/';
+        return SALON_CONTACT.social.instagram;
     }
 
     getTikTokUrl(): string {

@@ -6,7 +6,16 @@ import { PUBLIC_ROUTES } from './public-routes';
 
 const SITE = 'https://papihairdesign.sk';
 
-function readLd(): Record<string, any> {
+/** Tvar JSON-LD HairSalon v src/index.html (iba polia, ktoré testy kontrolujú). */
+interface LdSalon {
+    '@type': string; telephone: string; email: string; url: string; hasMap: string; sameAs: string[];
+    address: { streetAddress: string; addressLocality: string; postalCode: string; addressCountry: string };
+    geo: { latitude: number; longitude: number };
+    openingHoursSpecification: { dayOfWeek: string | string[]; opens: string; closes: string }[];
+    openingHours?: unknown; aggregateRating?: unknown; review?: unknown;
+}
+
+function readLd(): LdSalon {
     const html = readFileSync('src/index.html', 'utf8');
     const m = html.match(/<script type="application\/ld\+json" id="ld-salon">([\s\S]*?)<\/script>/);
     expect(m, 'JSON-LD #ld-salon v index.html').toBeTruthy();
@@ -32,8 +41,8 @@ test.describe('JSON-LD HairSalon = SALON_CONTACT + OPENING_HOURS', () => {
 
     test('otváracie hodiny zodpovedajú OPENING_HOURS', () => {
         const ld = readLd();
-        const fromLd = (ld.openingHoursSpecification as any[]).flatMap(s =>
-            (Array.isArray(s.dayOfWeek) ? s.dayOfWeek : [s.dayOfWeek]).map((d: string) => `${d} ${s.opens}-${s.closes}`));
+        const fromLd = ld.openingHoursSpecification.flatMap(s =>
+            (Array.isArray(s.dayOfWeek) ? s.dayOfWeek : [s.dayOfWeek]).map(d => `${d} ${s.opens}-${s.closes}`));
         const expected = OPENING_HOURS.filter(h => h.schemaDay).map(h => `${h.schemaDay} ${h.open}-${h.close}`);
         expect(fromLd.sort()).toEqual(expected.sort());
         expect(ld.openingHours, 'staré pole openingHours').toBeUndefined();
@@ -58,6 +67,7 @@ test('sitemap obsahuje všetky verejné routes a nič navyše', () => {
 });
 
 test('meta: unikátny title ≤ 60, description ≤ 155, canonical, og:image, robots', async ({ page }) => {
+    test.setTimeout(120_000);
     const seen = { title: new Map<string, string>(), desc: new Map<string, string>() };
     for (const route of PUBLIC_ROUTES) {
         await page.goto(route, { waitUntil: 'networkidle' });

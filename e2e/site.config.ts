@@ -1,18 +1,24 @@
 import { defineConfig } from '@playwright/test';
 
 /**
- * Testy celého webu (bezpečnosť, SEO, routes, a11y, home 100dvh).
- * Spustenie po `ng build --configuration production`:
- *   HOME_URL=http://127.0.0.1:4300 npx playwright test -c e2e/site.config.ts
- * (bez HOME_URL ide na dev server https://localhost:3002)
+ * Testy celého webu (bezpečnosť, SEO, prerendering, routes, a11y, home 100dvh).
+ * Spustenie po `pnpm run build:prod`:  pnpm run test:site
+ * Server (scripts/serve-dist.mjs) sa spustí automaticky; HOME_URL=… otestuje iný web (napr. Vercel preview).
  */
+const external = process.env['HOME_URL'];
+
 export default defineConfig({
     testDir: '.',
-    testMatch: ['security.spec.ts', 'seo.spec.ts', 'routes.spec.ts', 'a11y.spec.ts', 'home-dvh.spec.ts'],
+    testMatch: ['security.spec.ts', 'seo.spec.ts', 'prerender.spec.ts', 'interactions.spec.ts', 'routes.spec.ts', 'a11y.spec.ts', 'home-dvh.spec.ts'],
     reporter: 'list',
     workers: 4,
     use: {
-        baseURL: process.env['HOME_URL'] ?? 'https://localhost:3002',
+        baseURL: external ?? 'http://127.0.0.1:4300',
         ignoreHTTPSErrors: true,
+    },
+    webServer: external ? undefined : {
+        command: 'node ../scripts/serve-dist.mjs 4300 ../dist/app/browser',
+        url: 'http://127.0.0.1:4300/',
+        reuseExistingServer: true,
     },
 });

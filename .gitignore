@@ -53,3 +53,10 @@ src/proxy/rate-limit.json
 
 # screenshoty z home-dvh testu
 e2e/screens/
+
+# Lighthouse CI výstupy
+.lighthouseci/
+
+# Playwright výstupy
+test-results/
+playwright-report/

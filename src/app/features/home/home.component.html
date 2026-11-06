@@ -1,7 +1,13 @@
 <!-- ============ S1 HERO ============ -->
 <section class="screen hero" aria-labelledby="hero-title">
-  <img class="hero-bg" src="/assets/salon-interior.webp" alt="" aria-hidden="true" width="1920" height="1080"
-    fetchpriority="high" decoding="async" />
+  <picture>
+    <source type="image/avif" sizes="100vw"
+      srcset="/assets/hero/salon-interior-768.avif 768w, /assets/hero/salon-interior-1170.avif 1170w" />
+    <source type="image/webp" sizes="100vw"
+      srcset="/assets/hero/salon-interior-768.webp 768w, /assets/hero/salon-interior-1170.webp 1170w" />
+    <img class="hero-bg" src="/assets/hero/salon-interior-1170.webp" alt="" aria-hidden="true" width="1170"
+      height="1324" fetchpriority="high" decoding="async" />
+  </picture>
   <div class="hero-inner">
     <div class="hero-stack animate-fade-in">
       <img src="/images/logo-white.png" alt="" aria-hidden="true" width="394" height="114" class="hero-logo" />

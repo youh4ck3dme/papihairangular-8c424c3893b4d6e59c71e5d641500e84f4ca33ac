@@ -38,7 +38,7 @@
      ============================================ */
 
     /* Font Families */
-    --font-primary: 'Arimo', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --font-heading: 'Syne', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
     /* Font Sizes (Perfect Fourth Scale - 1.333, reduced by ~5px for blog) */

@@ -1,13 +1,10 @@
 import { Injectable } from "@angular/core";
 import { BlogPost, ContentBlock } from "../models/blog-post.interface";
-import { Comment } from "../models/comment.interface";
-import { Observable, from } from "rxjs";
 
-interface CacheItem<T> {
-  data: T;
-  timestamp: number;
-}
-
+/**
+ * Obsah blogu je statický (v kóde) – žiadna localStorage cache:
+ * tá spôsobovala zastaraný obsah po nasadení a padala pri prerenderingu.
+ */
 @Injectable({
   providedIn: "root",
 })
@@ -468,46 +465,14 @@ export class BlogService {
       ]
     }
   ];
-  private readonly CACHE_EXPIRY = 3600000; // 1 hodina v ms
-
-  private setCache<T>(key: string, data: T): void {
-    const item: CacheItem<T> = { data, timestamp: Date.now() };
-    localStorage.setItem(key, JSON.stringify(item));
-  }
-
-  private getCache<T>(key: string): T | null {
-    const itemStr = localStorage.getItem(key);
-    if (!itemStr) return null;
-    const item: CacheItem<T> = JSON.parse(itemStr);
-    if (this.isExpired(item.timestamp)) {
-      localStorage.removeItem(key);
-      return null;
-    }
-    return item.data;
-  }
-
-  private isExpired(timestamp: number): boolean {
-    return Date.now() - timestamp > this.CACHE_EXPIRY;
-  }
-
   /** Vráti všetky príspevky (zoradené podľa dátumu zostupne) */
   getAllPosts(): BlogPost[] {
-    const cached = this.getCache<BlogPost[]>('blog_posts');
-    if (cached) return cached;
-
-    const posts = [...this.posts].sort((a, b) => (a.date < b.date ? 1 : -1));
-    this.setCache('blog_posts', posts);
-    return posts;
+    return [...this.posts].sort((a, b) => (a.date < b.date ? 1 : -1));
   }
 
   /** Nájde príspevok podľa slug */
   getPostBySlug(slug: string): BlogPost | undefined {
-    const cached = this.getCache<BlogPost>(`blog_post_${slug}`);
-    if (cached) return cached;
-
-    const post = this.posts.find((p) => p.slug === slug);
-    if (post) this.setCache(`blog_post_${slug}`, post);
-    return post;
+    return this.posts.find((p) => p.slug === slug);
   }
 
   /** Vráti nasledujúci príspevok */
@@ -561,39 +526,5 @@ export class BlogService {
       .sort((a, b) => b.commonTagsCount - a.commonTagsCount)
       .slice(0, limit)
       .map((item) => item.post);
-  }
-
-  /** Načíta komentáre pre konkrétny príspevok (Mock) */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  getComments(_postSlug: string): Observable<Comment[]> {
-    return from(Promise.resolve([])); // Return empty list for now
-  }
-
-  /** Pridá nový komentár (Mock) */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  addComment(_comment: Omit<Comment, 'id'>): Observable<string> {
-    return from(Promise.resolve('mock-id'));
-  }
-
-  /** Vymaže komentár podľa ID (Mock) */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  deleteComment(_commentId: string): Observable<void> {
-    return from(Promise.resolve());
-  }
-
-  /** Vymaže celú cache */
-  clearCache(): void {
-    const keys = Object.keys(localStorage).filter(key => key.startsWith('blog_'));
-    keys.forEach(key => localStorage.removeItem(key));
-  }
-
-  /** Vymaže cache pre konkrétny príspevok */
-  invalidatePost(slug: string): void {
-    localStorage.removeItem(`blog_post_${slug}`);
-  }
-
-  /** Vymaže cache pre všetky príspevky */
-  invalidateAllPosts(): void {
-    localStorage.removeItem('blog_posts');
   }
 }

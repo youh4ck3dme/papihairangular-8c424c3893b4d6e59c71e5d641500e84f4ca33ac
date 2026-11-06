@@ -162,8 +162,7 @@
       <div class="related-posts-grid">
         @for (relatedPost of relatedPosts(); track relatedPost.slug) {
         <a [routerLink]="['/blog', relatedPost.slug]" @slideInLeft class="related-post-card">
-          <img ngSrc="{{ relatedPost.imageUrl }}" alt="{{ relatedPost.title }}" width="300" height="200" loading="lazy"
-            appLazyImage>
+          <img ngSrc="{{ relatedPost.imageUrl }}" alt="{{ relatedPost.title }}" width="300" height="200" loading="lazy">
           <h4>{{ relatedPost.title }}</h4>
           <p>{{ relatedPost.perex }}</p>
         </a>

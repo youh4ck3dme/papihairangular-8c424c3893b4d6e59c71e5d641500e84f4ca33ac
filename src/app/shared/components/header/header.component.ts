@@ -39,7 +39,8 @@ export class HeaderComponent {
   }
 
   toggleMenu(): void {
-    this.isMenuOpen() ? this.closeMenu() : this.openMenu();
+    if (this.isMenuOpen()) this.closeMenu();
+    else this.openMenu();
   }
 
   openMenu(): void {
