@@ -1,5 +1,8 @@
 /* =========================================================
-   HOME – 1 sekcia = 1 obrazovka (100dvh), mriežka 8px
+   HOME – 1 sekcia = 1 obrazovka (100svh), mriežka 8px
+   svh (nie dvh): výška sa nemení, keď mobilný prehliadač pri posúvaní skryje/ukáže lištu s adresou.
+   S dvh sa pri každom skrytí lišty prepočítalo celé rozloženie, stránka narástla o 6 × výšku lišty
+   a obsah pod prstom poskočil.
    --header-h a --cta-h sú v src/styles.css (:root)
    ========================================================= */
 :host {
@@ -37,7 +40,7 @@
   position: relative;
   box-sizing: border-box;
   height: 100vh;
-  height: 100dvh;
+  height: 100svh;
   padding-top: var(--header-h);
   padding-bottom: calc(var(--cta-h) + env(safe-area-inset-bottom));
   overflow: hidden;
@@ -57,7 +60,7 @@
   .screen {
     height: auto;
     min-height: 100vh;
-    min-height: 100dvh;
+    min-height: 100svh;
     overflow: visible;
   }
 }
@@ -320,7 +323,7 @@ summary:focus-visible {
 .about-photo {
   flex: 1 1 0;
   min-height: 96px;
-  max-height: 34dvh;
+  max-height: 34svh;
   margin: 0;
   border-radius: var(--radius);
   overflow: hidden;
@@ -395,7 +398,7 @@ summary:focus-visible {
     width: 100%;
     height: auto;
     aspect-ratio: 4 / 5;
-    max-height: min(calc(100dvh - var(--header-h) - 128px), 640px);
+    max-height: min(calc(100svh - var(--header-h) - 128px), 640px);
   }
 
   .about-photo img { object-position: center top; }
@@ -538,7 +541,7 @@ summary:focus-visible {
 .gold-img {
   flex: 1 1 0;
   min-height: 80px;
-  max-height: 28dvh;
+  max-height: 28svh;
   width: 100%;
   object-fit: cover;
   border-radius: var(--radius);
@@ -593,7 +596,7 @@ summary:focus-visible {
 
   .gold-img {
     flex: none;
-    max-height: min(480px, calc(100dvh - var(--header-h) - 96px - 64px - 112px));
+    max-height: min(480px, calc(100svh - var(--header-h) - 96px - 64px - 112px));
     aspect-ratio: 4 / 3;
     height: auto;
     width: 100%;
@@ -896,8 +899,8 @@ summary:focus-visible {
   align-items: center;
   gap: 8px;
   padding: 8px 16px env(safe-area-inset-bottom);
-  background: color-mix(in srgb, var(--home-bg) 92%, transparent);
-  backdrop-filter: blur(12px);
+  /* nepriehľadné pozadie namiesto backdrop-filter – rozmazanie pod fixnou lištou sa prepočítavalo v každom snímku posunu */
+  background: var(--home-bg);
   border-top: 1px solid var(--home-border);
 }
 

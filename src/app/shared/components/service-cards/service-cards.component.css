@@ -1,4 +1,4 @@
-/* Karty služieb – mobil: karusel, tablet: 2×3, desktop: 3×2. Výška = výška rodiča (100dvh sekcia). */
+/* Karty služieb – mobil: karusel, tablet: 2×3, desktop: 3×2. Výška = výška rodiča (100svh sekcia). */
 :host {
     --card-bg: #ffffff;
     --card-border: rgba(23, 23, 23, 0.1);
@@ -23,7 +23,7 @@
 .cards-grid {
     flex: 1 1 0;
     min-height: 0;
-    max-height: 56dvh;
+    max-height: 56svh;
     display: flex;
     gap: 16px;
     overflow-x: auto;

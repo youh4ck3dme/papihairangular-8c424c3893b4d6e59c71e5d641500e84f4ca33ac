@@ -1,4 +1,4 @@
-/* Pevná výška headera – home sekcie (100dvh) s ňou počítajú cez --header-h */
+/* Pevná výška headera – home sekcie (100svh) s ňou počítajú cez --header-h */
 :host {
   display: block;
   position: sticky;

@@ -56,6 +56,10 @@ Docker (`Dockerfile`, `nginx.conf`, `docker-compose.yml`) je zosúladený s tým
 - [ ] Rezervácia: tlačidlo „Rezervovať“ → Bookio → výber služby a termínu (rezerváciu stačí nedokončiť).
 - [ ] Telefón (ťuknutím volá), e-mailový formulár (otvorí poštu s vyplnenou správou), mapa sa načíta až po kliknutí.
 - [ ] Menu, prepínač témy, cenník (rozbalenie položiek), FAQ, karusel služieb.
+- [ ] Posúvanie palcom na domovskej stránke: plynulé, po pustení prsta stránka nedoskakuje na sekciu, obsah neposkočí,
+  keď sa skryje lišta prehliadača. Meranie na telefóne: Android → USB ladenie, v počítači `chrome://inspect` →
+  Inspect → Performance → nahrať 5 s posúvania (červené snímky = sekanie); iPhone → Nastavenia → Safari → Pokročilé →
+  Web Inspector, Mac Safari → Vývoj → [iPhone] → Timelines.
 - [ ] Inštalácia ako aplikácia (PWA); po prvej návšteve sa web otvorí aj bez siete (service worker).
 
 ## Testy a merania
@@ -66,6 +70,7 @@ Docker (`Dockerfile`, `nginx.conf`, `docker-compose.yml`) je zosúladený s tým
 | `pnpm run test:site` | Playwright: bezpečnosť (žiadne kľúče/AI v bundli), SEO meta, surové HTML každej stránky, interakcie po hydratácii, každá stránka na 360/1440 px v svetlom aj tmavom režime, axe WCAG 2.1 AA, domov 100dvh |
 | `pnpm run test:unit` | unit testy (Karma, Chrome headless; `CHROME_BIN` = cesta k Chrome) |
 | `pnpm run lh` | Lighthouse CI (mobil, 3 behy, medián) na `/`, `/cennik`, `/kontakt`, `/sluzby/damske-strihy` |
+| `pnpm run bench:scroll` | plynulosť posúvania prstom (mobil, 4× CPU): JS a prepočty štýlov počas posunu, či snap neťahá stránku |
 | `pnpm run serve:dist` | lokálny server, ktorý sa správa ako Vercel/nginx (port 4300) |
 
 Lighthouse (mobil, simulované pomalé 4G, medián 3 behov, lokálny server s kompresiou) – výsledky sú v záverečnej

@@ -1,26 +1,24 @@
-import { Component, HostListener, signal, ChangeDetectionStrategy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, ChangeDetectionStrategy, DestroyRef, ElementRef, ViewEncapsulation, afterNextRender, inject } from '@angular/core';
 
+/**
+ * Tenký pásik priebehu čítania hore na stránke.
+ *
+ * Posúva ho priamo prehliadač (CSS scroll-driven animácia) – počas posúvania nebeží žiadny JavaScript.
+ * Predtým sa pri každom scroll evente menil signál, spúšťala detekcia zmien a zapisovalo do DOM
+ * (100 % prepočtov štýlov a ~80 % JS práce počas posúvania na mobile – scripts/scroll-bench.mjs).
+ * Prehliadače bez animation-timeline (starší Safari/Firefox) dostanú záložné riešenie s requestAnimationFrame.
+ * Pásik je čisto dekoratívny, preto aria-hidden.
+ * ViewEncapsulation.None: Angular inak premenuje @keyframes a odkaz v @supports bloku by nesedel.
+ */
 @Component({
   selector: 'app-scroll-progress',
   standalone: true,
-  imports: [CommonModule],
   template: `
-    <div class="scroll-progress-container">
-      <div
-        class="scroll-progress-bar"
-        [style.transform]="'scaleX(' + scrollProgress() / 100 + ')'"
-        role="progressbar"
-        [attr.aria-valuenow]="scrollProgress() | number: '1.0-0'"
-        aria-valuemin="0"
-        aria-valuemax="100"
-        aria-label="Priebeh čítania"
-      ></div>
+    <div class="scroll-progress-container" aria-hidden="true">
+      <div class="scroll-progress-bar"></div>
     </div>
   `,
   styles: [`
-    /* Iba transform (kompozitor) – žiadna nekonečná animácia ani backdrop-filter,
-       ktoré predtým prekresľovali stránku v každom snímku (TBT). */
     .scroll-progress-container {
       position: fixed;
       top: 0;
@@ -37,49 +35,55 @@ import { CommonModule } from '@angular/common';
       background: linear-gradient(90deg, #d4af37 0%, #f4c542 50%, #c9a961 100%);
       transform-origin: 0 50%;
       transform: scaleX(0);
-      transition: transform 0.1s ease-out;
-      will-change: transform;
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      .scroll-progress-bar { transition: none; }
+    @supports (animation-timeline: scroll()) {
+      .scroll-progress-bar {
+        animation: scroll-progress linear both;
+        animation-timeline: scroll(root block);
+      }
     }
 
-    /* Dark mode support */
-    :host-context(.dark) .scroll-progress-container {
+    @keyframes scroll-progress {
+      to { transform: scaleX(1); }
+    }
+
+    .dark .scroll-progress-container {
       background: rgba(255, 255, 255, 0.05);
     }
 
-    :host-context(.dark) .scroll-progress-bar {
-      box-shadow: 0 0 15px rgba(212, 175, 55, 0.7),
-                  0 0 25px rgba(212, 175, 55, 0.4);
+    .dark .scroll-progress-bar {
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.7), 0 0 25px rgba(212, 175, 55, 0.4);
     }
   `],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ScrollProgressComponent {
-  scrollProgress = signal(0);
+  private readonly host = inject(ElementRef<HTMLElement>);
+  private readonly destroyRef = inject(DestroyRef);
 
-  @HostListener('window:scroll', ['$event'])
-  onWindowScroll(): void {
-    this.calculateScrollProgress();
-  }
+  constructor() {
+    afterNextRender(() => {
+      if (CSS.supports('animation-timeline: scroll()')) return;
 
-  private calculateScrollProgress(): void {
-    const windowHeight = window.innerHeight;
-    const documentHeight = document.documentElement.scrollHeight;
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-    // Calculate the maximum scrollable distance
-    const maxScroll = documentHeight - windowHeight;
-
-    if (maxScroll <= 0) {
-      this.scrollProgress.set(0);
-      return;
-    }
-
-    // Calculate percentage (0-100)
-    const progress = Math.min(Math.max((scrollTop / maxScroll) * 100, 0), 100);
-    this.scrollProgress.set(Math.round(progress));
+      // záloha: najviac jedna aktualizácia na snímku, mimo Angularu
+      const bar = this.host.nativeElement.querySelector('.scroll-progress-bar') as HTMLElement;
+      let queued = false;
+      const update = () => {
+        queued = false;
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        bar.style.transform = `scaleX(${max > 0 ? Math.min(window.scrollY / max, 1) : 0})`;
+      };
+      const onScroll = () => {
+        if (!queued) {
+          queued = true;
+          requestAnimationFrame(update);
+        }
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      update();
+      this.destroyRef.onDestroy(() => window.removeEventListener('scroll', onScroll));
+    });
   }
 }

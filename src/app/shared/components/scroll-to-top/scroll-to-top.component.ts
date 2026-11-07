@@ -1,4 +1,4 @@
-import { Component, HostListener, signal } from '@angular/core';
+import { Component, DestroyRef, afterNextRender, inject, signal } from '@angular/core';
 
 @Component({
     selector: 'app-scroll-to-top',
@@ -30,10 +30,23 @@ import { Component, HostListener, signal } from '@angular/core';
 })
 export class ScrollToTopComponent {
     isVisible = signal(false);
+    private readonly destroyRef = inject(DestroyRef);
 
-    @HostListener('window:scroll')
-    onWindowScroll() {
-        this.isVisible.set(window.scrollY > 300);
+    constructor() {
+        // Tlačidlo sa ukáže po 300 px. Namiesto scroll eventu (beží pri každom pixeli posunu)
+        // sleduje neviditeľnú 300 px značku na začiatku stránky – signál sa zmení iba pri prekročení hranice.
+        afterNextRender(() => {
+            const sentinel = document.createElement('div');
+            sentinel.setAttribute('aria-hidden', 'true');
+            sentinel.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:300px;pointer-events:none;visibility:hidden';
+            document.body.prepend(sentinel);
+            const observer = new IntersectionObserver(([entry]) => this.isVisible.set(!entry.isIntersecting));
+            observer.observe(sentinel);
+            this.destroyRef.onDestroy(() => {
+                observer.disconnect();
+                sentinel.remove();
+            });
+        });
     }
 
     scrollToTop() {

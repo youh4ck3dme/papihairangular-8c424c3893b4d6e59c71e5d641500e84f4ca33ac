@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * Akceptačný test: každá sekcia domovskej stránky = presne 1 obrazovka (100dvh),
+ * Akceptačný test: každá sekcia domovskej stránky = presne 1 obrazovka (100svh),
  * nič sa neoreže, žiadny horizontálny scroll, text nepresahuje sekciu.
  */
 const VIEWPORTS = [
@@ -16,7 +16,7 @@ const THEMES = ['light', 'dark'] as const;
 
 for (const vp of VIEWPORTS) {
     for (const theme of THEMES) {
-        test(`home 100dvh ${vp.width}x${vp.height} ${theme}`, async ({ page }) => {
+        test(`home 100svh ${vp.width}x${vp.height} ${theme}`, async ({ page }) => {
             await page.setViewportSize(vp);
             await page.addInitScript(t => localStorage.setItem('theme', t), theme);
             await page.goto('/', { waitUntil: 'networkidle' });
@@ -83,7 +83,7 @@ for (const vp of VIEWPORTS) {
 
 /** Otvorené rozbaľovacie bloky (Príbeh značky, FAQ) nesmú pretiecť sekciu – scrollujú vo vnútri. */
 for (const vp of [VIEWPORTS[0], VIEWPORTS[3]]) {
-    test(`home 100dvh ${vp.width}x${vp.height} otvorené details`, async ({ page }) => {
+    test(`home 100svh ${vp.width}x${vp.height} otvorené details`, async ({ page }) => {
         await page.setViewportSize(vp);
         await page.goto('/', { waitUntil: 'networkidle' });
         await page.evaluate(() => {
