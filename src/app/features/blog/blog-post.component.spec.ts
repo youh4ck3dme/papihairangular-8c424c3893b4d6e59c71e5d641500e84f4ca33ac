@@ -5,7 +5,6 @@ import { SeoService } from '../../core/services/seo.service';
 import { provideRouter, ActivatedRoute } from '@angular/router';
 import { BlogPost } from '../../core/models/blog-post.interface';
 import { of } from 'rxjs';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('BlogPostComponent', () => {
     let component: BlogPostComponent;
@@ -42,7 +41,7 @@ describe('BlogPostComponent', () => {
         const seoServiceSpy = jasmine.createSpyObj('SeoService', ['setBlogPostSeo']);
 
         await TestBed.configureTestingModule({
-            imports: [BlogPostComponent, NoopAnimationsModule],
+            imports: [BlogPostComponent],
             providers: [
                 provideRouter([]),
                 {

@@ -1,5 +1,4 @@
 import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { NotificationService } from '../../../core/services/notification.service';
 
 @Component({
@@ -7,7 +6,7 @@ import { NotificationService } from '../../../core/services/notification.service
   templateUrl: './notification.component.html',
   styleUrls: ['./notification.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule],
+  imports: [],
 })
 export class NotificationComponent {
   notificationService = inject(NotificationService);

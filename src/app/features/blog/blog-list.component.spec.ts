@@ -6,7 +6,6 @@ import { ThemeService } from '../../core/services/theme.service';
 import { provideRouter } from '@angular/router';
 import { BlogPost } from '../../core/models/blog-post.interface';
 import { signal } from '@angular/core';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('BlogListComponent', () => {
     let component: BlogListComponent;
@@ -43,7 +42,7 @@ describe('BlogListComponent', () => {
         };
 
         await TestBed.configureTestingModule({
-            imports: [BlogListComponent, NoopAnimationsModule],
+            imports: [BlogListComponent],
             providers: [
                 provideRouter([]),
                 { provide: BlogService, useValue: blogServiceSpy },

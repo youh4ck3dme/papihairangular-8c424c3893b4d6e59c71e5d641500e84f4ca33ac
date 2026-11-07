@@ -4,7 +4,7 @@ import {
   inject,
   signal,
 } from "@angular/core";
-import { CommonModule, NgOptimizedImage } from "@angular/common";
+import { DatePipe, NgOptimizedImage } from "@angular/common";
 import { ActivatedRoute, RouterLink } from "@angular/router";
 import { BlogService } from "../../core/services/blog.service";
 import { BlogPost, ContentBlock } from "../../core/models/blog-post.interface";
@@ -18,7 +18,7 @@ import { SafeHtmlPipe } from "../../shared/pipes/safe-html.pipe";
   styleUrls: ["./blog-post.component.css"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, RouterLink, SafeHtmlPipe, NgOptimizedImage],
+  imports: [DatePipe, RouterLink, SafeHtmlPipe, NgOptimizedImage],
 })
 export class BlogPostComponent {
   readonly bookingUrl = SALON_CONTACT.bookingUrl;
