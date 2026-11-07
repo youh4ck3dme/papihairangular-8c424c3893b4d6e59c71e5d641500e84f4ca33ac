@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# ⛔ Poistka (AGENTS.md): produkčný deploy len s výslovným súhlasom majiteľa.
+if [ "${OWNER_APPROVED_PRODUCTION_DEPLOY:-}" != "papihairdesign.sk" ]; then
+  echo "STOP: produkčný deploy vyžaduje súhlas majiteľa. Spusti s OWNER_APPROVED_PRODUCTION_DEPLOY=papihairdesign.sk" >&2
+  exit 1
+fi
+
 # ==============================================================================
 # 🚀 ULTIMATE DEPLOY SCRIPT: PAPI HAIR DESIGN
 # ==============================================================================

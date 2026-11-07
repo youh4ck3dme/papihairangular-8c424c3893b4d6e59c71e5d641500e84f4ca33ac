@@ -1,5 +1,7 @@
 # Spustenie novej verzie papihairdesign.sk
 
+> ⛔ **Žiadny produkčný deploy bez výslovného súhlasu majiteľa.** Ostrá doména papihairdesign.sk sa nesmie prepnúť na inú verziu bez jeho súhlasu – platí pre ľudí aj AI agentov (pozri `AGENTS.md`). Merge do `main` produkciu nespustí (`git.deploymentEnabled.main = false` vo `vercel.json`); produkčné nasadenie robí majiteľ ručne vo Vercel dashboarde („Promote to Production“), až keď ho schváli.
+
 Stav vetvy `refactor/home-ui-ux` (november 2026). Web je hotový na nasadenie; tento dokument je
 kontrolný zoznam pre spustenie a údržbu.
 
