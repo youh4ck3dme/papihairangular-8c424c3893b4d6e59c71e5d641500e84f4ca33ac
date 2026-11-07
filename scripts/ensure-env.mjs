@@ -2,7 +2,8 @@
 // Existujúce lokálne súbory nikdy neprepíše.
 //
 // BEZPEČNOSŤ: environment.ts sa kompiluje do VEREJNÉHO JS bundlu – nikdy sem
-// nedávaj tajné kľúče. Z env sa berie len VAPID_PUBLIC_KEY (verejný z princípu).
+// nedávaj tajné kľúče. Z env sa berú len verejné hodnoty: VAPID_PUBLIC_KEY (verejný kľúč),
+// VITALS_ENDPOINT (URL na príjem Web Vitals) a SENTRY_DSN (klientsky DSN je verejný z princípu).
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 
 const dir = 'src/environments';
@@ -11,6 +12,8 @@ mkdirSync(dir, { recursive: true });
 const body = (production) => `export const environment = {
   production: ${production},
   vapidPublicKey: ${JSON.stringify(process.env.VAPID_PUBLIC_KEY ?? '')},
+  vitalsEndpoint: ${JSON.stringify(process.env.VITALS_ENDPOINT ?? '')},
+  sentryDsn: ${JSON.stringify(process.env.SENTRY_DSN ?? '')},
 };
 `;
 
