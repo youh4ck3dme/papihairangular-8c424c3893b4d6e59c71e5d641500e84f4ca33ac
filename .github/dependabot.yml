@@ -1,0 +1,23 @@
+# Bezpečnostné a patch aktualizácie závislostí ako PR (nikdy sa samé nezlúčia ani nenasadia – AGENTS.md).
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule: { interval: weekly, day: monday }
+    open-pull-requests-limit: 5
+    groups:
+      angular:
+        patterns: ['@angular/*', '@angular-devkit/*']
+    ignore:
+      # major verzie len ručne (VERSIONS.md): Angular 21+, Tailwind 4+, TypeScript 6+
+      - dependency-name: '@angular/*'
+        update-types: ['version-update:semver-major']
+      - dependency-name: '@angular-devkit/*'
+        update-types: ['version-update:semver-major']
+      - dependency-name: tailwindcss
+        update-types: ['version-update:semver-major']
+      - dependency-name: typescript
+        update-types: ['version-update:semver-major', 'version-update:semver-minor']
+  - package-ecosystem: github-actions
+    directory: /
+    schedule: { interval: monthly }
