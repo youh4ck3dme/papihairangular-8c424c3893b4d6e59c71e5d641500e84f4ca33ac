@@ -11,7 +11,6 @@ import { BlogService } from "../../core/services/blog.service";
 import { BlogPost, ContentBlock } from "../../core/models/blog-post.interface";
 import { SeoService } from "../../core/services/seo.service";
 import { SALON_CONTACT } from "../../core/config/salon-contact";
-import { SafeHtmlPipe } from "../../shared/pipes/safe-html.pipe";
 
 @Component({
   selector: "app-blog-post",
@@ -19,7 +18,7 @@ import { SafeHtmlPipe } from "../../shared/pipes/safe-html.pipe";
   styleUrls: ["./blog-post.component.css"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [DatePipe, RouterLink, SafeHtmlPipe, NgOptimizedImage],
+  imports: [DatePipe, RouterLink, NgOptimizedImage],
 })
 export class BlogPostComponent {
   readonly bookingUrl = SALON_CONTACT.bookingUrl;

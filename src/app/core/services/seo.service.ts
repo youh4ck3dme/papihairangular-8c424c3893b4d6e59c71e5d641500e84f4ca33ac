@@ -4,6 +4,7 @@ import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { BlogPost } from '../models/blog-post.interface';
 import { RouteData } from '../models';
+import { trustedJsonLd } from '../security/trusted-types';
 
 export interface SeoData {
   title?: string;
@@ -129,7 +130,7 @@ export class SeoService {
 
     const script = this.document.createElement('script');
     script.type = 'application/ld+json';
-    script.text = JSON.stringify(data);
+    script.text = trustedJsonLd(data);
     this.document.head.appendChild(script);
 
     this.jsonLdElements.push(script);

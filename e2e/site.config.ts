@@ -9,7 +9,7 @@ const external = process.env['HOME_URL'];
 
 export default defineConfig({
     testDir: '.',
-    testMatch: ['security.spec.ts', 'seo.spec.ts', 'prerender.spec.ts', 'interactions.spec.ts', 'routes.spec.ts', 'a11y.spec.ts', 'home-dvh.spec.ts', 'perf.spec.ts'],
+    testMatch: ['security.spec.ts', 'seo.spec.ts', 'prerender.spec.ts', 'interactions.spec.ts', 'routes.spec.ts', 'a11y.spec.ts', 'home-dvh.spec.ts', 'perf.spec.ts', 'security-headers.spec.ts'],
     reporter: 'list',
     workers: 4,
     use: {

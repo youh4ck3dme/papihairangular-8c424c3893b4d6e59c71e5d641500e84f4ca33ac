@@ -18,14 +18,20 @@ async function measure(page: Page, path: string, scroll = false): Promise<Sizes>
     await cdp.send('Network.setCacheDisabled', { cacheDisabled: true });
     const types = new Map<string, { type: string; url: string }>();
     const s: Sizes = { script: 0, image: 0, font: 0, other: 0, total: 0, images: [] };
+    // počítajú sa bajty tela odpovede (komprimované), nie hlavičky: lokálny server je HTTP/1.1, kde by
+    // bezpečnostné hlavičky (~0,5 kB) pribudli ku každému súboru; na Verceli (HTTP/2, HPACK) sa opakované
+    // hlavičky posielajú takmer zadarmo
+    const body = new Map<string, number>();
     cdp.on('Network.responseReceived', (e) => types.set(e.requestId, { type: e.type, url: e.response.url }));
+    cdp.on('Network.dataReceived', (e) => body.set(e.requestId, (body.get(e.requestId) ?? 0) + e.encodedDataLength));
     cdp.on('Network.loadingFinished', (e) => {
         const r = types.get(e.requestId);
         if (!r) return;
+        const bytes = body.get(e.requestId) ?? 0;
         const k = r.type === 'Script' ? 'script' : r.type === 'Image' ? 'image' : r.type === 'Font' ? 'font' : 'other';
-        s[k] += e.encodedDataLength;
-        s.total += e.encodedDataLength;
-        if (k === 'image') s.images.push({ url: new URL(r.url).pathname, bytes: e.encodedDataLength });
+        s[k] += bytes;
+        s.total += bytes;
+        if (k === 'image') s.images.push({ url: new URL(r.url).pathname, bytes });
     });
     await page.goto(path, { waitUntil: 'networkidle' });
     if (scroll) {

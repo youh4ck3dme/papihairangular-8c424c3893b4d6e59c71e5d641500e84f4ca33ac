@@ -34,19 +34,19 @@
         <div class="post-body">
           @for (block of processedContent(); track $index) {
           @switch (block.type) {
-          @case ('heading') { <h2 [innerHTML]="block.text || block.data | safeHtml"></h2> }
-          @case ('heading-level-2') { <h2 [innerHTML]="block.text || block.data | safeHtml"></h2> }
-          @case ('heading-level-3') { <h3 [innerHTML]="block.text || block.data | safeHtml"></h3> }
-          @case ('heading-level-4') { <h4 [innerHTML]="block.text || block.data | safeHtml"></h4> }
-          @case ('paragraph') { <p [innerHTML]="block.text || block.data | safeHtml"></p> }
-          @case ('quote') { <blockquote class="quote" [innerHTML]="block.text || block.data | safeHtml"></blockquote> }
-          @case ('tip-box') { <p class="tip-box" [innerHTML]="block.data || block.text | safeHtml"></p> }
+          @case ('heading') { <h2 [innerHTML]="block.text || block.data"></h2> }
+          @case ('heading-level-2') { <h2 [innerHTML]="block.text || block.data"></h2> }
+          @case ('heading-level-3') { <h3 [innerHTML]="block.text || block.data"></h3> }
+          @case ('heading-level-4') { <h4 [innerHTML]="block.text || block.data"></h4> }
+          @case ('paragraph') { <p [innerHTML]="block.text || block.data"></p> }
+          @case ('quote') { <blockquote class="quote" [innerHTML]="block.text || block.data"></blockquote> }
+          @case ('tip-box') { <p class="tip-box" [innerHTML]="block.data || block.text"></p> }
           @case ('list') {
           <ul>
-            @for (item of block.items; track item) { <li [innerHTML]="item | safeHtml"></li> }
+            @for (item of block.items; track item) { <li [innerHTML]="item"></li> }
           </ul>
           }
-          @case ('list-item') { <ul><li [innerHTML]="block.text | safeHtml"></li></ul> }
+          @case ('list-item') { <ul><li [innerHTML]="block.text"></li></ul> }
           @case ('image') {
           <figure>
             <img [src]="block.url" [alt]="block.alt || ''" [attr.width]="block.width" [attr.height]="block.height"
