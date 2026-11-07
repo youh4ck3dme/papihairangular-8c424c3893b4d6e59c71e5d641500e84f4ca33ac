@@ -26,7 +26,8 @@
 
     <div class="container-site post-main">
       <div class="post-image">
-        <img [ngSrc]="p.imageUrl" [alt]="p.title" fill priority class="object-cover">
+        <img [ngSrc]="p.imageUrl" [alt]="p.title" fill priority
+          sizes="(min-width: 1000px) 75vw, 100vw" class="object-cover">
       </div>
 
       <div class="post-column">
@@ -100,7 +101,7 @@
           @for (r of relatedPosts(); track r.slug) {
           <article class="post-card">
             <a [routerLink]="['/blog', r.slug]" class="block relative aspect-video overflow-hidden">
-              <img [ngSrc]="r.imageUrl" [alt]="r.title" fill class="object-cover">
+              <img [ngSrc]="r.imageUrl" [alt]="r.title" fill sizes="(min-width: 768px) 33vw, 100vw" class="object-cover">
             </a>
             <div class="p-6 flex flex-col flex-grow">
               <h3 class="post-card-title clamp-2"><a [routerLink]="['/blog', r.slug]">{{ r.title }}</a></h3>

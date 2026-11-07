@@ -24,10 +24,11 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:report": "playwright show-report",
-    "preinstall": "echo '\u26a0\ufe0f  POZOR: Verzie s\u00fa zamknut\u00e9. Pred upgradom si pre\u010d\u00edtaj VERSIONS.md'",
+    "preinstall": "echo '⚠️  POZOR: Verzie sú zamknuté. Pred upgradom si prečítaj VERSIONS.md'",
     "serve:dist": "node scripts/serve-dist.mjs 4300",
     "test:unit": "pnpm ng test --watch=false --browsers=ChromeHeadlessCI",
-    "bench:scroll": "node scripts/scroll-bench.mjs"
+    "bench:scroll": "node scripts/scroll-bench.mjs",
+    "gen:images": "node scripts/gen-images.mjs"
   },
   "dependencies": {
     "@angular/build": "20.3.13",

@@ -9,12 +9,6 @@
     "theme_color": "#000000",
     "icons": [
         {
-            "src": "/assets/logo.png",
-            "sizes": "512x512",
-            "type": "image/png",
-            "purpose": "any maskable"
-        },
-        {
             "src": "/android-chrome-192x192.png",
             "sizes": "192x192",
             "type": "image/png"
@@ -22,28 +16,29 @@
         {
             "src": "/android-chrome-512x512.png",
             "sizes": "512x512",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any"
         }
     ],
     "screenshots": [
         {
-            "src": "/assets/screenshots/homepage-mobile.png",
-            "sizes": "390x844",
-            "type": "image/png",
+            "src": "/assets/screenshots/homepage-mobile.webp",
+            "sizes": "500x723",
+            "type": "image/webp",
             "form_factor": "narrow",
             "label": "Domovská obrazovka PAPI HAIR"
         },
         {
-            "src": "/assets/screenshots/blog-mobile.png",
-            "sizes": "390x844",
-            "type": "image/png",
+            "src": "/assets/screenshots/blog-mobile.webp",
+            "sizes": "500x723",
+            "type": "image/webp",
             "form_factor": "narrow",
             "label": "Najnovšie trendy z nášho blogu"
         },
         {
-            "src": "/assets/screenshots/homepage-desktop.png",
-            "sizes": "1280x800",
-            "type": "image/png",
+            "src": "/assets/screenshots/homepage-desktop.webp",
+            "sizes": "1133x686",
+            "type": "image/webp",
             "form_factor": "wide",
             "label": "PAPI HAIR DESIGN na desktope"
         }

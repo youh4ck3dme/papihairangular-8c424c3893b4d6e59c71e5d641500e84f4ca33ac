@@ -3,7 +3,7 @@
 import sharp from 'sharp';
 
 const W = 1200, H = 630;
-const bg = await sharp('src/assets/salon-interior.webp').resize(W, H, { fit: 'cover', position: 'centre' }).toBuffer();
+const bg = await sharp('scripts/source/salon-interior.webp').resize(W, H, { fit: 'cover', position: 'centre' }).toBuffer();
 const logo = await sharp('public/images/logo-white.png').resize({ width: 560 }).toBuffer();
 const { height: lh } = await sharp(logo).metadata();
 
