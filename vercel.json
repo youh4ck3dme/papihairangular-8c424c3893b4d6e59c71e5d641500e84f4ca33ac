@@ -63,7 +63,14 @@
     {
       "src": "^/(?:assets|images)/.*$",
       "headers": {
-        "Cache-Control": "public, max-age=604800"
+        "Cache-Control": "public, max-age=2592000"
+      },
+      "continue": true
+    },
+    {
+      "src": "^/assets/fonts/.*\\.woff2$",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
       },
       "continue": true
     },

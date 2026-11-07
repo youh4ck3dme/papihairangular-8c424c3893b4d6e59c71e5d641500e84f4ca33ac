@@ -40,7 +40,22 @@ kontrolný zoznam pre spustenie a údržbu.
   `/neexistuje` (→ 404), `/booking` (→ Bookio), `/ai-studio` (→ 301 na `/`).
 - [ ] **Nikdy** nevracať fallback `try_files … /index.html` – `index.html` je teraz domovská stránka, nie prázdny shell.
 
-Docker (`Dockerfile`, `nginx.conf`, `docker-compose.yml`) je zosúladený s tým istým správaním (Node 22, pnpm 8.15, `build:prod`).
+Docker (`Dockerfile`, `nginx.conf`, `docker-compose.yml`) je zosúladený s tým istým správaním (Node 22, pnpm 8.15).
+Pre VPS/Docker sa používa `pnpm run build:vps` = `build:prod` + `scripts/precompress.mjs` (vedľa každého textového súboru
+nad 1 kB vytvorí `.gz` a `.br`); nginx ich servuje cez `gzip_static on` bez komprimovania pri každej požiadavke.
+`brotli_static` vyžaduje modul ngx_brotli (v `nginx.conf` je pripravený ako komentár). Na Verceli sa `build:vps` nepoužíva – komprimuje sám.
+
+**Cache (rovnaké na Verceli aj v nginx):** súbory s hashom (`main-*.js`, `chunk-*.js`, `styles-*.css`, `/media/`) a písma
+`/assets/fonts/*.woff2` 1 rok `immutable` (pri zmene písma súbor premenovať), obrázky `/assets`, `/images` 30 dní,
+HTML `no-cache`, `ngsw.json` a `ngsw-worker.js` nikdy necachovať. HTTP/2 push sa nepoužíva (prehliadače ho zrušili) –
+namiesto neho `preload` pre 2 písma nad záhybom a `dns-prefetch` pre `services.bookio.com`.
+
+**Cloudflare**
+- Vercel: DNS záznamy **iba DNS** (sivý obláčik). Proxy pred Vercelom pridáva ďalší skok, rozbíja Vercel cache a vydanie SSL.
+- VPS: proxy **zapnutý** (oranžový obláčik) – CDN a Brotli pre návštevníkov ďaleko od servera. Nastaviť:
+  SSL/TLS → **Full (strict)**; Speed → Optimization → **Rocket Loader OFF** (prepisuje `<script>` a rozbíja hydratáciu Angularu),
+  **Auto Minify vypnuté** (súbory sú už minifikované; zmena HTML by rozbila hash kontrolu service workera);
+  Brotli zapnuté; Caching → „Respect existing headers“ (riadi sa `Cache-Control` z nginx); Early Hints môžu byť zapnuté.
 
 ### 3. Google a profily
 - [ ] Google Search Console: overiť doménu, odoslať `https://papihairdesign.sk/sitemap.xml`, cez „Kontrola URL“ požiadať o indexovanie

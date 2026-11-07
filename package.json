@@ -13,6 +13,7 @@
     "start": "pnpm run dev",
     "build": "pnpm ng build",
     "build:prod": "node scripts/gen-sitemap.mjs && pnpm ng build --configuration=production && node scripts/postbuild.mjs",
+    "build:vps": "pnpm run build:prod && node scripts/precompress.mjs",
     "sitemap": "node scripts/gen-sitemap.mjs",
     "test:site": "playwright test -c e2e/site.config.ts",
     "lh": "lhci autorun --config=lighthouserc.json",
