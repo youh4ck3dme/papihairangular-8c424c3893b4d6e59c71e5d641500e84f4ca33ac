@@ -50,6 +50,33 @@
   unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
 }
 
+/* Metricky zladené záložné písma (kým sa nenačíta woff2): Arial/Liberation Sans s upravenou veľkosťou
+   a výškou riadku, aby výmena písma neposúvala text (CLS) a LCP nadpis nemenil rozmery.
+   Hodnoty vypočítané z hmtx/hhea (fontTools) voči Arial; Syne má pre 700/800 vlastné, je oveľa širšie. */
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial'), local('ArialMT'), local('Liberation Sans'), local('Helvetica');
+  size-adjust: 102.27%; ascent-override: 94.72%; descent-override: 23.59%; line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Syne Fallback';
+  font-weight: 400 600;
+  src: local('Arial'), local('ArialMT'), local('Liberation Sans'), local('Helvetica');
+  size-adjust: 90.34%; ascent-override: 102.39%; descent-override: 30.44%; line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Syne Fallback';
+  font-weight: 700;
+  src: local('Arial Bold'), local('Arial-BoldMT'), local('Liberation Sans Bold'), local('Helvetica Bold');
+  size-adjust: 115.15%; ascent-override: 80.33%; descent-override: 23.88%; line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Syne Fallback';
+  font-weight: 800;
+  src: local('Arial Bold'), local('Arial-BoldMT'), local('Liberation Sans Bold'), local('Helvetica Bold');
+  size-adjust: 166.21%; ascent-override: 55.65%; descent-override: 16.55%; line-gap-override: 0%;
+}
+
 :root {
   --surface: #ffffff;
   --surface-alt: #f7f5f0;
@@ -62,8 +89,8 @@
   --gold-hover: #e6c35c;
   --on-gold: #111111;
 
-  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-heading: 'Syne', 'Inter', system-ui, sans-serif;
+  --font-body: 'Inter', 'Inter Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-heading: 'Syne', 'Syne Fallback', 'Inter', 'Inter Fallback', system-ui, sans-serif;
 
   --container: 1200px;
   --pad-x: 20px;

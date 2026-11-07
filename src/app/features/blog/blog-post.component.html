@@ -71,9 +71,9 @@
 
         <div class="post-share">
           <span class="post-share-label">Zdieľať:</span>
-          <a [href]="getFacebookShareUrl()" target="_blank" rel="noopener noreferrer" class="share-btn">Facebook<span class="sr-only"> (otvorí sa v novom okne)</span></a>
-          <a [href]="getTwitterShareUrl()" target="_blank" rel="noopener noreferrer" class="share-btn">X<span class="sr-only"> (Twitter, otvorí sa v novom okne)</span></a>
-          <a [href]="getWhatsAppShareUrl()" target="_blank" rel="noopener noreferrer" class="share-btn">WhatsApp<span class="sr-only"> (otvorí sa v novom okne)</span></a>
+          <a [href]="share().facebook" target="_blank" rel="noopener noreferrer" class="share-btn">Facebook<span class="sr-only"> (otvorí sa v novom okne)</span></a>
+          <a [href]="share().twitter" target="_blank" rel="noopener noreferrer" class="share-btn">X<span class="sr-only"> (Twitter, otvorí sa v novom okne)</span></a>
+          <a [href]="share().whatsapp" target="_blank" rel="noopener noreferrer" class="share-btn">WhatsApp<span class="sr-only"> (otvorí sa v novom okne)</span></a>
         </div>
 
         @if (prevPost() || nextPost()) {
