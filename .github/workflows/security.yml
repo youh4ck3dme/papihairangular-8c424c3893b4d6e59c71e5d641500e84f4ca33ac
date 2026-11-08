@@ -11,7 +11,9 @@ permissions:
   contents: read
 jobs:
   check:
-    runs-on: ubuntu-latest
+    # ubuntu-latest sa posunul na 26.04, kde Playwright 1.57 nepodporuje chromium (install zlyhá).
+    # 24.04 (LTS) držíme, kým Playwright pridá podporu alebo sa upgradujeme na novšiu verziu.
+    runs-on: ubuntu-24.04
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
