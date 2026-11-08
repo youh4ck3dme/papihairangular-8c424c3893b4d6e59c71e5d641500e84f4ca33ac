@@ -1,22 +1,14 @@
-/* Karty služieb – mobil: karusel, tablet: 2×3, desktop: 3×2. Výška = výška rodiča (100svh sekcia). */
+/* Karty služieb – mobil: karusel, tablet: 2×3, desktop: 3×2. Výška = výška rodiča (100svh sekcia).
+   Aliasy na globálne tokeny – komponent nemá vlastnú paletu, dedí tému z <html>. */
 :host {
-    --card-bg: #ffffff;
-    --card-border: rgba(23, 23, 23, 0.1);
-    --card-text: #171717;
-    --card-muted: #52525b;
-    --card-accent: #8a6a12;
-    --gold: #d4af37;
+    --card-bg: var(--color-card);
+    --card-border: var(--color-border);
+    --card-text: var(--color-text);
+    --card-muted: var(--color-text-muted);
+    --card-accent: var(--color-accent-text);
     display: flex;
     flex-direction: column;
     min-height: 0;
-}
-
-:host-context(.dark) {
-    --card-bg: #171717;
-    --card-border: rgba(212, 175, 55, 0.15);
-    --card-text: #f5f5f5;
-    --card-muted: #a1a1aa;
-    --card-accent: #d4af37;
 }
 
 /* ---------- Mobil: horizontálny karusel ---------- */

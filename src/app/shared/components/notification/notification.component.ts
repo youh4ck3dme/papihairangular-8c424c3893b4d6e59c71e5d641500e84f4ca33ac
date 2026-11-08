@@ -21,10 +21,11 @@ export class NotificationComponent {
   }
 
   getBgColor(type: string): string {
+    // Sémantické tokeny (surface/accent/danger) — správny kontrast v light aj dark
     switch (type) {
-      case 'success': return 'bg-neutral-900 text-gold-400 border border-gold-400';
-      case 'error': return 'bg-neutral-900 text-copper-500 border border-copper-500';
-      default: return 'bg-neutral-900 text-gold-300 border border-gold-300';
+      case 'success': return 'bg-card text-success border border-success';
+      case 'error':   return 'bg-card text-danger border border-danger';
+      default:        return 'bg-card text-accent-text border border-gold-400';
     }
   }
 }
