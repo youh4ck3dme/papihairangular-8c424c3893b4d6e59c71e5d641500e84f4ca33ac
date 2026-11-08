@@ -33,9 +33,8 @@ export class PushNotificationService {
             serverPublicKey: environment.vapidPublicKey
         })).pipe(
             map(sub => {
-                console.log('Push Subscription successful:', sub);
+                // Odoberanie push notifikácií prebehlo – backend ešte neprijíma predplatné.
                 this.subscriptionSubject.next(sub);
-                // Here you would typically send the subscription object to your backend
                 return sub;
             }),
             catchError(err => {

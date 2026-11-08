@@ -17,7 +17,7 @@ PAPI HAIR DESIGN is a modern, responsive web application built with Angular for 
 - **Performance**: zoneless change detection, lazy animations, self-hosted fonts (Inter + Syne, Slovak subset), AVIF/WebP hero. Lighthouse mobile: Performance 93–98, Accessibility / Best Practices / SEO 100.
 - **SEO**: unique titles/descriptions, canonical URLs, JSON-LD `HairSalon`, sitemap generated from routes.
 - **Design**: home page in 100dvh sections; all subpages (pricing, about, contact, service pages, blog) use the same design system in light and dark mode.
-- **Tests**: Playwright suite `pnpm run test:site` (security, SEO, prerender, interactions, routes, a11y/axe, home 100dvh) and Lighthouse CI `pnpm run lh`. See [docs/LAUNCH.md](docs/LAUNCH.md).
+- **Tests**: Playwright suite `pnpm run test:site` (security, SEO, prerender, interactions, routes, a11y/axe, home 100dvh, perf, security-headers) and Lighthouse CI `pnpm run lh`. See [docs/LAUNCH.md](docs/LAUNCH.md). **Žiadne GitHub Actions** — všetky testy sa spúšťajú lokálne; CI/CD neprichádza do úvahy, kým majiteľ nerozhodne inak.
 
 ### Version 2.0.0 - VPS Migration & AI Studio (January 2026)
 

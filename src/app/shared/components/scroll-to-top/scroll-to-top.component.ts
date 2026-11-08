@@ -9,10 +9,10 @@ import { Component, DestroyRef, afterNextRender, inject, signal } from '@angular
     <button
       type="button"
       (click)="scrollToTop()"
-      class="fixed bottom-24 right-4 md:bottom-8 md:right-8 z-50 p-3 rounded-full bg-gradient-to-br from-black via-zinc-800 to-gold text-white shadow-[0_0_15px_rgba(212,175,55,0.5)] border border-gold/30 transition-all duration-300 overflow-hidden"
+      class="fixed bottom-24 right-4 md:bottom-8 md:right-8 z-50 p-3 rounded-full bg-accent-fill text-on-accent shadow-md border border-gold-500 transition-all duration-base overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-focus focus-visible:outline-offset-2"
       aria-label="Späť na začiatok stránky">
-      <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-[shine_4s_infinite]"></div>
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <div class="absolute inset-0 bg-gradient-to-r from-transparent via-gold-100 to-transparent -translate-x-full animate-[shine_4s_infinite] motion-reduce:hidden"></div>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18" />
       </svg>
     </button>
