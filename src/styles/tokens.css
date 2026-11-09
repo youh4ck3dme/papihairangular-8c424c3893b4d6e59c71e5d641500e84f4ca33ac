@@ -1,104 +1,40 @@
-/* Písma hostované lokálne (rýchlejšie, bez prenosu IP adries návštevníkov na Google – GDPR).
-   Variabilné woff2 z @fontsource-variable (OFL). Slovenská stránka stiahne iba latin + sk
-   (sk = 24 znakov č ď ě ĺ ľ ň ŕ ř š ť ů ž, vytvorené scripts/subset-fonts.py); latin-ext len pri iných jazykoch. */
+/* Písmo Satoshi (Indian Type Foundry, OFL) hostované lokálne – rýchlejšie a bez prenosu IP
+   adries návštevníkov tretej strane (GDPR). Jediný variabilný woff2 (váha 300–900), podmnožina
+   latin + latin-ext, ktorá pokrýva celú slovenskú diakritiku (č ď ľ ň ŕ š ť ž ô á é í ó ú ý ä…).
+   Satoshi sa používa na bežný text, nadpisy aj špeciálne texty – hierarchiu tvorí váha, nie rodina. */
 @font-face {
-  font-family: 'Inter';
+  font-family: 'Satoshi';
   font-style: normal;
-  font-weight: 100 900;
+  font-weight: 300 900;
   font-display: swap;
-  src: url('/assets/fonts/inter-latin-ext-wght-normal.woff2') format('woff2');
-  unicode-range: U+0100-010B,U+0110-0119,U+011C-0138,U+013B-013C,U+013F-0146,U+0149-0153,U+0156-0157,U+015A-015F,U+0162-0163,U+0166-016D,U+0170-017C,U+017F-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
-}
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url('/assets/fonts/inter-sk-wght-normal.woff2') format('woff2');
-  unicode-range: U+010C-010F,U+011A-011B,U+0139-013A,U+013D-013E,U+0147-0148,U+0154-0155,U+0158-0159,U+0160-0161,U+0164-0165,U+016E-016F,U+017D-017E;
-}
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url('/assets/fonts/inter-latin-wght-normal.woff2') format('woff2');
-  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
-}
-@font-face {
-  font-family: 'Syne';
-  font-style: normal;
-  font-weight: 400 800;
-  font-display: swap;
-  src: url('/assets/fonts/syne-latin-ext-wght-normal.woff2') format('woff2');
-  unicode-range: U+0100-010B,U+0110-0119,U+011C-0138,U+013B-013C,U+013F-0146,U+0149-0153,U+0156-0157,U+015A-015F,U+0162-0163,U+0166-016D,U+0170-017C,U+017F-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
-}
-@font-face {
-  font-family: 'Syne';
-  font-style: normal;
-  font-weight: 400 800;
-  font-display: swap;
-  src: url('/assets/fonts/syne-sk-wght-normal.woff2') format('woff2');
-  unicode-range: U+010C-010F,U+011A-011B,U+0139-013A,U+013D-013E,U+0147-0148,U+0154-0155,U+0158-0159,U+0160-0161,U+0164-0165,U+016E-016F,U+017D-017E;
-}
-@font-face {
-  font-family: 'Syne';
-  font-style: normal;
-  font-weight: 400 800;
-  font-display: swap;
-  src: url('/assets/fonts/syne-latin-wght-normal.woff2') format('woff2');
-  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+  src: url('/assets/fonts/satoshi-variable.woff2') format('woff2');
 }
 
-/* Metricky zladené záložné písma (kým sa nenačíta woff2): Arial/Liberation Sans s upravenou šírkou (size-adjust)
-   a výškou riadku, aby výmena písma neposúvala text (CLS) a LCP nadpis nemenil rozmery.
-   size-adjust = pomer šírky skutočného textu webu (Inter/Syne vs Arial) pre každú váhu zvlášť – tučné rezy
-   sú voči Arial Bold, inak by prehliadač tučné písmo syntetizoval z Arial Regular s inou šírkou.
-   ascent/descent z hhea tabuliek písma (fontTools). */
+/* Metricky zladené záložné písmo (kým sa nenačíta Satoshi): Arial/Liberation Sans s upravenou
+   šírkou (size-adjust) a výškou, aby výmena písma neposúvala text (CLS) ani nemenila rozmer LCP
+   nadpisu. size-adjust = pomer priemernej šírky znaku Satoshi vs Arial pre danú váhu (fontTools
+   OS/2.xAvgCharWidth); tučné rezy sú voči Arial Bold, aby prehliadač tučné nesyntetizoval z Regular.
+   ascent/descent/line-gap = metriky Satoshi (hhea 1010/-240/100 pri 1000 upm) delené faktorom
+   size-adjust, lebo override sa aplikuje na už upravený em. */
 @font-face {
-  font-family: 'Inter Fallback'; font-weight: 100 500;
+  font-family: 'Satoshi Fallback'; font-weight: 300 400;
   src: local('Arial'), local('ArialMT'), local('Liberation Sans'), local('Helvetica');
-  size-adjust: 106.77%; ascent-override: 90.73%; descent-override: 22.59%; line-gap-override: 0%;
+  size-adjust: 107.1%; ascent-override: 94.3%; descent-override: 22.4%; line-gap-override: 9.3%;
 }
 @font-face {
-  font-family: 'Inter Fallback'; font-weight: 600;
-  src: local('Arial Bold'), local('Arial-BoldMT'), local('Liberation Sans Bold'), local('Helvetica Bold');
-  size-adjust: 100.41%; ascent-override: 96.47%; descent-override: 24.02%; line-gap-override: 0%;
-}
-@font-face {
-  font-family: 'Inter Fallback'; font-weight: 700;
-  src: local('Arial Bold'), local('Arial-BoldMT'), local('Liberation Sans Bold'), local('Helvetica Bold');
-  size-adjust: 103.05%; ascent-override: 94.00%; descent-override: 23.41%; line-gap-override: 0%;
-}
-@font-face {
-  font-family: 'Inter Fallback'; font-weight: 800 900;
-  src: local('Arial Bold'), local('Arial-BoldMT'), local('Liberation Sans Bold'), local('Helvetica Bold');
-  size-adjust: 104.98%; ascent-override: 92.27%; descent-override: 22.98%; line-gap-override: 0%;
-}
-@font-face {
-  font-family: 'Syne Fallback'; font-weight: 400;
+  font-family: 'Satoshi Fallback'; font-weight: 500;
   src: local('Arial'), local('ArialMT'), local('Liberation Sans'), local('Helvetica');
-  size-adjust: 97.56%; ascent-override: 94.81%; descent-override: 28.19%; line-gap-override: 0%;
+  size-adjust: 110.5%; ascent-override: 91.4%; descent-override: 21.7%; line-gap-override: 9.0%;
 }
 @font-face {
-  font-family: 'Syne Fallback'; font-weight: 500;
-  src: local('Arial'), local('ArialMT'), local('Liberation Sans'), local('Helvetica');
-  size-adjust: 107.28%; ascent-override: 86.22%; descent-override: 25.63%; line-gap-override: 0%;
-}
-@font-face {
-  font-family: 'Syne Fallback'; font-weight: 600;
+  font-family: 'Satoshi Fallback'; font-weight: 600 700;
   src: local('Arial Bold'), local('Arial-BoldMT'), local('Liberation Sans Bold'), local('Helvetica Bold');
-  size-adjust: 105.06%; ascent-override: 88.04%; descent-override: 26.18%; line-gap-override: 0%;
+  size-adjust: 114.2%; ascent-override: 88.4%; descent-override: 21.0%; line-gap-override: 8.8%;
 }
 @font-face {
-  font-family: 'Syne Fallback'; font-weight: 700;
+  font-family: 'Satoshi Fallback'; font-weight: 800 900;
   src: local('Arial Bold'), local('Arial-BoldMT'), local('Liberation Sans Bold'), local('Helvetica Bold');
-  size-adjust: 113.34%; ascent-override: 81.61%; descent-override: 24.26%; line-gap-override: 0%;
-}
-@font-face {
-  font-family: 'Syne Fallback'; font-weight: 800;
-  src: local('Arial Bold'), local('Arial-BoldMT'), local('Liberation Sans Bold'), local('Helvetica Bold');
-  size-adjust: 162.80%; ascent-override: 56.82%; descent-override: 16.89%; line-gap-override: 0%;
+  size-adjust: 118.6%; ascent-override: 85.2%; descent-override: 20.2%; line-gap-override: 8.4%;
 }
 
 /* GENERATED FROM tokens/tokens.json — nemeniť ručne pod touto čiarou */
@@ -147,8 +83,8 @@
   --size-header-h: 56px;
   --size-cta-h: 56px;
   --size-touch: 44px;
-  --font-family-body: 'Inter', 'Inter Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-family-heading: 'Syne', 'Syne Fallback', 'Inter', 'Inter Fallback', system-ui, sans-serif;
+  --font-family-body: 'Satoshi', 'Satoshi Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-family-heading: 'Satoshi', 'Satoshi Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-size-body: clamp(16px, 1rem + 0.1vw, 18px);
   --font-size-lead: clamp(17px, 1rem + 0.5vw, 20px);
   --font-size-h3: clamp(22px, 1.1rem + 1.5vw, 32px);

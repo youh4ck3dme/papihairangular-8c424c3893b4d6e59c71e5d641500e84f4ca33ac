@@ -170,7 +170,7 @@ summary:focus-visible {
 }
 
 .hero-title {
-  /* 40px podľa zadania; na 360px je Syne široký → max 9vw, aby „Kaderníctvo“ nepretieklo */
+  /* 40px podľa zadania; na úzkych displejoch max 9vw, aby „Kaderníctvo“ nepretieklo */
   font-size: min(40px, 9vw);
   line-height: 1.1;
   font-weight: 800;

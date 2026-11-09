@@ -110,21 +110,24 @@
     border-radius: 9999px;
     font-size: 0.875rem;
     font-weight: 600;
-    color: #b91c1c;
-    background: rgba(220, 38, 38, 0.1);
+    /* Farby cez sémantické tokeny – AA aj na pastelovom pozadí pilulky (overené axe) */
+    color: var(--color-semantic-danger);
+    background: color-mix(in srgb, var(--color-semantic-danger) 10%, transparent);
 }
 
 .status-pill.is-open {
-    color: #15803d;
-    background: rgba(22, 163, 74, 0.12);
+    color: var(--color-semantic-success);
+    background: color-mix(in srgb, var(--color-semantic-success) 12%, transparent);
 }
 
 :host-context(.dark) .status-pill {
     color: #f87171;
+    background: color-mix(in srgb, #f87171 14%, transparent);
 }
 
 :host-context(.dark) .status-pill.is-open {
     color: #4ade80;
+    background: color-mix(in srgb, #4ade80 14%, transparent);
 }
 
 .status-dot {

@@ -103,12 +103,12 @@ html.dark .field textarea { border-color: rgba(255, 255, 255, 0.18); }
   border-color: var(--gold);
 }
 
-.field [aria-invalid="true"] { border-color: #b91c1c; }
+.field [aria-invalid="true"] { border-color: var(--color-semantic-danger); }
 
 .field-error {
   margin: 0;
   font-size: 14px;
-  color: #b91c1c;
+  color: var(--color-semantic-danger);
 }
 
 html.dark .field-error { color: #f87171; }
