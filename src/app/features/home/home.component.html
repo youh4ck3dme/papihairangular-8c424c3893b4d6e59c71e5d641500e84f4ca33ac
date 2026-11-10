@@ -171,7 +171,70 @@
   </div>
 </section>
 
-<!-- ============ S6 FAQ + KONTAKT ============ -->
+<!-- ============ S6 RECENZIE ============ -->
+<section id="recenzie" class="screen section-alt" aria-labelledby="reviews-title">
+  <div class="screen-inner reviews-layout">
+    <header class="reviews-head">
+      <p class="eyebrow text-accent">Recenzie</p>
+      <h2 id="reviews-title" class="h2">Čo hovoria naši klienti</h2>
+    </header>
+
+    <!-- Súhrn hodnotení: priemer, hviezdy, zdroje -->
+    <div class="reviews-summary">
+      <div class="reviews-score">
+        <span class="reviews-avg">{{ reviewsSummary.average }}</span>
+        <span class="reviews-stars" role="img" aria-label="Priemer 4,9 z 5 hviezdičiek">
+          @for (s of [1,2,3,4,5]; track s) {
+            <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M10 1.5l2.6 5.3 5.9.85-4.25 4.15 1 5.85L10 14.9l-5.25 2.75 1-5.85L1.5 7.65l5.9-.85L10 1.5z"/></svg>
+          }
+        </span>
+        <span class="reviews-count">zo {{ reviewsSummary.total }} hodnotení</span>
+      </div>
+      <ul class="reviews-sources">
+        @for (src of reviewsSummary.sources; track src.label) {
+          <li class="reviews-source-pill">
+            <strong>{{ src.label }}</strong> {{ src.rating }}
+            <span class="reviews-source-count">· {{ src.count }}</span>
+          </li>
+        }
+      </ul>
+    </div>
+
+    <!-- Témy, ktoré klienti spomínajú najčastejšie -->
+    <ul class="review-chips" aria-label="Najčastejšie spomínané">
+      @for (theme of reviewThemes; track theme) {
+        <li class="review-chip">{{ theme }}</li>
+      }
+    </ul>
+
+    <!-- Animovaný pás recenzií (posúva sa sprava doľava; zastaví sa pri hover/focus aj pri reduce-motion) -->
+    <div class="reviews-marquee" role="group" aria-label="Recenzie klientov">
+      <ul class="reviews-track">
+        @for (r of reviewsTrack; track $index) {
+          <li class="review-card" [attr.aria-hidden]="$index >= marqueeCount ? 'true' : null">
+            <span class="review-card-stars" aria-hidden="true">
+              @for (s of [1,2,3,4,5]; track s) {
+                <svg viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.3 5.9.85-4.25 4.15 1 5.85L10 14.9l-5.25 2.75 1-5.85L1.5 7.65l5.9-.85L10 1.5z"/></svg>
+              }
+            </span>
+            <p class="review-card-text">{{ r.text }}</p>
+            <p class="review-card-meta"><span class="review-card-name">{{ r.name }}</span></p>
+          </li>
+        }
+      </ul>
+    </div>
+
+    <!-- CTA na napísanie recenzie -->
+    <div class="reviews-cta-row">
+      <a [href]="contact.writeReviewUrl" target="_blank" rel="noopener" class="btn btn-primary">
+        Napíšte nám recenziu
+        <span class="sr-only">(otvorí sa v novom okne)</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ S7 FAQ + KONTAKT ============ -->
 <section id="faq" class="screen section-base" aria-labelledby="faq-title">
   <div class="screen-inner faq-grid">
     <div class="faq-col">
