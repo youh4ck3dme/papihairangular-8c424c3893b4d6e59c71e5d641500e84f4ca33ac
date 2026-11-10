@@ -22,6 +22,8 @@ export const SALON_CONTACT = {
   mapsUrl: "https://www.google.com/maps/search/?api=1&query=PAPI+HAIR+DESIGN+Ko%C5%A1ice&query_place_id=ChIJE-uzMwjhPkcRxtYuoHWzuw0",
   bookingUrl: "https://services.bookio.com/papi-hair-design/widget?lang=sk",
   shopUrl: "https://www.goldhaircare.sk/affiliate/2208",
+  // Priamy odkaz na napísanie Google recenzie (z Google Business Profilu salónu).
+  writeReviewUrl: "https://search.google.com/local/writereview?placeid=ChIJE-uzMwjhPkcRxtYuoHWzuw0",
   social: {
     instagram: "https://www.instagram.com/papi_hair_design/",
     facebook: "https://www.facebook.com/papihairdesign/",

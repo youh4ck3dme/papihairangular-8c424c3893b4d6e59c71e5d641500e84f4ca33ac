@@ -4,6 +4,8 @@ import { RouterLink } from "@angular/router";
 import { ServiceCardsComponent } from "../../shared/components/service-cards/service-cards.component";
 import { SALON_CONTACT } from "../../core/config/salon-contact";
 import { BusinessHoursService } from "../../core/services/business-hours.service";
+import { CURATED_REVIEWS } from "../../core/data/curated-reviews";
+import { REVIEWS_SUMMARY, REVIEW_THEMES } from "../../core/data/reviews-summary";
 
 interface Feature {
   icon: "globe" | "sparkles" | "leaf" | "flask" | "bolt" | "bag";
@@ -63,6 +65,21 @@ export class HomeComponent {
     { icon: "bolt", title: "Kondicionéry", text: "Hĺbková výživa a lesk." },
     { icon: "bag", title: "Styling", text: "Pre dokonalý účes každý deň." },
   ];
+
+  /** Súhrn hodnotení a najčastejšie témy pre sekciu Recenzie. */
+  readonly reviewsSummary = REVIEWS_SUMMARY;
+  readonly reviewThemes = REVIEW_THEMES;
+
+  /**
+   * Recenzie do animovaného pásu. Vyberáme kratšie texty (do 160 znakov), aby karty mali
+   * jednotnú výšku, a zoznam zduplikujeme, aby bol posun pásu plynulý (bez „skoku").
+   */
+  private readonly marqueeSource = CURATED_REVIEWS
+    .filter(r => r.text.length <= 160)
+    .slice(0, 10);
+  readonly reviewsTrack = [...this.marqueeSource, ...this.marqueeSource];
+  /** Počet originálnych kariet – duplikáty za týmto indexom skryjeme pred čítačkou obrazovky. */
+  readonly marqueeCount = this.marqueeSource.length;
 
   readonly faqs: Faq[] = [
     {

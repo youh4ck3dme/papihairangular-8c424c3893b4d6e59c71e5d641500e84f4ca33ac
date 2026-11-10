@@ -916,3 +916,95 @@ summary:focus-visible {
 
   .product-card:hover { transform: none; }
 }
+
+/* ============ S6 RECENZIE ============ */
+.reviews-layout {
+  gap: clamp(16px, 3vh, 28px);
+  text-align: center;
+  align-items: center;
+}
+.reviews-head { display: flex; flex-direction: column; gap: 6px; }
+
+/* Súhrn: priemer + hviezdy + zdroje */
+.reviews-summary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.reviews-score { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.reviews-avg {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(40px, 7vw, 64px);
+  line-height: 1;
+  color: var(--color-accent-text);
+}
+.reviews-stars { display: inline-flex; gap: 4px; }
+.reviews-stars svg { width: 22px; height: 22px; fill: var(--color-accent-fill); }
+.reviews-count { font-size: 14px; color: var(--home-muted, var(--color-text-muted)); }
+.reviews-sources { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; list-style: none; margin: 0; padding: 0; }
+.reviews-source-pill {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 6px 14px; border-radius: var(--radius-pill);
+  background: var(--card); border: 1px solid var(--border);
+  font-size: 14px; color: var(--color-text);
+}
+.reviews-source-pill strong { color: var(--color-accent-text); font-weight: 600; }
+.reviews-source-count { color: var(--color-text-muted); }
+
+/* Témy */
+.review-chips {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
+  list-style: none; margin: 0; padding: 0; max-width: 720px;
+}
+.review-chip {
+  padding: 5px 12px; border-radius: var(--radius-pill);
+  /* Pevné hex hodnoty (nie color-mix): kontrast 6,6:1 (light) / 10,9:1 (dark), merateľné axe-om */
+  background: #f8f3e2; color: #6b530e; font-size: 13px; font-weight: 500;
+}
+html.dark .review-chip { background: #2a2411; color: #e8d99a; }
+
+/* Animovaný pás */
+.reviews-marquee {
+  width: 100%;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.reviews-track {
+  display: flex; gap: 16px; width: max-content; margin: 0; padding: 4px 0; list-style: none;
+  animation: reviews-scroll 48s linear infinite;
+}
+.reviews-marquee:hover .reviews-track,
+.reviews-marquee:focus-within .reviews-track { animation-play-state: paused; }
+@keyframes reviews-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+.review-card {
+  flex: 0 0 auto; width: 280px; box-sizing: border-box;
+  display: flex; flex-direction: column; gap: 10px;
+  padding: 18px 20px; text-align: left;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+.review-card-stars { display: inline-flex; gap: 2px; }
+.review-card-stars svg { width: 15px; height: 15px; fill: var(--color-accent-fill); }
+.review-card-text {
+  margin: 0; font-size: 14px; line-height: 1.55; color: var(--color-text);
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; overflow: hidden;
+}
+.review-card-meta { margin: 0; }
+.review-card-name { font-weight: 600; font-size: 14px; color: var(--color-text); }
+
+.reviews-cta-row { display: flex; justify-content: center; }
+
+/* Bez pohybu: pás stojí a dá sa posúvať prstom/kolieskom */
+@media (prefers-reduced-motion: reduce) {
+  .reviews-track { animation: none; }
+  .reviews-marquee { overflow-x: auto; }
+}
+
+@media (min-width: 768px) {
+  .review-card { width: 320px; }
+  .reviews-stars svg { width: 26px; height: 26px; }
+}

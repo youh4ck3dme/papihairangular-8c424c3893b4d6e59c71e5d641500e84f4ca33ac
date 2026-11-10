@@ -65,7 +65,7 @@ for (const vp of VIEWPORTS) {
                 };
             });
 
-            expect(report.count, 'počet sekcií').toBe(6);
+            expect(report.count, 'počet sekcií').toBe(7);
             expect(report.pageOverflowX, 'horizontálny scroll').toBeLessThanOrEqual(0);
 
             const tag = `${vp.width}x${vp.height}-${theme}`;
