@@ -123,23 +123,31 @@ export class ServiceWorkerUpdateService {
   private createUpdateNotification(): HTMLElement {
     const notification = document.createElement('div');
     notification.className = 'sw-update-notification';
-    notification.innerHTML = `
-      <div class="sw-update-content">
-        <div class="sw-update-icon">
-          <img src="assets/logo-icon.webp" alt="PAPI Logo" style="width: 40px; height: 40px; border-radius: 50%;">
-        </div>
-        <div class="sw-update-text">
-          <h4>Nová verzia je dostupná!</h4>
-          <p>Kliknite pre aktualizáciu aplikácie.</p>
-        </div>
-        <button class="sw-update-btn" onclick="window.location.reload()">
-          Aktualizovať
-        </button>
-        <button class="sw-update-close" onclick="this.closest('.sw-update-notification').remove()">
-          ✕
-        </button>
-      </div>
-    `;
+    // DOM API namiesto innerHTML s onclick – CSP zakazuje inline handlery a Trusted Types zápis HTML reťazcov
+    const el = <K extends keyof HTMLElementTagNameMap>(tag: K, cls?: string, text?: string) => {
+      const e = document.createElement(tag);
+      if (cls) e.className = cls;
+      if (text) e.textContent = text;
+      return e;
+    };
+    const content = el('div', 'sw-update-content');
+    const icon = el('div', 'sw-update-icon');
+    const img = el('img');
+    img.src = 'assets/logo-icon.webp';
+    img.alt = 'PAPI Logo';
+    img.style.cssText = 'width: 40px; height: 40px; border-radius: 50%;';
+    icon.append(img);
+    const text = el('div', 'sw-update-text');
+    text.append(el('h4', undefined, 'Nová verzia je dostupná!'), el('p', undefined, 'Kliknite pre aktualizáciu aplikácie.'));
+    const update = el('button', 'sw-update-btn', 'Aktualizovať');
+    update.type = 'button';
+    update.addEventListener('click', () => window.location.reload());
+    const close = el('button', 'sw-update-close', '✕');
+    close.type = 'button';
+    close.setAttribute('aria-label', 'Zavrieť');
+    close.addEventListener('click', () => notification.remove());
+    content.append(icon, text, update, close);
+    notification.append(content);
 
     // Add styles
     const style = document.createElement('style');

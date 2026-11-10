@@ -24,11 +24,12 @@
   <!-- Blog Grid - Responsive 3 Columns -->
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
     @for (post of posts(); track post.slug; let i = $index) {
-    <article @fadeSlideIn class="post-card group">
+    <article class="post-card group">
 
       <!-- Featured Image -->
       <a [routerLink]="['/blog', post.slug]" class="block overflow-hidden relative aspect-video">
-        <img [ngSrc]="post.imageUrl" [alt]="post.title" fill class="object-cover w-full h-full"
+        <img [ngSrc]="post.imageUrl" [alt]="post.title" fill [priority]="i === 0"
+          sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" class="object-cover w-full h-full"
           [style.object-position]="i === 0 ? 'center 30%' : 'center center'">
       </a>
 

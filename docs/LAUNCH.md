@@ -1,5 +1,7 @@
 # Spustenie novej verzie papihairdesign.sk
 
+> ⛔ **Žiadny produkčný deploy bez výslovného súhlasu majiteľa.** Ostrá doména papihairdesign.sk sa nesmie prepnúť na inú verziu bez jeho súhlasu – platí pre ľudí aj AI agentov (pozri `AGENTS.md`). Merge do `main` produkciu nespustí (`git.deploymentEnabled.main = false` vo `vercel.json`); produkčné nasadenie robí majiteľ ručne vo Vercel dashboarde („Promote to Production“), až keď ho schváli.
+
 Stav vetvy `refactor/home-ui-ux` (november 2026). Web je hotový na nasadenie; tento dokument je
 kontrolný zoznam pre spustenie a údržbu.
 
@@ -40,7 +42,22 @@ kontrolný zoznam pre spustenie a údržbu.
   `/neexistuje` (→ 404), `/booking` (→ Bookio), `/ai-studio` (→ 301 na `/`).
 - [ ] **Nikdy** nevracať fallback `try_files … /index.html` – `index.html` je teraz domovská stránka, nie prázdny shell.
 
-Docker (`Dockerfile`, `nginx.conf`, `docker-compose.yml`) je zosúladený s tým istým správaním (Node 22, pnpm 8.15, `build:prod`).
+Docker (`Dockerfile`, `nginx.conf`, `docker-compose.yml`) je zosúladený s tým istým správaním (Node 22, pnpm 8.15).
+Pre VPS/Docker sa používa `pnpm run build:vps` = `build:prod` + `scripts/precompress.mjs` (vedľa každého textového súboru
+nad 1 kB vytvorí `.gz` a `.br`); nginx ich servuje cez `gzip_static on` bez komprimovania pri každej požiadavke.
+`brotli_static` vyžaduje modul ngx_brotli (v `nginx.conf` je pripravený ako komentár). Na Verceli sa `build:vps` nepoužíva – komprimuje sám.
+
+**Cache (rovnaké na Verceli aj v nginx):** súbory s hashom (`main-*.js`, `chunk-*.js`, `styles-*.css`, `/media/`) a písma
+`/assets/fonts/*.woff2` 1 rok `immutable` (pri zmene písma súbor premenovať), obrázky `/assets`, `/images` 30 dní,
+HTML `no-cache`, `ngsw.json` a `ngsw-worker.js` nikdy necachovať. HTTP/2 push sa nepoužíva (prehliadače ho zrušili) –
+namiesto neho `preload` pre 2 písma nad záhybom a `dns-prefetch` pre `services.bookio.com`.
+
+**Cloudflare**
+- Vercel: DNS záznamy **iba DNS** (sivý obláčik). Proxy pred Vercelom pridáva ďalší skok, rozbíja Vercel cache a vydanie SSL.
+- VPS: proxy **zapnutý** (oranžový obláčik) – CDN a Brotli pre návštevníkov ďaleko od servera. Nastaviť:
+  SSL/TLS → **Full (strict)**; Speed → Optimization → **Rocket Loader OFF** (prepisuje `<script>` a rozbíja hydratáciu Angularu),
+  **Auto Minify vypnuté** (súbory sú už minifikované; zmena HTML by rozbila hash kontrolu service workera);
+  Brotli zapnuté; Caching → „Respect existing headers“ (riadi sa `Cache-Control` z nginx); Early Hints môžu byť zapnuté.
 
 ### 3. Google a profily
 - [ ] Google Search Console: overiť doménu, odoslať `https://papihairdesign.sk/sitemap.xml`, cez „Kontrola URL“ požiadať o indexovanie
@@ -56,6 +73,10 @@ Docker (`Dockerfile`, `nginx.conf`, `docker-compose.yml`) je zosúladený s tým
 - [ ] Rezervácia: tlačidlo „Rezervovať“ → Bookio → výber služby a termínu (rezerváciu stačí nedokončiť).
 - [ ] Telefón (ťuknutím volá), e-mailový formulár (otvorí poštu s vyplnenou správou), mapa sa načíta až po kliknutí.
 - [ ] Menu, prepínač témy, cenník (rozbalenie položiek), FAQ, karusel služieb.
+- [ ] Posúvanie palcom na domovskej stránke: plynulé, po pustení prsta stránka nedoskakuje na sekciu, obsah neposkočí,
+  keď sa skryje lišta prehliadača. Meranie na telefóne: Android → USB ladenie, v počítači `chrome://inspect` →
+  Inspect → Performance → nahrať 5 s posúvania (červené snímky = sekanie); iPhone → Nastavenia → Safari → Pokročilé →
+  Web Inspector, Mac Safari → Vývoj → [iPhone] → Timelines.
 - [ ] Inštalácia ako aplikácia (PWA); po prvej návšteve sa web otvorí aj bez siete (service worker).
 
 ## Testy a merania
@@ -66,10 +87,31 @@ Docker (`Dockerfile`, `nginx.conf`, `docker-compose.yml`) je zosúladený s tým
 | `pnpm run test:site` | Playwright: bezpečnosť (žiadne kľúče/AI v bundli), SEO meta, surové HTML každej stránky, interakcie po hydratácii, každá stránka na 360/1440 px v svetlom aj tmavom režime, axe WCAG 2.1 AA, domov 100dvh |
 | `pnpm run test:unit` | unit testy (Karma, Chrome headless; `CHROME_BIN` = cesta k Chrome) |
 | `pnpm run lh` | Lighthouse CI (mobil, 3 behy, medián) na `/`, `/cennik`, `/kontakt`, `/sluzby/damske-strihy` |
+| `pnpm run bench:scroll` | plynulosť posúvania prstom (mobil, 4× CPU): JS a prepočty štýlov počas posunu, či snap neťahá stránku |
 | `pnpm run serve:dist` | lokálny server, ktorý sa správa ako Vercel/nginx (port 4300) |
+| `node scripts/perf/vitals-bench.mjs --runs 3` | LCP (aj prvok), FCP, CLS, INP, TTFB na 7 stránkach – mobil 390 px, pomalé 4G, 4× CPU |
+| `pnpm run gen:images` | po výmene fotky: hero AVIF/WebP, varianty 400/800 px pre blog a lookbook, screenshoty manifestu; hlási súbory nad limitom |
+| `k6 run -e BASE_URL=… scripts/perf/k6-vps.js` | **len VPS**: 50 návštevníkov 1 min, p95 TTFB < 600 ms (na Vercel nespúšťať) |
 
-Lighthouse (mobil, simulované pomalé 4G, medián 3 behov, lokálny server s kompresiou) – výsledky sú v záverečnej
-správe PR. Limity: výkon ≥ 90, prístupnosť ≥ 95, best practices ≥ 95, SEO = 100 (chyba); LCP ≤ 2,5 s a TBT ≤ 200 ms (upozornenie).
+`test:site` obsahuje aj `e2e/perf.spec.ts`: rozpočty prenesených bajtov na každej stránke (mobil @3x) – JS ≤ 130 kB,
+obrázky ≤ 500 kB, spolu ≤ 900 kB, žiadny obrázok > 200 kB, LCP obrázky s `fetchpriority=high`, CLS < 0,1
+a že sa knižnica web-vitals bez `VITALS_ENDPOINT` vôbec nesťahuje. Písma majú ~95 kB (cieľ 80 kB nesplnený, pozri nižšie).
+
+### Meranie na produkcii
+- **PageSpeed Insights** (`https://pagespeed.web.dev/`): zadať `https://papihairdesign.sk/`, `/cennik`, `/blog`.
+  Rozhodujúca je horná časť „Discover what your real users are experiencing“ (údaje z Chrome UX Report za 28 dní,
+  objavia sa až pri dostatočnej návštevnosti); laboratórne skóre nižšie je len orientačné.
+- **WebPageTest** (`https://www.webpagetest.org/`): Location *Frankfurt* alebo *Vienna*, Browser *Moto G Power / Chrome*,
+  Connection *4G*, 3 behy, „First View and Repeat View“. Sledovať Filmstrip (kedy sa ukáže nadpis a fotka) a Waterfall
+  (nič nesmie blokovať vykreslenie okrem CSS a 2 písiem).
+- **Web Vitals od návštevníkov**: nastaviť `VITALS_ENDPOINT` (URL, ktorá prijme POST s JSON) – napr. vlastná Vercel Function,
+  Cloudflare Worker alebo služba typu Axiom/Logflare. Posiela sa len názov metriky, hodnota, hodnotenie, cesta stránky
+  a CSS selektor prvku (napr. ktorý obrázok bol LCP) – **žiadne cookies, IP ani identifikátor návštevníka**, preto netreba
+  cookie lištu. Voliteľne `SENTRY_DSN` (chyby JavaScriptu cez Sentry Loader; Sentry spracúva IP – uviesť v zásadách ochrany súkromia).
+  Obe hodnoty sú verejné (končia v JS bundli) a nastavujú sa ako premenné prostredia pred buildom (`scripts/ensure-env.mjs`).
+
+Lighthouse (mobil, simulované pomalé 4G, medián 5 behov na 7 stránkach, lokálny server s kompresiou) – výsledky sú v záverečnej
+správe PR. Limity: výkon ≥ 90, prístupnosť ≥ 95, best practices ≥ 95, SEO = 100, LCP ≤ 2,5 s, TBT ≤ 200 ms, CLS ≤ 0,1, FCP ≤ 1,8 s a rozpočty bajtov (chyba); písma ≤ 80 kB (upozornenie).
 
 ## Známe obmedzenia a ďalšie kroky
 
@@ -78,8 +120,15 @@ správe PR. Limity: výkon ≥ 90, prístupnosť ≥ 95, best practices ≥ 95, 
 2. **Fotky balíčkov v cenníku** (lookbook) pôsobia ako generované – nahradiť skutočnými fotkami zo salónu.
 3. **Kontaktný formulár** otvára e-mailového klienta (mailto) – bez servera; ak treba odosielanie priamo z webu,
    doplniť serverovú funkciu (napr. Vercel Function + e-mailová služba).
-4. **Domovská stránka – LCP** ~2,6 s na simulovanom pomalom 4G (cieľ 2,5 s). Ďalšie zlepšenie: menší nadpis/písmo v hero,
-   prípadne odložiť načítanie časti JavaScriptu.
+4. **Výkon – čo zostáva** (Lighthouse mobil, medián 5 behov): LCP na všetkých 7 stránkach ≤ 2,5 s (home 2,47 s – tesne,
+   Lighthouse simuluje aj sťahovanie hero fotky; reálne meranie pri pomalom 4G ukazuje 0,66 s). **TBT** 120–245 ms –
+   na `/`, `/cennik` a článkoch blogu je medián nad 200 ms; väčšinu tvorí jedna dlhá úloha pri hydratácii Angularu
+   (~350 ms pri 4× spomalenom CPU). Postupná hydratácia (`withIncrementalHydration`) bola vyskúšaná a TBT zhoršila,
+   preto je TBT v `lighthouserc.json` len upozornenie. Hero nadpis má úvodnú animáciu (0,8 s) – jej odstránenie by LCP
+   ešte znížilo, ale mení vzhľad. **Písma** ~95 kB (cieľ 80 kB): Inter + Syne, latin + slovenská podmnožina,
+   všetky váhy 100–900; menej by znamenalo vypustiť váhy alebo Syne.
+   Virtual scrolling ani Web Workers sa nepridávali – najdlhší zoznam (cenník) má desiatky položiek, nie tisíce,
+   a v prehliadači sa nerobí žiadny ťažký výpočet, ktorý by sa oplatilo presunúť mimo hlavného vlákna.
 5. Push notifikácie (VAPID) sú v kóde pripravené, ale nepoužívajú sa.
 
 ## Návrat späť

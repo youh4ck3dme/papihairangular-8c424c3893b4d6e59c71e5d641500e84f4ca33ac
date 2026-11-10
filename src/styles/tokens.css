@@ -1,88 +1,166 @@
-/* Písma hostované lokálne (rýchlejšie, bez prenosu IP adries návštevníkov na Google – GDPR).
-   Variabilné woff2 z @fontsource-variable (OFL). Slovenská stránka stiahne iba latin + sk
-   (sk = 24 znakov č ď ě ĺ ľ ň ŕ ř š ť ů ž, vytvorené scripts/subset-fonts.py); latin-ext len pri iných jazykoch. */
+/* Písmo Satoshi (Indian Type Foundry, OFL) hostované lokálne – rýchlejšie a bez prenosu IP
+   adries návštevníkov tretej strane (GDPR). Jediný variabilný woff2 (váha 300–900), podmnožina
+   latin + latin-ext, ktorá pokrýva celú slovenskú diakritiku (č ď ľ ň ŕ š ť ž ô á é í ó ú ý ä…).
+   Satoshi sa používa na bežný text, nadpisy aj špeciálne texty – hierarchiu tvorí váha, nie rodina. */
 @font-face {
-  font-family: 'Inter';
+  font-family: 'Satoshi';
   font-style: normal;
-  font-weight: 100 900;
+  font-weight: 300 900;
   font-display: swap;
-  src: url('/assets/fonts/inter-latin-ext-wght-normal.woff2') format('woff2');
-  unicode-range: U+0100-010B,U+0110-0119,U+011C-0138,U+013B-013C,U+013F-0146,U+0149-0153,U+0156-0157,U+015A-015F,U+0162-0163,U+0166-016D,U+0170-017C,U+017F-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
-}
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url('/assets/fonts/inter-sk-wght-normal.woff2') format('woff2');
-  unicode-range: U+010C-010F,U+011A-011B,U+0139-013A,U+013D-013E,U+0147-0148,U+0154-0155,U+0158-0159,U+0160-0161,U+0164-0165,U+016E-016F,U+017D-017E;
-}
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url('/assets/fonts/inter-latin-wght-normal.woff2') format('woff2');
-  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
-}
-@font-face {
-  font-family: 'Syne';
-  font-style: normal;
-  font-weight: 400 800;
-  font-display: swap;
-  src: url('/assets/fonts/syne-latin-ext-wght-normal.woff2') format('woff2');
-  unicode-range: U+0100-010B,U+0110-0119,U+011C-0138,U+013B-013C,U+013F-0146,U+0149-0153,U+0156-0157,U+015A-015F,U+0162-0163,U+0166-016D,U+0170-017C,U+017F-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
-}
-@font-face {
-  font-family: 'Syne';
-  font-style: normal;
-  font-weight: 400 800;
-  font-display: swap;
-  src: url('/assets/fonts/syne-sk-wght-normal.woff2') format('woff2');
-  unicode-range: U+010C-010F,U+011A-011B,U+0139-013A,U+013D-013E,U+0147-0148,U+0154-0155,U+0158-0159,U+0160-0161,U+0164-0165,U+016E-016F,U+017D-017E;
-}
-@font-face {
-  font-family: 'Syne';
-  font-style: normal;
-  font-weight: 400 800;
-  font-display: swap;
-  src: url('/assets/fonts/syne-latin-wght-normal.woff2') format('woff2');
-  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+  src: url('/assets/fonts/satoshi-variable.woff2') format('woff2');
 }
 
+/* Metricky zladené záložné písmo (kým sa nenačíta Satoshi): Arial/Liberation Sans s upravenou
+   šírkou (size-adjust) a výškou, aby výmena písma neposúvala text (CLS) ani nemenila rozmer LCP
+   nadpisu. size-adjust = pomer priemernej šírky znaku Satoshi vs Arial pre danú váhu (fontTools
+   OS/2.xAvgCharWidth); tučné rezy sú voči Arial Bold, aby prehliadač tučné nesyntetizoval z Regular.
+   ascent/descent/line-gap = metriky Satoshi (hhea 1010/-240/100 pri 1000 upm) delené faktorom
+   size-adjust, lebo override sa aplikuje na už upravený em. */
+@font-face {
+  font-family: 'Satoshi Fallback'; font-weight: 300 400;
+  src: local('Arial'), local('ArialMT'), local('Liberation Sans'), local('Helvetica');
+  size-adjust: 107.1%; ascent-override: 94.3%; descent-override: 22.4%; line-gap-override: 9.3%;
+}
+@font-face {
+  font-family: 'Satoshi Fallback'; font-weight: 500;
+  src: local('Arial'), local('ArialMT'), local('Liberation Sans'), local('Helvetica');
+  size-adjust: 110.5%; ascent-override: 91.4%; descent-override: 21.7%; line-gap-override: 9.0%;
+}
+@font-face {
+  font-family: 'Satoshi Fallback'; font-weight: 600 700;
+  src: local('Arial Bold'), local('Arial-BoldMT'), local('Liberation Sans Bold'), local('Helvetica Bold');
+  size-adjust: 114.2%; ascent-override: 88.4%; descent-override: 21.0%; line-gap-override: 8.8%;
+}
+@font-face {
+  font-family: 'Satoshi Fallback'; font-weight: 800 900;
+  src: local('Arial Bold'), local('Arial-BoldMT'), local('Liberation Sans Bold'), local('Helvetica Bold');
+  size-adjust: 118.6%; ascent-override: 85.2%; descent-override: 20.2%; line-gap-override: 8.4%;
+}
+
+/* GENERATED FROM tokens/tokens.json — nemeniť ručne pod touto čiarou */
 :root {
-  --surface: #ffffff;
-  --surface-alt: #f7f5f0;
-  --text: #171717;
-  --muted: #52525b;
-  --border: rgba(23, 23, 23, 0.1);
-  --card: #ffffff;
-  --accent: #8a6a12;   /* zlatá pre text na svetlom pozadí – 5.1:1 */
-  --gold: #d4af37;     /* zlatá pre plochy, ikony, tlačidlá */
+  --color-gold-50: #faf6e7;
+  --color-gold-100: #f3ecc9;
+  --color-gold-200: #e8d99a;
+  --color-gold-300: #dec36a;
+  --color-gold-400: #d4af37;
+  --color-gold-500: #b8922b;
+  --color-gold-600: #8a6a12;
+  --color-gold-700: #6b530e;
+  --color-gold-800: #4a3908;
+  --color-gold-900: #2a2005;
+  --color-neutral-0: #ffffff;
+  --color-neutral-50: #f7f5f0;
+  --color-neutral-100: #e9e7e2;
+  --color-neutral-400: #a1a1aa;
+  --color-neutral-500: #71717a;
+  --color-neutral-600: #52525b;
+  --color-neutral-800: #171717;
+  --color-neutral-900: #121212;
+  --color-neutral-950: #0a0a0a;
+  --color-semantic-success: #166534;
+  --color-semantic-danger: #b91c1c;
+  --color-semantic-focus: #8a6a12;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-pill: 9999px;
+  --size-container: 1200px;
+  --size-pad-x: 20px;
+  --size-pad-x-md: 48px;
+  --size-header-h: 56px;
+  --size-cta-h: 56px;
+  --size-touch: 44px;
+  --font-family-body: 'Satoshi', 'Satoshi Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-family-heading: 'Satoshi', 'Satoshi Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-size-body: clamp(16px, 1rem + 0.1vw, 18px);
+  --font-size-lead: clamp(17px, 1rem + 0.5vw, 20px);
+  --font-size-h3: clamp(22px, 1.1rem + 1.5vw, 32px);
+  --font-size-h2: clamp(28px, 1.2rem + 2.5vw, 44px);
+  --font-size-h1: clamp(34px, 1.3rem + 4.5vw, 60px);
+  --font-size-eyebrow: 12px;
+  --font-weight-body: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-line-body: 1.6;
+  --font-line-heading: 1.1;
+  --font-track-eyebrow: 0.2em;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-md: 0 8px 24px rgba(0,0,0,0.12);
+  --shadow-lg: 0 16px 40px -20px rgba(0,0,0,0.35);
+  --z-base: 1;
+  --z-header: 40;
+  --z-modal: 80;
+  --z-toast: 100;
+  --motion-duration-fast: 150ms;
+  --motion-duration-base: 300ms;
+  --motion-duration-hero: 800ms;
+  --motion-easing-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-easing-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* Téma — svetlá (default) */
+  --color-surface: #ffffff;
+  --color-surface-alt: #f7f5f0;
+  --color-text: #171717;
+  --color-text-muted: #52525b;
+  --color-border: rgba(23,23,23,0.10);
+  --color-border-strong: rgba(23,23,23,0.35);
+  --color-card: #ffffff;
+  --color-accent-text: #8a6a12;
+  --color-accent-fill: #d4af37;
+  --color-on-accent: #171717;
+  --color-overlay: rgba(0,0,0,0.5);
+
+  /* Legacy aliasy pre existujúce selektory v kóde */
+  --surface: var(--color-surface);
+  --surface-alt: var(--color-surface-alt);
+  --text: var(--color-text);
+  --muted: var(--color-text-muted);
+  --border: var(--color-border);
+  --card: var(--color-card);
+  --accent: var(--color-accent-text);
+  --gold: var(--color-accent-fill);
   --gold-hover: #e6c35c;
-  --on-gold: #111111;
-
-  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-heading: 'Syne', 'Inter', system-ui, sans-serif;
-
-  --container: 1200px;
-  --pad-x: 20px;
-  --radius: 16px;
+  --on-gold: var(--color-on-accent);
+  --font-body: var(--font-family-body);
+  --font-heading: var(--font-family-heading);
+  --container: var(--size-container);
+  --pad-x: var(--size-pad-x);
+  --radius: var(--radius-md);
+  --header-h: var(--size-header-h);
+  --cta-h: var(--size-cta-h);
 }
 
 @media (min-width: 768px) {
   :root {
-    --pad-x: 48px;
-    --radius: 24px;
+    --pad-x: var(--size-pad-x-md);
+    --radius: var(--radius-lg);
   }
 }
 
 html.dark {
-  --surface: #0a0a0a;
-  --surface-alt: #121212;
-  --text: #f5f5f5;
-  --muted: #a1a1aa;
-  --border: rgba(212, 175, 55, 0.15);
-  --card: #171717;
-  --accent: #d4af37;
+  --color-surface: #0a0a0a;
+  --color-surface-alt: #121212;
+  --color-text: #f5f5f5;
+  --color-text-muted: #a1a1aa;
+  --color-border: rgba(212,175,55,0.15);
+  --color-border-strong: rgba(212,175,55,0.45);
+  --color-card: #171717;
+  --color-accent-text: #d4af37;
+  --color-accent-fill: #d4af37;
+  --color-on-accent: #171717;
+  --color-overlay: rgba(0,0,0,0.7);
 }

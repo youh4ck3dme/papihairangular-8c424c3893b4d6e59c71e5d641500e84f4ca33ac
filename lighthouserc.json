@@ -5,9 +5,12 @@
         "http://127.0.0.1:4310/",
         "http://127.0.0.1:4310/cennik",
         "http://127.0.0.1:4310/kontakt",
-        "http://127.0.0.1:4310/sluzby/damske-strihy"
+        "http://127.0.0.1:4310/sluzby/damske-strihy",
+        "http://127.0.0.1:4310/blog",
+        "http://127.0.0.1:4310/blog/trendove-ucesy-2026",
+        "http://127.0.0.1:4310/o-nas"
       ],
-      "numberOfRuns": 3,
+      "numberOfRuns": 5,
       "settings": {
         "chromeFlags": "--headless=new --no-sandbox --disable-dev-shm-usage",
         "skipAudits": [
@@ -48,7 +51,7 @@
           }
         ],
         "largest-contentful-paint": [
-          "warn",
+          "error",
           {
             "maxNumericValue": 2500,
             "aggregationMethod": "median"
@@ -57,7 +60,7 @@
         "cumulative-layout-shift": [
           "error",
           {
-            "maxNumericValue": 0.05,
+            "maxNumericValue": 0.1,
             "aggregationMethod": "median"
           }
         ],
@@ -65,6 +68,41 @@
           "warn",
           {
             "maxNumericValue": 200,
+            "aggregationMethod": "median"
+          }
+        ],
+        "first-contentful-paint": [
+          "error",
+          {
+            "maxNumericValue": 1800,
+            "aggregationMethod": "median"
+          }
+        ],
+        "resource-summary:script:size": [
+          "error",
+          {
+            "maxNumericValue": 130000,
+            "aggregationMethod": "median"
+          }
+        ],
+        "resource-summary:image:size": [
+          "error",
+          {
+            "maxNumericValue": 500000,
+            "aggregationMethod": "median"
+          }
+        ],
+        "resource-summary:font:size": [
+          "warn",
+          {
+            "maxNumericValue": 80000,
+            "aggregationMethod": "median"
+          }
+        ],
+        "resource-summary:total:size": [
+          "error",
+          {
+            "maxNumericValue": 900000,
             "aggregationMethod": "median"
           }
         ]

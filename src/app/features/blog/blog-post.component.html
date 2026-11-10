@@ -26,26 +26,27 @@
 
     <div class="container-site post-main">
       <div class="post-image">
-        <img [ngSrc]="p.imageUrl" [alt]="p.title" fill priority class="object-cover">
+        <img [ngSrc]="p.imageUrl" [alt]="p.title" fill priority
+          sizes="(min-width: 1000px) 75vw, 100vw" class="object-cover">
       </div>
 
       <div class="post-column">
         <div class="post-body">
           @for (block of processedContent(); track $index) {
           @switch (block.type) {
-          @case ('heading') { <h2 [innerHTML]="block.text || block.data | safeHtml"></h2> }
-          @case ('heading-level-2') { <h2 [innerHTML]="block.text || block.data | safeHtml"></h2> }
-          @case ('heading-level-3') { <h3 [innerHTML]="block.text || block.data | safeHtml"></h3> }
-          @case ('heading-level-4') { <h4 [innerHTML]="block.text || block.data | safeHtml"></h4> }
-          @case ('paragraph') { <p [innerHTML]="block.text || block.data | safeHtml"></p> }
-          @case ('quote') { <blockquote class="quote" [innerHTML]="block.text || block.data | safeHtml"></blockquote> }
-          @case ('tip-box') { <p class="tip-box" [innerHTML]="block.data || block.text | safeHtml"></p> }
+          @case ('heading') { <h2 [innerHTML]="block.text || block.data"></h2> }
+          @case ('heading-level-2') { <h2 [innerHTML]="block.text || block.data"></h2> }
+          @case ('heading-level-3') { <h3 [innerHTML]="block.text || block.data"></h3> }
+          @case ('heading-level-4') { <h4 [innerHTML]="block.text || block.data"></h4> }
+          @case ('paragraph') { <p [innerHTML]="block.text || block.data"></p> }
+          @case ('quote') { <blockquote class="quote" [innerHTML]="block.text || block.data"></blockquote> }
+          @case ('tip-box') { <p class="tip-box" [innerHTML]="block.data || block.text"></p> }
           @case ('list') {
           <ul>
-            @for (item of block.items; track item) { <li [innerHTML]="item | safeHtml"></li> }
+            @for (item of block.items; track item) { <li [innerHTML]="item"></li> }
           </ul>
           }
-          @case ('list-item') { <ul><li [innerHTML]="block.text | safeHtml"></li></ul> }
+          @case ('list-item') { <ul><li [innerHTML]="block.text"></li></ul> }
           @case ('image') {
           <figure>
             <img [src]="block.url" [alt]="block.alt || ''" [attr.width]="block.width" [attr.height]="block.height"
@@ -70,9 +71,9 @@
 
         <div class="post-share">
           <span class="post-share-label">Zdieľať:</span>
-          <a [href]="getFacebookShareUrl()" target="_blank" rel="noopener noreferrer" class="share-btn">Facebook<span class="sr-only"> (otvorí sa v novom okne)</span></a>
-          <a [href]="getTwitterShareUrl()" target="_blank" rel="noopener noreferrer" class="share-btn">X<span class="sr-only"> (Twitter, otvorí sa v novom okne)</span></a>
-          <a [href]="getWhatsAppShareUrl()" target="_blank" rel="noopener noreferrer" class="share-btn">WhatsApp<span class="sr-only"> (otvorí sa v novom okne)</span></a>
+          <a [href]="share().facebook" target="_blank" rel="noopener noreferrer" class="share-btn">Facebook<span class="sr-only"> (otvorí sa v novom okne)</span></a>
+          <a [href]="share().twitter" target="_blank" rel="noopener noreferrer" class="share-btn">X<span class="sr-only"> (Twitter, otvorí sa v novom okne)</span></a>
+          <a [href]="share().whatsapp" target="_blank" rel="noopener noreferrer" class="share-btn">WhatsApp<span class="sr-only"> (otvorí sa v novom okne)</span></a>
         </div>
 
         @if (prevPost() || nextPost()) {
@@ -100,7 +101,7 @@
           @for (r of relatedPosts(); track r.slug) {
           <article class="post-card">
             <a [routerLink]="['/blog', r.slug]" class="block relative aspect-video overflow-hidden">
-              <img [ngSrc]="r.imageUrl" [alt]="r.title" fill class="object-cover">
+              <img [ngSrc]="r.imageUrl" [alt]="r.title" fill sizes="(min-width: 768px) 33vw, 100vw" class="object-cover">
             </a>
             <div class="p-6 flex flex-col flex-grow">
               <h3 class="post-card-title clamp-2"><a [routerLink]="['/blog', r.slug]">{{ r.title }}</a></h3>

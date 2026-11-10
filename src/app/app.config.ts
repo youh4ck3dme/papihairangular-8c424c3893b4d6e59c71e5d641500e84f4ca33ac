@@ -1,10 +1,14 @@
-import { ApplicationConfig, LOCALE_ID, isDevMode, provideZonelessChangeDetection } from '@angular/core';
-import { provideRouter, withInMemoryScrolling } from '@angular/router';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import {
+  ApplicationConfig, LOCALE_ID, PLATFORM_ID, inject, isDevMode, provideAppInitializer, provideZonelessChangeDetection,
+} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { provideRouter, withInMemoryScrolling, withPreloading } from '@angular/router';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideServiceWorker } from '@angular/service-worker';
 import { APP_ROUTES } from './app.routes';
+import { IdlePreloadStrategy } from './core/routing/idle-preload.strategy';
+import { IMAGE_PROVIDERS } from './core/images/image-loader';
+import { startRealUserMonitoring } from './core/perf/web-vitals';
 
 /**
  * Spoločná konfigurácia pre prehliadač aj build-time prerendering (main.server.ts).
@@ -16,12 +20,19 @@ export const appConfig: ApplicationConfig = {
     { provide: LOCALE_ID, useValue: 'sk' },
     // bez zone.js: menší bundle a menej práce pri štarte (celý stav aplikácie je v signals)
     provideZonelessChangeDetection(),
-    provideRouter(APP_ROUTES, withInMemoryScrolling({ scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' })),
-    // animácie sa načítajú lenivo – menší hlavný bundle
-    provideAnimationsAsync(),
-    provideHttpClient(withFetch()),
+    provideRouter(
+      APP_ROUTES,
+      withInMemoryScrolling({ scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' }),
+      withPreloading(IdlePreloadStrategy),
+    ),
     // event replay: klik pred dokončením hydratácie sa nestratí
     provideClientHydration(withEventReplay()),
+    // NgOptimizedImage: srcset z predgenerovaných variantov (scripts/gen-images.mjs)
+    ...IMAGE_PROVIDERS,
+    // Web Vitals od návštevníkov – len v prehliadači, v nečinnosti a len s nastaveným VITALS_ENDPOINT
+    provideAppInitializer(() => {
+      if (isPlatformBrowser(inject(PLATFORM_ID))) startRealUserMonitoring();
+    }),
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000',

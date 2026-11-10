@@ -4,9 +4,13 @@ import { isDevMode } from '@angular/core';
 import localeSk from '@angular/common/locales/sk';
 import { AppComponent } from './app/app.component';
 import { appConfig } from './app/app.config';
+import { installTrustedTypesDefaultPolicy } from './app/core/security/trusted-types';
 
 // Slovenské formáty dátumov a čísel (DatePipe: „5. januára 2026“)
 registerLocaleData(localeSk);
+
+// pred štartom Angularu – registrácia service workera prechádza cez Trusted Types
+installTrustedTypesDefaultPolicy();
 
 bootstrapApplication(AppComponent, appConfig)
   .then(appRef => {

@@ -4,11 +4,10 @@ import {
   inject,
   signal,
 } from "@angular/core";
-import { CommonModule, NgOptimizedImage } from "@angular/common";
+import { DatePipe, NgOptimizedImage } from "@angular/common";
 import { RouterLink } from "@angular/router";
 import { BlogService } from "../../core/services/blog.service";
 import { BlogPost } from "../../core/models/blog-post.interface";
-import { fadeSlideIn, slideInLeft, hoverScale } from "../../core/animations";
 import { SeoService } from "../../core/services/seo.service";
 import { ThemeService } from "../../core/services/theme.service";
 import { PageHeaderComponent } from "../../shared/components/page-header/page-header.component";
@@ -20,8 +19,7 @@ import { PageHeaderComponent } from "../../shared/components/page-header/page-he
   styleUrls: ["./blog-list.component.css"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, RouterLink, NgOptimizedImage, PageHeaderComponent],
-  animations: [fadeSlideIn, slideInLeft, hoverScale],
+  imports: [DatePipe, RouterLink, NgOptimizedImage, PageHeaderComponent],
 })
 export class BlogListComponent {
   private blogService = inject(BlogService);

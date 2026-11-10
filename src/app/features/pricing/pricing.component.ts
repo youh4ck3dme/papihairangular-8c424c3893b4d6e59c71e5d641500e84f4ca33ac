@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { NgOptimizedImage } from '@angular/common';
 import { ServiceInfoModalComponent } from '../../shared/components/service-info-modal/service-info-modal.component';
 import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
 import { SalonService } from '../../core/models';
@@ -22,7 +23,7 @@ interface Look {
   templateUrl: './pricing.component.html',
   styleUrls: ['./pricing.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, ServiceInfoModalComponent, PageHeaderComponent]
+  imports: [RouterLink, NgOptimizedImage, ServiceInfoModalComponent, PageHeaderComponent]
 })
 export class PricingComponent {
   readonly contact = SALON_CONTACT;

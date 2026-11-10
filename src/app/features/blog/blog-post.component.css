@@ -100,6 +100,19 @@
   margin: 0 0 20px;
 }
 
+/* Odkazy v texte článku: podčiarknuté (farba nesmie byť jediný nosič informácie). */
+.post-body a {
+  color: var(--color-accent-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  font-weight: 500;
+}
+
+.post-body a:hover {
+  text-decoration-thickness: 2px;
+}
+
 .post-body h2 {
   font-family: var(--font-heading);
   font-size: 24px;

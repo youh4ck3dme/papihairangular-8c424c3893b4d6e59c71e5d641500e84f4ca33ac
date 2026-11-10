@@ -2,7 +2,7 @@
   @for (notification of notifications(); track notification.id) {
     <div
       role="alert"
-      class="flex items-center p-4 mb-4 text-white rounded-lg shadow-lg animate-fade-in-up"
+      class="flex items-center p-4 mb-4 rounded-lg shadow-lg animate-fade-in-up"
       [class]="getBgColor(notification.type)"
     >
       <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -14,7 +14,7 @@
       </div>
       <button
         type="button"
-        class="ml-4 -mx-1.5 -my-1.5 bg-transparent text-white rounded-lg focus:ring-2 focus:ring-white/50 p-1.5 hover:bg-white/20 inline-flex h-8 w-8"
+        class="ml-4 -mx-1.5 -my-1.5 bg-transparent text-current rounded-lg focus:ring-2 focus:ring-focus p-1.5 hover:bg-overlay inline-flex h-8 w-8"
         (click)="notificationService.dismiss(notification.id)"
         aria-label="Close"
       >

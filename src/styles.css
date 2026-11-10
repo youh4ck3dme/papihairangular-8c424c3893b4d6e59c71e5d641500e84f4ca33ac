@@ -10,7 +10,7 @@
    komponenty (tlačidlá, karty, sekcie) v styles/components.css.
 -------------------------------------------------------------- */
 
-/* ===== Výška headera – jediný zdroj (header + home 100dvh sekcie) ===== */
+/* ===== Výška headera – jediný zdroj (header + home sekcie na výšku obrazovky) ===== */
 :root {
   --header-h: 64px;
   --cta-h: 64px;
@@ -28,10 +28,14 @@ html.dark {
   }
 }
 
-/* Snap scroll len na domovskej stránke */
-html:has(app-home) {
-  scroll-snap-type: y proximity;
-  scroll-padding-top: 0;
+/* Snap na sekcie len na domovskej stránke a len pri myši/touchpade.
+   Na dotykovom displeji snap po pustení prsta ťahal stránku na najbližšiu sekciu (až o ~200 px)
+   a prerušoval zotrvačnosť – posúvanie pôsobilo spomalene. */
+@media (hover: hover) and (pointer: fine) {
+  html:has(app-home) {
+    scroll-snap-type: y proximity;
+    scroll-padding-top: 0;
+  }
 }
 
 /* Na mobile má home vlastnú sticky CTA lištu – plávajúce „hore“ by prekrývalo obsah sekcií */

@@ -1,4 +1,4 @@
-/* Pevná výška headera – home sekcie (100dvh) s ňou počítajú cez --header-h */
+/* Pevná výška headera – home sekcie (100svh) s ňou počítajú cez --header-h */
 :host {
   display: block;
   position: sticky;
@@ -120,7 +120,7 @@
 .menu-backdrop {
   position: fixed;
   inset: var(--header-h) 0 0 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--color-overlay);
   z-index: 49;
   animation: fade 0.2s ease-out;
 }
@@ -136,7 +136,7 @@
   padding: 16px 20px calc(24px + env(safe-area-inset-bottom));
   background: var(--surface);
   border-left: 1px solid var(--border);
-  box-shadow: -16px 0 40px -20px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-lg);
   display: flex;
   flex-direction: column;
   gap: 24px;

@@ -13,7 +13,7 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
             color: #ffffff;
             min-height: 100vh;
@@ -191,7 +191,7 @@
 
 <body>
     <div class="offline-container">
-        <img src="/images/logo.png" alt="PAPI HAIR DESIGN" class="logo" onerror="this.style.display='none'">
+        <img src="/images/logo.png" alt="PAPI HAIR DESIGN" class="logo">
 
         <div class="icon">📡</div>
 
@@ -204,7 +204,7 @@
             Skontrolujte svoje pripojenie a skúste to znova.
         </p>
 
-        <button class="retry-btn" onclick="location.reload()">
+        <button class="retry-btn" id="retry" type="button">
             🔄 Skúsiť znova
         </button>
 
@@ -235,6 +235,9 @@
                 statusEl.classList.remove('online');
             }
         }
+
+        // bez inline onclick (CSP)
+        document.getElementById('retry').addEventListener('click', () => location.reload());
 
         // Listen for connection changes
         window.addEventListener('online', updateConnectionStatus);

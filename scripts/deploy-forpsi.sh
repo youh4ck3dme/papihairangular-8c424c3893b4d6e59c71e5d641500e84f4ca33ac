@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# ⛔ Poistka (AGENTS.md): produkčný deploy len s výslovným súhlasom majiteľa.
+if [ "${OWNER_APPROVED_PRODUCTION_DEPLOY:-}" != "papihairdesign.sk" ]; then
+  echo "STOP: produkčný deploy vyžaduje súhlas majiteľa. Spusti s OWNER_APPROVED_PRODUCTION_DEPLOY=papihairdesign.sk" >&2
+  exit 1
+fi
+
 # ==============================================================================
 # 🚀 DEPLOY SCRIPT: PAPI HAIR DESIGN → FORPSI.SK VPS
 # ==============================================================================
@@ -146,9 +152,17 @@ server {
     gzip_types text/plain text/css text/xml text/javascript application/x-javascript application/xml application/json;
 
     # Bezpečnostné hlavičky
-    add_header X-Frame-Options "SAMEORIGIN";
-    add_header X-XSS-Protection "1; mode=block";
-    add_header X-Content-Type-Options "nosniff";
+    # (rovnaké ako vercel.json a nginx.conf; Docker variant používa priamo nginx.conf)
+    add_header Content-Security-Policy "frame-ancestors 'none'; object-src 'none'; base-uri 'self'; upgrade-insecure-requests" always;
+    add_header Strict-Transport-Security "max-age=63072000" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-Frame-Options "DENY" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()" always;
+    add_header Cross-Origin-Opener-Policy "same-origin" always;
+    add_header Cross-Origin-Resource-Policy "same-origin" always;
+    add_header X-XSS-Protection "0" always;
+    server_tokens off;
 
     # presmerovania (rovnaké ako vercel.json)
     location = /booking { return 302 https://services.bookio.com/papi-hair-design/widget?lang=sk; }

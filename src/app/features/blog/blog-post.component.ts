@@ -3,14 +3,14 @@ import {
   ChangeDetectionStrategy,
   inject,
   signal,
+  computed,
 } from "@angular/core";
-import { CommonModule, NgOptimizedImage } from "@angular/common";
+import { DatePipe, NgOptimizedImage } from "@angular/common";
 import { ActivatedRoute, RouterLink } from "@angular/router";
 import { BlogService } from "../../core/services/blog.service";
 import { BlogPost, ContentBlock } from "../../core/models/blog-post.interface";
 import { SeoService } from "../../core/services/seo.service";
 import { SALON_CONTACT } from "../../core/config/salon-contact";
-import { SafeHtmlPipe } from "../../shared/pipes/safe-html.pipe";
 
 @Component({
   selector: "app-blog-post",
@@ -18,7 +18,7 @@ import { SafeHtmlPipe } from "../../shared/pipes/safe-html.pipe";
   styleUrls: ["./blog-post.component.css"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, RouterLink, SafeHtmlPipe, NgOptimizedImage],
+  imports: [DatePipe, RouterLink, NgOptimizedImage],
 })
 export class BlogPostComponent {
   readonly bookingUrl = SALON_CONTACT.bookingUrl;
@@ -78,22 +78,16 @@ export class BlogPostComponent {
     }
   }
 
-  /** Kanonická URL článku – rovnaká pri prerenderingu aj v prehliadači (žiadne window.location) */
-  private shareUrl(): string {
-    const slug = this.post()?.slug;
-    return encodeURIComponent(`${SALON_CONTACT.siteUrl}/blog/${slug ?? ''}`);
-  }
-
-  getFacebookShareUrl(): string {
-    return `https://www.facebook.com/sharer/sharer.php?u=${this.shareUrl()}`;
-  }
-
-  getTwitterShareUrl(): string {
-    const text = encodeURIComponent(this.post()?.title || '');
-    return `https://twitter.com/intent/tweet?url=${this.shareUrl()}&text=${text}`;
-  }
-
-  getWhatsAppShareUrl(): string {
-    return `https://wa.me/?text=${this.shareUrl()}`;
-  }
+  /** Odkazy na zdieľanie – computed: prepočíta sa len pri zmene článku, nie pri každej detekcii zmien.
+   *  Kanonická URL je rovnaká pri prerenderingu aj v prehliadači (žiadne window.location). */
+  readonly share = computed(() => {
+    const p = this.post();
+    const url = encodeURIComponent(`${SALON_CONTACT.siteUrl}/blog/${p?.slug ?? ''}`);
+    const text = encodeURIComponent(p?.title || '');
+    return {
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+      twitter: `https://twitter.com/intent/tweet?url=${url}&text=${text}`,
+      whatsapp: `https://wa.me/?text=${url}`,
+    };
+  });
 }

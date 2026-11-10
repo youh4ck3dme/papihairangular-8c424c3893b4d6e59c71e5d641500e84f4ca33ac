@@ -1,11 +1,11 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { DecimalPipe } from '@angular/common';
 import { SalonService } from '../../../core/models';
 
 @Component({
     selector: 'app-service-info-modal',
     standalone: true,
-    imports: [CommonModule],
+    imports: [DecimalPipe],
     templateUrl: './service-info-modal.component.html',
     styleUrls: ['./service-info-modal.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush
