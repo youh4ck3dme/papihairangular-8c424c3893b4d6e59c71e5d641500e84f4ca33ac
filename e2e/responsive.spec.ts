@@ -15,8 +15,8 @@ for (const [width, height] of VIEWPORTS) {
     test(`responsive ${width}x${height}`, async ({ page }) => {
         test.setTimeout(180_000);
         await page.setViewportSize({ width, height });
-        await page.addInitScript(() => localStorage.setItem('theme', 'light'));
-
+        for (const theme of ['light', 'dark'] as const) {
+        await page.addInitScript(t => localStorage.setItem('theme', t), theme);
         for (const route of PUBLIC_ROUTES) {
             await page.goto(route, { waitUntil: 'networkidle' });
             const report = await page.evaluate(() => {
@@ -70,10 +70,11 @@ for (const [width, height] of VIEWPORTS) {
                     outside: outside.slice(0, 8), tinyText: tinyText.slice(0, 8), smallTargets: smallTargets.slice(0, 12),
                 };
             });
-            expect.soft(report.overflowX, `${route} vodorovný scroll`).toBeLessThanOrEqual(0);
-            expect.soft(report.outside, `${route} prvky mimo viewportu`).toEqual([]);
-            expect.soft(report.tinyText, `${route} text pod 12 px`).toEqual([]);
-            expect.soft(report.smallTargets, `${route} malé dotykové ciele`).toEqual([]);
+            expect.soft(report.overflowX, `${route} ${theme} vodorovný scroll`).toBeLessThanOrEqual(0);
+            expect.soft(report.outside, `${route} ${theme} prvky mimo viewportu`).toEqual([]);
+            expect.soft(report.tinyText, `${route} ${theme} text pod 12 px`).toEqual([]);
+            expect.soft(report.smallTargets, `${route} ${theme} malé dotykové ciele`).toEqual([]);
+        }
         }
     });
 }
