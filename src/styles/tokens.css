@@ -10,31 +10,92 @@
   src: url('/assets/fonts/satoshi-variable.woff2') format('woff2');
 }
 
-/* Metricky zladené záložné písmo (kým sa nenačíta Satoshi): Arial/Liberation Sans s upravenou
-   šírkou (size-adjust) a výškou, aby výmena písma neposúvala text (CLS) ani nemenila rozmer LCP
-   nadpisu. size-adjust = pomer priemernej šírky znaku Satoshi vs Arial pre danú váhu (fontTools
-   OS/2.xAvgCharWidth); tučné rezy sú voči Arial Bold, aby prehliadač tučné nesyntetizoval z Regular.
-   ascent/descent/line-gap = metriky Satoshi (hhea 1010/-240/100 pri 1000 upm) delené faktorom
-   size-adjust, lebo override sa aplikuje na už upravený em. */
+/* Záložné písma, kým sa nenačíta Satoshi – pre každú platformu jej najkrajšie systémové písmo
+   (macOS/iOS Helvetica Neue, Windows Segoe UI, Android Roboto, inak Arial/Liberation Sans).
+   Každá rodina má vlastné metriky, aby výmena za Satoshi neposunula text (CLS):
+   size-adjust = priemerná šírka znaku Satoshi / záložného písma (frekvenčne vážený priemer a–z + medzera,
+   rovnaká metóda ako capsize xWidthAvg; Satoshi 400 0,4426 · 500 0,4552 · 700 0,4685 · 900 0,4849 em),
+   ascent/descent/line-gap = metriky Satoshi (1010/240/100 pri 1000 upm) delené faktorom size-adjust.
+   Váhy 600–900 idú z tučného rezu, aby prehliadač tučné nesyntetizoval. */
+@font-face {
+  font-family: 'Satoshi Fallback HN'; font-weight: 300 400;
+  src: local('Helvetica Neue'), local('HelveticaNeue');
+  size-adjust: 98.4%; ascent-override: 102.7%; descent-override: 24.4%; line-gap-override: 10.2%;
+}
+@font-face {
+  font-family: 'Satoshi Fallback HN'; font-weight: 500;
+  src: local('Helvetica Neue'), local('HelveticaNeue');
+  size-adjust: 101.2%; ascent-override: 99.8%; descent-override: 23.7%; line-gap-override: 9.9%;
+}
+@font-face {
+  font-family: 'Satoshi Fallback HN'; font-weight: 600 700;
+  src: local('Helvetica Neue Bold'), local('HelveticaNeue-Bold');
+  size-adjust: 97.6%; ascent-override: 103.5%; descent-override: 24.6%; line-gap-override: 10.2%;
+}
+@font-face {
+  font-family: 'Satoshi Fallback HN'; font-weight: 800 900;
+  src: local('Helvetica Neue Bold'), local('HelveticaNeue-Bold');
+  size-adjust: 101.0%; ascent-override: 100.0%; descent-override: 23.8%; line-gap-override: 9.9%;
+}
+@font-face {
+  font-family: 'Satoshi Fallback Segoe'; font-weight: 300 400;
+  src: local('Segoe UI');
+  size-adjust: 99.8%; ascent-override: 101.2%; descent-override: 24.0%; line-gap-override: 10.0%;
+}
+@font-face {
+  font-family: 'Satoshi Fallback Segoe'; font-weight: 500;
+  src: local('Segoe UI');
+  size-adjust: 102.7%; ascent-override: 98.4%; descent-override: 23.4%; line-gap-override: 9.7%;
+}
+@font-face {
+  font-family: 'Satoshi Fallback Segoe'; font-weight: 600 700;
+  src: local('Segoe UI Bold'), local('SegoeUI-Bold');
+  size-adjust: 98.6%; ascent-override: 102.4%; descent-override: 24.3%; line-gap-override: 10.1%;
+}
+@font-face {
+  font-family: 'Satoshi Fallback Segoe'; font-weight: 800 900;
+  src: local('Segoe UI Bold'), local('SegoeUI-Bold');
+  size-adjust: 102.1%; ascent-override: 99.0%; descent-override: 23.5%; line-gap-override: 9.8%;
+}
+@font-face {
+  font-family: 'Satoshi Fallback Roboto'; font-weight: 300 400;
+  src: local('Roboto'), local('Roboto-Regular');
+  size-adjust: 99.5%; ascent-override: 101.5%; descent-override: 24.1%; line-gap-override: 10.0%;
+}
+@font-face {
+  font-family: 'Satoshi Fallback Roboto'; font-weight: 500;
+  src: local('Roboto'), local('Roboto-Regular');
+  size-adjust: 102.3%; ascent-override: 98.7%; descent-override: 23.5%; line-gap-override: 9.8%;
+}
+@font-face {
+  font-family: 'Satoshi Fallback Roboto'; font-weight: 600 700;
+  src: local('Roboto Bold'), local('Roboto-Bold');
+  size-adjust: 103.6%; ascent-override: 97.5%; descent-override: 23.2%; line-gap-override: 9.6%;
+}
+@font-face {
+  font-family: 'Satoshi Fallback Roboto'; font-weight: 800 900;
+  src: local('Roboto Bold'), local('Roboto-Bold');
+  size-adjust: 107.3%; ascent-override: 94.2%; descent-override: 22.4%; line-gap-override: 9.3%;
+}
 @font-face {
   font-family: 'Satoshi Fallback'; font-weight: 300 400;
   src: local('Arial'), local('ArialMT'), local('Liberation Sans'), local('Helvetica');
-  size-adjust: 107.1%; ascent-override: 94.3%; descent-override: 22.4%; line-gap-override: 9.3%;
+  size-adjust: 99.3%; ascent-override: 101.7%; descent-override: 24.2%; line-gap-override: 10.1%;
 }
 @font-face {
   font-family: 'Satoshi Fallback'; font-weight: 500;
   src: local('Arial'), local('ArialMT'), local('Liberation Sans'), local('Helvetica');
-  size-adjust: 110.5%; ascent-override: 91.4%; descent-override: 21.7%; line-gap-override: 9.0%;
+  size-adjust: 102.1%; ascent-override: 98.9%; descent-override: 23.5%; line-gap-override: 9.8%;
 }
 @font-face {
   font-family: 'Satoshi Fallback'; font-weight: 600 700;
   src: local('Arial Bold'), local('Arial-BoldMT'), local('Liberation Sans Bold'), local('Helvetica Bold');
-  size-adjust: 114.2%; ascent-override: 88.4%; descent-override: 21.0%; line-gap-override: 8.8%;
+  size-adjust: 97.6%; ascent-override: 103.5%; descent-override: 24.6%; line-gap-override: 10.2%;
 }
 @font-face {
   font-family: 'Satoshi Fallback'; font-weight: 800 900;
   src: local('Arial Bold'), local('Arial-BoldMT'), local('Liberation Sans Bold'), local('Helvetica Bold');
-  size-adjust: 118.6%; ascent-override: 85.2%; descent-override: 20.2%; line-gap-override: 8.4%;
+  size-adjust: 101.0%; ascent-override: 100.0%; descent-override: 23.8%; line-gap-override: 9.9%;
 }
 
 /* GENERATED FROM tokens/tokens.json — nemeniť ručne pod touto čiarou */
@@ -77,14 +138,16 @@
   --radius-md: 16px;
   --radius-lg: 24px;
   --radius-pill: 9999px;
-  --size-container: 1200px;
-  --size-pad-x: 20px;
-  --size-pad-x-md: 48px;
+  --size-container: 1320px;
+  --size-pad-x: 12px;
+  --size-pad-x-sm: 16px;
+  --size-pad-x-md: 24px;
+  --size-pad-x-lg: 32px;
   --size-header-h: 56px;
   --size-cta-h: 56px;
   --size-touch: 44px;
-  --font-family-body: 'Satoshi', 'Satoshi Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-family-heading: 'Satoshi', 'Satoshi Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-family-body: 'Satoshi', 'Satoshi Fallback HN', 'Satoshi Fallback Segoe', 'Satoshi Fallback Roboto', 'Satoshi Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-family-heading: 'Satoshi', 'Satoshi Fallback HN', 'Satoshi Fallback Segoe', 'Satoshi Fallback Roboto', 'Satoshi Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-size-body: clamp(16px, 1rem + 0.1vw, 18px);
   --font-size-lead: clamp(17px, 1rem + 0.5vw, 20px);
   --font-size-h3: clamp(22px, 1.1rem + 1.5vw, 32px);
@@ -112,16 +175,18 @@
   --motion-easing-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 
   /* Téma — svetlá (default) */
-  --color-surface: #ffffff;
-  --color-surface-alt: #f7f5f0;
-  --color-text: #171717;
-  --color-text-muted: #52525b;
-  --color-border: rgba(23,23,23,0.10);
-  --color-border-strong: rgba(23,23,23,0.35);
+  --shadow-card: 0 1px 2px rgba(17,17,17,0.06), 0 6px 16px rgba(17,17,17,0.06);
+  --color-surface: #faf8f3;
+  --color-surface-alt: #efeadf;
+  --color-text: #111111;
+  --color-text-muted: #45454d;
+  --color-border: rgba(23,23,23,0.16);
+  --color-border-strong: rgba(23,23,23,0.50);
   --color-card: #ffffff;
-  --color-accent-text: #8a6a12;
+  --color-accent-text: #7a5c0c;
+  --color-accent-graphic: #9a7614;
   --color-accent-fill: #d4af37;
-  --color-on-accent: #171717;
+  --color-on-accent: #111111;
   --color-overlay: rgba(0,0,0,0.5);
 
   /* Legacy aliasy pre existujúce selektory v kóde */
@@ -144,14 +209,21 @@
   --cta-h: var(--size-cta-h);
 }
 
+@media (min-width: 480px) {
+  :root { --pad-x: var(--size-pad-x-sm); }
+}
 @media (min-width: 768px) {
   :root {
     --pad-x: var(--size-pad-x-md);
     --radius: var(--radius-lg);
   }
 }
+@media (min-width: 1024px) {
+  :root { --pad-x: var(--size-pad-x-lg); }
+}
 
 html.dark {
+  --shadow-card: none;
   --color-surface: #0a0a0a;
   --color-surface-alt: #121212;
   --color-text: #f5f5f5;
@@ -160,6 +232,7 @@ html.dark {
   --color-border-strong: rgba(212,175,55,0.45);
   --color-card: #171717;
   --color-accent-text: #d4af37;
+  --color-accent-graphic: #d4af37;
   --color-accent-fill: #d4af37;
   --color-on-accent: #171717;
   --color-overlay: rgba(0,0,0,0.7);

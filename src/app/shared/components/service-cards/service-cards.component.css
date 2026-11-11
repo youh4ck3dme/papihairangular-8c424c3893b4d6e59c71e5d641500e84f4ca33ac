@@ -73,6 +73,7 @@
     border-radius: 16px;
     background: var(--card-bg);
     border: 1px solid var(--card-border);
+    box-shadow: var(--shadow-card);
     color: var(--card-text);
     text-align: left;
     transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;

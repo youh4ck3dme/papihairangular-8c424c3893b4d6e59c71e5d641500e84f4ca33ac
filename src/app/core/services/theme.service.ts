@@ -22,7 +22,7 @@ export class ThemeService {
     effect(() => {
       this.document.documentElement.classList.toggle('dark', this.isDark());
       const meta = this.document.querySelector('meta[name="theme-color"]');
-      meta?.setAttribute('content', this.isDark() ? '#0a0a0a' : '#ffffff');
+      meta?.setAttribute('content', this.isDark() ? '#0a0a0a' : '#faf8f3');
     });
   }
 

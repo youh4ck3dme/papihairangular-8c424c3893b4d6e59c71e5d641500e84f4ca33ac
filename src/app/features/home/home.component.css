@@ -14,7 +14,7 @@
   --home-border: var(--border);
   --home-card: var(--card);
   --home-accent: var(--accent);
-  --pad-x: 20px;
+  /* --pad-x je globálny token (12/16/24/32 px podľa šírky) */
   --pad-y: 24px;
   --radius: 16px;
 
@@ -29,7 +29,6 @@
 
 @media (min-width: 768px) {
   :host {
-    --pad-x: 48px;
     --pad-y: 48px;
     --radius: 24px;
   }
@@ -78,7 +77,7 @@
   flex: 1;
   min-height: 0;
   width: 100%;
-  max-width: calc(1200px + 2 * var(--pad-x));
+  max-width: calc(var(--container) + 2 * var(--pad-x));
   margin: 0 auto;
   padding: var(--pad-y) var(--pad-x);
   display: flex;
@@ -941,7 +940,7 @@ summary:focus-visible {
   color: var(--color-accent-text);
 }
 .reviews-stars { display: inline-flex; gap: 4px; }
-.reviews-stars svg { width: 22px; height: 22px; fill: var(--color-accent-fill); }
+.reviews-stars svg { width: 22px; height: 22px; fill: var(--color-accent-graphic); }
 .reviews-count { font-size: 14px; color: var(--home-muted, var(--color-text-muted)); }
 .reviews-sources { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; list-style: none; margin: 0; padding: 0; }
 .reviews-source-pill {
@@ -985,10 +984,11 @@ html.dark .review-chip { background: #2a2411; color: #e8d99a; }
   display: flex; flex-direction: column; gap: 10px;
   padding: 18px 20px; text-align: left;
   background: var(--card); border: 1px solid var(--border);
+  box-shadow: var(--shadow-card);
   border-radius: var(--radius-md);
 }
 .review-card-stars { display: inline-flex; gap: 2px; }
-.review-card-stars svg { width: 15px; height: 15px; fill: var(--color-accent-fill); }
+.review-card-stars svg { width: 15px; height: 15px; fill: var(--color-accent-graphic); }
 .review-card-text {
   margin: 0; font-size: 14px; line-height: 1.55; color: var(--color-text);
   display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; overflow: hidden;

@@ -12,14 +12,24 @@ const nonText = v => v >= 3 ? 'OK' : 'FAIL';
 
 const pairs = {
   light: [
-    ['--accent #8a6a12', '#8a6a12', '--surface #ffffff', '#ffffff', 'text'],
-    ['--accent #8a6a12', '#8a6a12', '--surface-alt #f7f5f0', '#f7f5f0', 'text'],
-    ['--text #171717', '#171717', '--surface #ffffff', '#ffffff', 'text'],
-    ['--muted #52525b', '#52525b', '--surface #ffffff', '#ffffff', 'text'],
-    ['--muted #52525b', '#52525b', '--surface-alt #f7f5f0', '#f7f5f0', 'text'],
-    ['--gold #d4af37 ako text', '#d4af37', '--surface #ffffff', '#ffffff', 'text'],
-    ['tailwind gold #c59d24 ako text', '#c59d24', '--surface #ffffff', '#ffffff', 'text'],
-    ['--on-gold #111111', '#111111', '--gold #d4af37', '#d4af37', 'text'],
+    ['--color-text #111111', '#111111', 'surface #faf8f3', '#faf8f3', 'text'],
+    ['--color-text #111111', '#111111', 'surface-alt #efeadf', '#efeadf', 'text'],
+    ['--color-text-muted #45454d', '#45454d', 'surface #faf8f3', '#faf8f3', 'text'],
+    ['--color-text-muted #45454d', '#45454d', 'surface-alt #efeadf', '#efeadf', 'text'],
+    ['--color-text-muted #45454d', '#45454d', 'card #ffffff', '#ffffff', 'text'],
+    ['--color-accent-text #7a5c0c', '#7a5c0c', 'surface #faf8f3', '#faf8f3', 'text'],
+    ['--color-accent-text #7a5c0c', '#7a5c0c', 'surface-alt #efeadf', '#efeadf', 'text'],
+    ['--color-accent-text #7a5c0c', '#7a5c0c', 'card #ffffff', '#ffffff', 'text'],
+    ['--color-on-accent #111111', '#111111', 'accent-fill #d4af37', '#d4af37', 'text'],
+    ['success #166534', '#166534', 'surface-alt #efeadf', '#efeadf', 'text'],
+    ['danger #b91c1c', '#b91c1c', 'surface-alt #efeadf', '#efeadf', 'text'],
+    ['chip text #6b530e', '#6b530e', 'chip #f8f3e2', '#f8f3e2', 'text'],
+    // grafika a ovládacie prvky: stačí 3:1
+    ['--color-accent-graphic #9a7614 (hviezdy)', '#9a7614', 'surface-alt #efeadf', '#efeadf', 'nontext'],
+    ['--color-border-strong (0.50) → #83807b', '#83807b', 'surface-alt #efeadf', '#efeadf', 'nontext'],
+    ['--color-border-strong (0.50) → #8b8b8b', '#8b8b8b', 'card #ffffff', '#ffffff', 'nontext'],
+    // kontrolné zakázané páry (musia ostať FAIL – zlatá plocha sa nesmie použiť ako text na svetlom)
+    ['ZAKÁZANÉ: --gold #d4af37 ako text', '#d4af37', 'surface #faf8f3', '#faf8f3', 'text'],
   ],
   dark: [
     ['--text #f5f5f5', '#f5f5f5', '--surface #0a0a0a', '#0a0a0a', 'text'],
