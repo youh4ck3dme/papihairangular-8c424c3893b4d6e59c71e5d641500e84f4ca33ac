@@ -2,7 +2,7 @@ import {
   ApplicationConfig, LOCALE_ID, PLATFORM_ID, inject, isDevMode, provideAppInitializer, provideZonelessChangeDetection,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { provideRouter, withInMemoryScrolling, withPreloading } from '@angular/router';
+import { provideRouter, withInMemoryScrolling, withPreloading, withViewTransitions } from '@angular/router';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideServiceWorker } from '@angular/service-worker';
 import { APP_ROUTES } from './app.routes';
@@ -24,6 +24,9 @@ export const appConfig: ApplicationConfig = {
       APP_ROUTES,
       withInMemoryScrolling({ scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' }),
       withPreloading(IdlePreloadStrategy),
+      // Prechod medzi stránkami (slide + fade) cez natívne View Transitions API prehliadača.
+      // SSR/prerender-safe (na serveri no-op), samotný efekt je v styles.css (::view-transition-*).
+      withViewTransitions(),
     ),
     // event replay: klik pred dokončením hydratácie sa nestratí
     provideClientHydration(withEventReplay()),
