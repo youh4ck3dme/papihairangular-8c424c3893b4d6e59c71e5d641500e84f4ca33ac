@@ -75,3 +75,25 @@ Pozri `tokens/tokens.json` — sekcie `space`, `radius`, `size`, `font`, `shadow
 <p class="text-gold">Padne na kontrast na bielom</p>
 <p class="text-[#c59d24]">Arbitrárna hodnota</p>
 ```
+
+## Aktualizácia 2026-11-11: svetlá téma, okraje, záložné písmo
+
+Hodnoty vyššie pre svetlú tému nahrádza táto tabuľka (tmavá téma sa nemenila). Overenie: `node scripts/audit/contrast.mjs`.
+
+| Token (light) | Pred | Po | Kontrast |
+|---|---|---|---|
+| `--color-surface` | `#ffffff` | `#faf8f3` | – |
+| `--color-surface-alt` | `#f7f5f0` | `#efeadf` | – |
+| `--color-card` | `#ffffff` | `#ffffff` + `--shadow-card` | – |
+| `--color-text` | `#171717` | `#111111` | 15,74:1 na surface-alt |
+| `--color-text-muted` | `#52525b` | `#45454d` | 7,92:1 na surface-alt |
+| `--color-accent-text` | `#8a6a12` | `#7a5c0c` | 5,20:1 na surface-alt |
+| `--color-accent-graphic` (nový, hviezdy/ikony) | – | `#9a7614` | 3,52:1 na surface-alt |
+| `--color-border` | `rgba(23,23,23,0.10)` | `rgba(23,23,23,0.16)` | dekoratívny |
+| `--color-border-strong` | `rgba(23,23,23,0.35)` | `rgba(23,23,23,0.50)` | 3,28:1 na surface-alt |
+
+Oprava staršieho údaja: `--color-border-strong` s alfou 0,35 mal v skutočnosti len ~2,2:1 (nie 4,3:1, ako uvádza tabuľka vyššie). Až alfa 0,50 spĺňa 3:1.
+
+**Okraje:** `--pad-x` 12 px (do 479 px) → 16 px (od 480) → 24 px (od 768) → 32 px (od 1024). `--size-container` 1320 px. Sekcie podstránok 48/72 px (predtým 64/96).
+
+**Záložné písmo:** štyri rodiny podľa platformy (`Satoshi Fallback HN` – Helvetica Neue, `… Segoe` – Segoe UI, `… Roboto`, `Satoshi Fallback` – Arial/Liberation Sans), každá s vlastným `size-adjust` pre 4 váhové pásma. Metóda: frekvenčne vážená priemerná šírka znaku (ako capsize `xWidthAvg`). Pôvodné hodnoty (107–119 %) boli počítané z OS/2 `xAvgCharWidth` a boli o ~7 % príliš široké; nové sú 97,6–107,3 %.

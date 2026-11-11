@@ -88,11 +88,18 @@ lines.push('  /* Legacy aliasy pre existujúce selektory v kóde */');
 for (const [k, v] of legacyLight) lines.push(`  ${k}: ${v};`);
 lines.push('}');
 lines.push('');
+// Bočný okraj rastie so šírkou displeja: 12 → 16 → 24 → 32 px
+lines.push('@media (min-width: 480px) {');
+lines.push('  :root { --pad-x: var(--size-pad-x-sm); }');
+lines.push('}');
 lines.push('@media (min-width: 768px) {');
 lines.push('  :root {');
 lines.push('    --pad-x: var(--size-pad-x-md);');
 lines.push('    --radius: var(--radius-lg);');
 lines.push('  }');
+lines.push('}');
+lines.push('@media (min-width: 1024px) {');
+lines.push('  :root { --pad-x: var(--size-pad-x-lg); }');
 lines.push('}');
 lines.push('');
 lines.push('html.dark {');
