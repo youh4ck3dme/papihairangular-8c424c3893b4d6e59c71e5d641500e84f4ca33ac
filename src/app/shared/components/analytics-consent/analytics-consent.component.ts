@@ -49,8 +49,8 @@ export class AnalyticsConsentComponent {
       if (this.started) return;
       this.started = true;
       browser.dataLayer ??= [];
-      // Oficiálny formát gtag.js je objekt arguments v poli dataLayer.
       const gtag: (...command: unknown[]) => void = function () {
+        // eslint-disable-next-line prefer-rest-params -- gtag.js očakáva objekt arguments v poli dataLayer.
         browser.dataLayer!.push(arguments);
       };
       gtag('consent', 'default', {
