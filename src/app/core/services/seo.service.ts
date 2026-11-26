@@ -164,8 +164,8 @@ export class SeoService {
 
     const fullTitle = `${post.title} | PAPI HAIR DESIGN`;
     const seoData: SeoData = {
-      title: fullTitle.length <= 60 ? fullTitle : clip(post.title, 60),
-      description: post.perex,
+      title: post.seoTitle ?? (fullTitle.length <= 60 ? fullTitle : clip(post.title, 60)),
+      description: post.seoDescription ?? post.perex,
       keywords: post.tags.join(', '),
       ogImage: absoluteImageUrl,
       ogType: 'article'
@@ -180,7 +180,7 @@ export class SeoService {
         "description": post.perex,
         "image": absoluteImageUrl,
         "author": {
-          "@type": "Person",
+          "@type": post.author === "PAPI HAIR DESIGN" ? "Organization" : "Person",
           "name": post.author
         },
         "publisher": {

@@ -10,6 +10,9 @@ export interface BlogPost {
   date: string;
   readingTime: number;
   imageUrl: string;
+  imageAlt?: string;
+  seoTitle?: string;
+  seoDescription?: string;
   tags: string[];
   faqs?: { question: string; answer: string }[];
 }

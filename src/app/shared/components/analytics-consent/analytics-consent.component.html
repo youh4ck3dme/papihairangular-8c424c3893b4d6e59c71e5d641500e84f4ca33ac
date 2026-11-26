@@ -1,0 +1,17 @@
+@if (available()) {
+  <button class="settings" type="button" [attr.aria-controls]="open() ? 'analytics-options' : null"
+    [attr.aria-expanded]="open()" (click)="open.set(!open())">Nastavenia cookies</button>
+  @if (open()) {
+    <aside id="analytics-options" aria-labelledby="analytics-title">
+      <h2 id="analytics-title">Meranie návštevnosti</h2>
+      <p>Môžeme pomocou cookies Google Analytics merať, ktoré stránky navštevujete? Voľbu môžete kedykoľvek zmeniť v pätičke webu.</p>
+      @if (preference()) {
+        <p>Analytika je {{ preference() === 'granted' ? 'povolená' : 'odmietnutá' }}.</p>
+      }
+      <div class="actions">
+        <button type="button" (click)="choose('denied')">Odmietnuť analytiku</button>
+        <button type="button" (click)="choose('granted')">Prijať analytiku</button>
+      </div>
+    </aside>
+  }
+}

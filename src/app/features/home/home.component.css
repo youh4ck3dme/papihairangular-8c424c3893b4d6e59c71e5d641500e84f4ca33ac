@@ -155,21 +155,12 @@ summary:focus-visible {
   justify-content: center;
 }
 
-.hero-logo {
-  height: 56px;
-  width: auto;
-  object-fit: contain;
-  margin-bottom: 16px;
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
-}
-
 .hero-eyebrow {
   color: var(--gold);
   margin-bottom: 12px;
 }
 
 .hero-title {
-  /* 40px podľa zadania; na úzkych displejoch max 9vw, aby „Kaderníctvo“ nepretieklo */
   font-size: min(40px, 9vw);
   line-height: 1.1;
   font-weight: 800;
@@ -180,12 +171,11 @@ summary:focus-visible {
 }
 
 .hero-sub {
-  font-size: 14px;
-  line-height: 20px;
+  font-size: clamp(20px, 3vw, 28px);
+  line-height: 1.25;
   font-weight: 600;
-  letter-spacing: 0.3em;
-  color: var(--gold);
-  margin: 0 0 16px;
+  color: #fff;
+  margin: 0 0 8px;
 }
 
 .hero-lead {
@@ -257,7 +247,6 @@ summary:focus-visible {
 }
 
 @media (min-width: 768px) {
-  .hero-logo { height: 96px; }
 
   .hero-title {
     font-size: 56px;
@@ -917,6 +906,11 @@ summary:focus-visible {
 }
 
 /* ============ S6 RECENZIE ============ */
+#recenzie {
+  height: auto;
+  min-height: 100vh;
+  min-height: 100svh;
+}
 .reviews-layout {
   gap: clamp(16px, 3vh, 28px);
   text-align: center;
@@ -949,6 +943,8 @@ summary:focus-visible {
   background: var(--card); border: 1px solid var(--border);
   font-size: 14px; color: var(--color-text);
 }
+.reviews-source-pill { min-height: 44px; }
+.reviews-source-pill:hover strong { text-decoration: underline; }
 .reviews-source-pill strong { color: var(--color-accent-text); font-weight: 600; }
 .reviews-source-count { color: var(--color-text-muted); }
 
@@ -966,6 +962,7 @@ html.dark .review-chip { background: #2a2411; color: #e8d99a; }
 
 /* Animovaný pás */
 .reviews-marquee {
+  flex-shrink: 0;
   width: 100%;
   overflow: hidden;
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);

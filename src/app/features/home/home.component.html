@@ -10,10 +10,9 @@
   </picture>
   <div class="hero-inner">
     <div class="hero-stack animate-fade-in">
-      <img src="/images/logo-white.png" alt="" aria-hidden="true" width="394" height="114" class="hero-logo" />
-      <p class="eyebrow hero-eyebrow">Hair studio &amp; Barber · Košice</p>
-      <h1 id="hero-title" class="hero-title">Kaderníctvo Košice</h1>
-      <p class="hero-sub">PAPI HAIR DESIGN</p>
+      <h1 id="hero-title" class="hero-title">PAPI HAIR DESIGN</h1>
+      <p class="hero-sub">Kaderníctvo Košice</p>
+      <p class="eyebrow hero-eyebrow">HAIR STUDIO &amp; BARBER · KOŠICE</p>
       <p class="hero-lead">
         Precízne remeslo a moderný dizajn. Dámske strihy, farbenie, barber a regenerácia vlasov
         s prémiovými produktmi Gold Haircare.
@@ -183,7 +182,7 @@
     <div class="reviews-summary">
       <div class="reviews-score">
         <span class="reviews-avg">{{ reviewsSummary.average }}</span>
-        <span class="reviews-stars" role="img" aria-label="Priemer 4,9 z 5 hviezdičiek">
+        <span class="reviews-stars" role="img" [attr.aria-label]="'Priemer ' + reviewsSummary.average + ' z 5 hviezdičiek'">
           @for (s of [1,2,3,4,5]; track s) {
             <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M10 1.5l2.6 5.3 5.9.85-4.25 4.15 1 5.85L10 14.9l-5.25 2.75 1-5.85L1.5 7.65l5.9-.85L10 1.5z"/></svg>
           }
@@ -192,9 +191,14 @@
       </div>
       <ul class="reviews-sources">
         @for (src of reviewsSummary.sources; track src.label) {
-          <li class="reviews-source-pill">
-            <strong>{{ src.label }}</strong> {{ src.rating }}
-            <span class="reviews-source-count">· {{ src.count }}</span>
+          <li>
+            <a class="reviews-source-pill" [href]="src.url" target="_blank" rel="noopener"
+              [title]="src.hint">
+              <strong>{{ src.label }}</strong> {{ src.rating }}
+              <span class="reviews-source-count">· {{ src.count }}</span>
+              <span aria-hidden="true">↗</span>
+              <span class="sr-only">{{ src.hint }} (otvorí sa v novom okne)</span>
+            </a>
           </li>
         }
       </ul>
