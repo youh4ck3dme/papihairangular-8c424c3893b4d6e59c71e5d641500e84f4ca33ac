@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * Akceptačný test: každá sekcia domovskej stránky = presne 1 obrazovka (100svh),
+ * Akceptačný test: sekcie domovskej stránky majú 100svh, recenzie môžu narásť podľa obsahu,
  * nič sa neoreže, žiadny horizontálny scroll, text nepresahuje sekciu.
  */
 const VIEWPORTS = [
@@ -71,7 +71,19 @@ for (const vp of VIEWPORTS) {
             const tag = `${vp.width}x${vp.height}-${theme}`;
             const sections = page.locator('app-home section.screen');
             for (const s of report.sections) {
-                expect.soft(Math.abs(s.height - s.vh), `S${s.i} (${s.id}) výška ${s.height} vs ${s.vh}`).toBeLessThanOrEqual(1);
+                if (s.id === 'recenzie') {
+                    expect.soft(s.height, 'sekcia recenzií má aspoň výšku obrazovky').toBeGreaterThanOrEqual(s.vh - 1);
+                    const clipped = await page.locator('#recenzie .reviews-marquee').evaluate(strip => {
+                        const bounds = strip.getBoundingClientRect();
+                        return Array.from(strip.querySelectorAll('.review-card')).some(card => {
+                            const rect = card.getBoundingClientRect();
+                            return rect.top < bounds.top - 1 || rect.bottom > bounds.bottom + 1;
+                        });
+                    });
+                    expect.soft(clipped, 'karty recenzií sú zvislo orezané').toBe(false);
+                } else {
+                    expect.soft(Math.abs(s.height - s.vh), `S${s.i} (${s.id}) výška ${s.height} vs ${s.vh}`).toBeLessThanOrEqual(1);
+                }
                 expect.soft(s.overflowY, `S${s.i} (${s.id}) orezaný obsah o ${s.overflowY}px`).toBeLessThanOrEqual(0);
                 expect.soft(s.outside, `S${s.i} (${s.id}) text mimo sekcie`).toEqual([]);
                 await sections.nth(s.i - 1).scrollIntoViewIfNeeded();
