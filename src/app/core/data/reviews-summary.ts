@@ -2,8 +2,8 @@ import { SALON_CONTACT } from "../config/salon-contact";
 
 /** Stav podľa zdrojov: Google 5. 11. 2026, Bookio 26. 11. 2026. */
 const sources = [
-  { label: "Google", rating: 4.8, count: 63, url: SALON_CONTACT.mapsUrl,
-    hint: "Otvoriť profil salónu v Mapách Google" },
+  { label: "Google", rating: 4.8, count: 63, url: "https://maps.app.goo.gl/oB2UqFxyhDi1qSrQA?g_st=ic",
+    hint: "Otvoriť hodnotenia salónu v Mapách Google" },
   { label: "Bookio", rating: 4.9, count: 422, url: SALON_CONTACT.bookingUrl,
     hint: "Otvoriť Bookio. Recenzie zobrazíte kliknutím na počet hodnotení." },
 ] as const;
