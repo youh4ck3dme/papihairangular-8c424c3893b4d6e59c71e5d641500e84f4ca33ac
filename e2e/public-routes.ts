@@ -8,6 +8,7 @@ export const PUBLIC_ROUTES = [
     '/sluzby/panske-strihy',
     '/sluzby/ombre-farbenie',
     '/blog',
+    '/blog/uces-na-firemny-vecierok',
     '/blog/pribeh-znacky',
     '/blog/trendove-ucesy-2026',
     '/blog/starostlivost-o-vlasy-v-zime',

@@ -26,7 +26,7 @@
 
     <div class="container-site post-main">
       <div class="post-image">
-        <img [ngSrc]="p.imageUrl" [alt]="p.title" fill priority
+        <img [ngSrc]="p.imageUrl" [alt]="p.imageAlt || p.title" fill priority
           sizes="(min-width: 1000px) 75vw, 100vw" class="object-cover">
       </div>
 

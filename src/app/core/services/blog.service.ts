@@ -11,6 +11,34 @@ import { BlogPost, ContentBlock } from "../models/blog-post.interface";
 export class BlogService {
   private posts: BlogPost[] = [
     {
+      id: "4",
+      slug: "uces-na-firemny-vecierok",
+      title: "Účes na firemný večierok: kedy stačí fúkaná a kedy si vlasy vypnúť?",
+      perex: "Idete z práce rovno na večierok? Vyberte si úpravu, ktorá sa hodí k vašim vlasom, oblečeniu aj tomu, čo vás večer čaká.",
+      seoTitle: "Účes na firemný večierok v Košiciach | PAPI HAIR DESIGN",
+      seoDescription: "Stačí fúkaná alebo si vybrať spoločenský účes? Tipy na krátke aj dlhé vlasy, pánsky strih a výber služby pred večierkom v Košiciach.",
+      imageUrl: "assets/images/blog/uces-na-firemny-vecierok.webp",
+      imageAlt: "Žena s nízkym drdolom a muž s krátkym strihom pri príchode na večierok.",
+      author: "PAPI HAIR DESIGN",
+      date: "2026-11-26",
+      readingTime: 2,
+      tags: ["spoločenský účes", "firemný večierok", "pánsky strih", "Košice"],
+      content: [
+        { type: "paragraph", text: "O piatej zatvoríte notebook, o šiestej máte byť na večeri a medzi tým vás čaká cesta cez Košice v kabáte a šále. Pri výbere účesu preto pomôže jednoduchá otázka: chcete si počas večera vlasy občas prehrnúť rukou, alebo ich chcete po odchode zo salónu pustiť z hlavy?" },
+        { type: "heading", text: "Rozpustené vlasy na večeru a fotky" },
+        { type: "paragraph", text: "Ak nosíte vlasy najradšej rozpustené, na slávnostný dojem často stačí fúkaná. Pri mikáde môže pekne vyniknúť čistá línia koncov, pri dlhších vlasoch mäkká vlna okolo tváre. Ak si predné pramene pri rozhovore zakaždým dávate za ucho, povedzte to pri úprave. Jednu stranu možno pripnúť a zároveň nechať zvyšok vlasov voľný." },
+        { type: "paragraph", text: "Pri výbere služby si všímajte dĺžku vlasov. V cenníku PAPI nájdete osobitne fúkanú pre polodlhé a dlhé vlasy. Ak máte kučery a chcete si ich prirodzený tvar ponechať, spomeňte to už pri objednaní." },
+        { type: "heading", text: "Vypnuté vlasy na tanec alebo k vysokému golieru" },
+        { type: "paragraph", text: "Nízky drdol odhalí náušnice aj golier saka. Vyskúšajte si však doma, kde vám na zátylku končí golier kabáta. Ak presne naň dosadá drdol, môže byť pohodlnejšie posunúť ho trochu vyššie. Pri vlasoch po plecia je ďalšou možnosťou zopnúť len vrchné pramene. Tvár zostane voľná a kratšie pramene pri krku môžu zostať rozpustené." },
+        { type: "paragraph", text: "Ak chcete účes vypnúť alebo prepliesť, pri objednaní hľadajte službu <strong>spoločenský účes</strong>. Stačí jedna fotografia toho, čo sa vám páči. Ešte viac pomôže povedať, čo vám na podobnom účese zvyčajne prekáža." },
+        { type: "heading", text: "Krátke vlasy, pánsky strih a brada" },
+        { type: "paragraph", text: "Pri krátkych vlasoch skúste najprv zmeniť smer cestičky alebo uhladiť boky a nechať vrch prirodzene voľný. Ak vám už vlasy prerastajú cez uši alebo vám nesedí dĺžka vzadu, vyberte si strih. Pri objednaní môžete jednoducho povedať: „Boky chcem skrátiť, ale vrch si ráno potrebujem upraviť rukou.“ Ak chcete zároveň upraviť bradu, v cenníku je na to spoločná služba <strong>Kombinácia vlasy a brada</strong>." },
+        { type: "heading", text: "Čo povedať pri rezervácii" },
+        { type: "paragraph", text: "Uveďte čas, keď už potrebujete zo salónu odísť. Pridajte dĺžku vlasov, predstavu o účese a to, či sa budete prezliekať až po návšteve. Košeľu alebo sako oblečiete aj po stylingu. Úzky rolák je praktickejšie obliecť si vopred. Ak váhate medzi dvoma službami, zavolajte a opíšte výsledok, ktorý chcete." },
+        { type: "paragraph", text: "PAPI HAIR DESIGN nájdete na Triede SNP 61 v Spoločenskom pavilóne v Košiciach. Ak už máte vybranú službu, <a href=\"/cennik\">pozrite si cenník</a> a <a href=\"https://services.bookio.com/papi-hair-design/widget?lang=sk\">vyberte si termín online</a>. Konzultáciu k Róbertovi „PAPI“ Papcunovi si dohodnete telefonicky na <a href=\"tel:+421949459624\">+421 949 459 624</a>." }
+      ]
+    },
+    {
       id: "0",
       slug: "pribeh-znacky",
       title: "Z ulice na svetové pódiá: príbeh Róberta Papcuna",
