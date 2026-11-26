@@ -14,8 +14,8 @@ const origin = (u) => { try { return new URL(u).origin; } catch { return null; }
 
 /** Zdroje tretích strán – len to, čo web naozaj používa. */
 function externals() {
-  const script = [];
-  const connect = [];
+  const script = ['https://www.googletagmanager.com/gtag/js'];
+  const connect = ['https://*.google-analytics.com', 'https://*.analytics.google.com', 'https://*.googletagmanager.com'];
   const vitals = origin(process.env.VITALS_ENDPOINT ?? '');
   if (vitals) connect.push(vitals);
   const dsn = /^https:\/\/[a-f0-9]+@([^/]+)\//.exec(process.env.SENTRY_DSN ?? '');
@@ -42,7 +42,7 @@ export function buildPolicy(html) {
     `script-src ${scriptSrc.join(' ')}`,
     // Angular vkladá štýly komponentov do <style> a atribútov style – bez 'unsafe-inline' by web nemal vzhľad
     "style-src 'self' 'unsafe-inline'",
-    "img-src 'self' data:",
+    "img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com",
     "font-src 'self'",
     `connect-src ${["'self'", ...ext.connect].join(' ')}`,
     // mapa na /kontakt
@@ -53,9 +53,9 @@ export function buildPolicy(html) {
     "object-src 'none'",
     "base-uri 'self'",
     // DOM XSS: zápis HTML/skriptov len cez politiky Angularu (sanitizér, bypass statických SVG ikon)
-    // a dve úzke politiky webu (src/app/core/security/trusted-types.ts)
+    // a pomenované politiky webu a značky Google Analytics.
     "require-trusted-types-for 'script'",
-    'trusted-types angular angular#unsafe-bypass papi#jsonld default',
+    'trusted-types angular angular#unsafe-bypass papi#jsonld papi#analytics goog#html default',
   ].join('; ');
 }
 

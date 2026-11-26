@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy, inject, PLATFORM_ID } from "@angular/core";
 import { isPlatformBrowser } from "@angular/common";
+import { AnalyticsConsentComponent } from "../analytics-consent/analytics-consent.component";
 import { RouterLink } from "@angular/router";
 import { BusinessHoursService } from "../../../core/services/business-hours.service";
 import { SALON_CONTACT } from "../../../core/config/salon-contact";
@@ -9,7 +10,7 @@ import { SALON_CONTACT } from "../../../core/config/salon-contact";
   templateUrl: "./footer.component.html",
   styleUrls: ["./footer.component.css"],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink],
+  imports: [RouterLink, AnalyticsConsentComponent],
 })
 export class FooterComponent {
   private readonly businessHoursService = inject(BusinessHoursService);

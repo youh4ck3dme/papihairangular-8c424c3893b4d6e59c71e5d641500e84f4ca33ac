@@ -1,7 +1,7 @@
 /**
  * Trusted Types (CSP `require-trusted-types-for 'script'`, scripts/csp.mjs): prehliadač odmietne
  * zápis reťazca do nebezpečných miest (innerHTML, script.text, URL skriptu…), ak neprejde politikou.
- * Angular má vlastné politiky ('angular', 'angular#unsafe-bypass'); tu sú len dve úzke výnimky webu.
+ * Angular má vlastné politiky ('angular', 'angular#unsafe-bypass'); tu sú úzko vymedzené výnimky webu.
  * Prehliadače bez Trusted Types (Firefox, Safari) dostanú pôvodný reťazec – správanie sa nemení.
  */
 interface Policy { createScript?: (s: string) => unknown; createScriptURL?: (s: string) => unknown }
@@ -38,4 +38,17 @@ export function trustedJsonLd(data: unknown): string {
   if (!tt) return json;
   jsonLd ??= tt.createPolicy('papi#jsonld', { createScript: (s: string) => s });
   return jsonLd.createScript!(json) as string;
+}
+
+export const ANALYTICS_ID = 'G-N4DSHC7SNZ';
+const tagUrl = 'https://www.googletagmanager.com/gtag/js?id=' + ANALYTICS_ID;
+let analytics: Policy | undefined;
+/** Samostatná politika povoľuje iba pevne zadanú URL tagu tohto salónu. */
+export function trustedAnalyticsTagUrl(): string {
+  if (!tt) return tagUrl;
+  analytics ??= tt.createPolicy('papi#analytics', { createScriptURL: value => {
+    if (value !== tagUrl) throw new TypeError('Neplatná URL analytiky');
+    return tagUrl;
+  } });
+  return analytics.createScriptURL!(tagUrl) as string;
 }
