@@ -906,6 +906,11 @@ summary:focus-visible {
 }
 
 /* ============ S6 RECENZIE ============ */
+#recenzie {
+  height: auto;
+  min-height: 100vh;
+  min-height: 100svh;
+}
 .reviews-layout {
   gap: clamp(16px, 3vh, 28px);
   text-align: center;
@@ -957,6 +962,7 @@ html.dark .review-chip { background: #2a2411; color: #e8d99a; }
 
 /* Animovaný pás */
 .reviews-marquee {
+  flex-shrink: 0;
   width: 100%;
   overflow: hidden;
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
