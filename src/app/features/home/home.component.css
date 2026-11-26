@@ -155,21 +155,12 @@ summary:focus-visible {
   justify-content: center;
 }
 
-.hero-logo {
-  height: 56px;
-  width: auto;
-  object-fit: contain;
-  margin-bottom: 16px;
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
-}
-
 .hero-eyebrow {
   color: var(--gold);
   margin-bottom: 12px;
 }
 
 .hero-title {
-  /* 40px podľa zadania; na úzkych displejoch max 9vw, aby „Kaderníctvo“ nepretieklo */
   font-size: min(40px, 9vw);
   line-height: 1.1;
   font-weight: 800;
@@ -180,12 +171,11 @@ summary:focus-visible {
 }
 
 .hero-sub {
-  font-size: 14px;
-  line-height: 20px;
+  font-size: clamp(20px, 3vw, 28px);
+  line-height: 1.25;
   font-weight: 600;
-  letter-spacing: 0.3em;
-  color: var(--gold);
-  margin: 0 0 16px;
+  color: #fff;
+  margin: 0 0 8px;
 }
 
 .hero-lead {
@@ -257,7 +247,6 @@ summary:focus-visible {
 }
 
 @media (min-width: 768px) {
-  .hero-logo { height: 96px; }
 
   .hero-title {
     font-size: 56px;
