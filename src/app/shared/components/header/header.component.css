@@ -13,6 +13,10 @@
   color: var(--text);
 }
 
+:host-context(html:not(.dark)) .site-header {
+  background: #fff;
+}
+
 .header-bar {
   height: 100%;
   display: flex;
