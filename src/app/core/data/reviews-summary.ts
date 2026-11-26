@@ -1,21 +1,20 @@
-/**
- * Súhrn hodnotení pre sekciu Recenzie na domovskej stránke.
- * Čísla overené 5. 11. 2026 z Bookio widgetu a Google Business Profilu.
- * Zdroje:
- *  - Bookio: https://services.bookio.com/papi-hair-design/widget?lang=sk (419 hodnotení, priemer 4,93)
- *  - Google: place_id ChIJE-uzMwjhPkcRxtYuoHWzuw0 (63 recenzií, 4,8)
- * Kombinovane: 482 hodnotení, vážený priemer 4,91 → zobrazujeme „4,9".
- */
+import { SALON_CONTACT } from "../config/salon-contact";
+
+/** Stav podľa zdrojov: Google 5. 11. 2026, Bookio 26. 11. 2026. */
+const sources = [
+  { label: "Google", rating: 4.8, count: 63, url: SALON_CONTACT.mapsUrl,
+    hint: "Otvoriť profil salónu v Mapách Google" },
+  { label: "Bookio", rating: 4.9, count: 422, url: SALON_CONTACT.bookingUrl,
+    hint: "Otvoriť Bookio. Recenzie zobrazíte kliknutím na počet hodnotení." },
+] as const;
+
+const total = sources.reduce((sum, source) => sum + source.count, 0);
+const format = new Intl.NumberFormat("sk-SK", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 export const REVIEWS_SUMMARY = {
-  /** Zobrazený priemer (zaokrúhlený na 1 desatinné miesto). */
-  average: "4,9",
-  /** Spolu hodnotení naprieč zdrojmi. */
-  total: 482,
-  sources: [
-    { label: "Google", rating: "4,8", count: 63 },
-    { label: "Bookio", rating: "4,93", count: 419 },
-  ],
-} as const;
+  average: format.format(sources.reduce((sum, source) => sum + source.rating * source.count, 0) / total),
+  total,
+  sources: sources.map(source => ({ ...source, rating: format.format(source.rating) })),
+};
 
 /** Témy, ktoré klienti spomínajú najčastejšie (počty zo zmienok v 85 Bookio textoch). */
 export const REVIEW_THEMES: readonly string[] = [

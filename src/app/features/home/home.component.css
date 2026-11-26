@@ -938,6 +938,8 @@ summary:focus-visible {
   background: var(--card); border: 1px solid var(--border);
   font-size: 14px; color: var(--color-text);
 }
+.reviews-source-pill { min-height: 44px; }
+.reviews-source-pill:hover strong { text-decoration: underline; }
 .reviews-source-pill strong { color: var(--color-accent-text); font-weight: 600; }
 .reviews-source-count { color: var(--color-text-muted); }
 
