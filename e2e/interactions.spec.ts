@@ -7,6 +7,21 @@ import { test, expect } from '@playwright/test';
 test.describe('mobil 390×844', () => {
     test.use({ viewport: { width: 390, height: 844 } });
 
+    test('cenník prepája ceny s detailmi troch služieb', async ({ page }) => {
+        const services = [
+            { name: 'Viac o dámskych strihoch', slug: 'damske-strihy', heading: 'Dámske strihy Košice' },
+            { name: 'Viac o pánskych strihoch', slug: 'panske-strihy', heading: 'Pánske strihy a barber Košice' },
+            { name: 'Viac o ombre a balayage', slug: 'ombre-farbenie', heading: 'Ombre a balayage Košice' },
+        ];
+        for (const service of services) {
+            await page.goto('/cennik');
+            const link = page.getByRole('main').getByRole('link', { name: service.name });
+            await expect(link).toHaveAttribute('href', '/sluzby/' + service.slug);
+            await link.click();
+            await expect(page.getByRole('heading', { level: 1 })).toHaveText(service.heading);
+        }
+    });
+
     test('menu: otvorenie, Esc, navigácia cez menu', async ({ page }) => {
         await page.goto('/', { waitUntil: 'networkidle' });
         const btn = page.getByRole('button', { name: 'Otvoriť menu' });

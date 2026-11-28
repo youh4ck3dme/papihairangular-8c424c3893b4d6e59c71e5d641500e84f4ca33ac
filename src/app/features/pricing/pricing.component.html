@@ -54,6 +54,9 @@
             </li>
             }
           </ul>
+          @if (group.serviceLink; as link) {
+          <a class="inline-link" [routerLink]="link.path">{{ link.label }}</a>
+          }
         </div>
         }
       </div>
