@@ -13,7 +13,11 @@ export interface PriceItem {
   description?: string;
 }
 
-export interface PriceGroup { title: string; items: PriceItem[]; }
+export interface PriceGroup {
+  title: string;
+  items: PriceItem[];
+  serviceLink?: { path: string; label: string };
+}
 export interface PriceList { id: 'damske' | 'panske'; title: string; groups: PriceGroup[]; }
 
 export const PRICE_LISTS: PriceList[] = [
@@ -23,6 +27,7 @@ export const PRICE_LISTS: PriceList[] = [
     groups: [
       {
         title: "Strih & Styling",
+        serviceLink: { path: '/sluzby/damske-strihy', label: 'Viac o dámskych strihoch' },
         items: [
           { name: "Dámsky strih", price: 30, duration: 60, category: 'Dámske', description: "Kompletný servis zahrňujúci odbornú konzultáciu, umývanie vlasov, relaxačnú masáž hlavy, precízny strih na mieru a záverečný styling. (Služba zahŕňa: umytie, strihanie a styling)" },
           { name: "Fúkaná dlhé vlasy", price: 30, duration: 45, category: 'Dámske', description: "Profesionálna úprava dlhých vlasov (pod ramená) fúkaním cez guľatú kefu pre maximálny objem, lesk a dlhotrvajúci tvar. (Služba zahŕňa: umytie a styling)" },
@@ -41,6 +46,7 @@ export const PRICE_LISTS: PriceList[] = [
       },
       {
         title: "Balayage & Melír",
+        serviceLink: { path: '/sluzby/ombre-farbenie', label: 'Viac o ombre a balayage' },
         items: [
           { name: "Balayage komplet", price: 150, duration: 240, category: 'Farbenie', description: "Moderná technika farbenia vytvárajúca prirodzené prechody. Zahŕňa konzultáciu, zosvetlenie, tónovanie a hĺbkovú regeneráciu. (Služba zahŕňa: balayage, umytie a styling)" },
           { name: "Balayage dorábka", price: 120, duration: 180, category: 'Farbenie', description: "Obnova a oživenie vašej balayage techniky, zameraná na oživenie odrastov a prejasnenie končekov. (Služba zahŕňa: balayage, umytie a styling)" },
@@ -75,6 +81,7 @@ export const PRICE_LISTS: PriceList[] = [
     groups: [
       {
         title: "Vlasy",
+        serviceLink: { path: '/sluzby/panske-strihy', label: 'Viac o pánskych strihoch' },
         items: [
           { name: "Strih Junior (do 15r.)", price: 15, duration: 45, category: 'Pánske', description: "Moderný a štýlový strih pre našich mladých zákazníkov do 15 rokov, prispôsobený ich vlasom a aktuálnym trendom. (Služba zahŕňa: umytie, strihanie, umytie a styling)" },
           { name: "Pánsky strih", price: 19, duration: 60, category: 'Pánske', description: "Kompletný pánsky strih zahŕňajúci konzultáciu, umývanie vlasov pred aj po strihaní a finálny styling s použitím prémiových produktov. (Služba zahŕňa: umytie, strihanie, umytie a styling)" },

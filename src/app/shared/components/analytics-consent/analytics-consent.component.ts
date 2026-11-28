@@ -1,4 +1,5 @@
 import { afterNextRender, ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
+import { SALON_CONTACT } from '../../../core/config/salon-contact';
 import { ANALYTICS_ID, trustedAnalyticsTagUrl } from '../../../core/security/trusted-types';
 
 const PREFERENCE = 'papi.analytics-consent.v1';
@@ -60,6 +61,22 @@ export class AnalyticsConsentComponent {
       gtag('js', new Date());
       // Rozšírené meranie streamu zachytí načítanie aj navigáciu cez History API.
       gtag('config', ANALYTICS_ID, { allow_google_signals: false, allow_ad_personalization_signals: false });
+      const trackClick = ({ target }: MouseEvent) => {
+        if (this.preference() !== 'granted' || !(target instanceof Element)) return;
+        const link = target.closest<HTMLAnchorElement>('a[href]');
+        if (!link) return;
+        // Odznak recenzií Bookio má rovnaký cieľ ako rezervácia.
+        const source = link.dataset['reviewSource'];
+        if (source === 'Google' || source === 'Bookio') {
+          gtag('event', 'reviews_click', { review_source: source });
+        } else if (link.href === SALON_CONTACT.bookingUrl) {
+          gtag('event', 'booking_click');
+        } else if (link.protocol === 'tel:') {
+          gtag('event', 'phone_click');
+        }
+      };
+      document.addEventListener('click', trackClick, true);
+      this.destroy.onDestroy(() => document.removeEventListener('click', trackClick, true));
       const script = document.createElement('script');
       script.async = true;
       script.src = trustedAnalyticsTagUrl();
