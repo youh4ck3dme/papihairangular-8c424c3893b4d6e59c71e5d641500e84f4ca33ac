@@ -193,7 +193,7 @@
         @for (src of reviewsSummary.sources; track src.label) {
           <li>
             <a class="reviews-source-pill" [href]="src.url" target="_blank" rel="noopener"
-              [title]="src.hint">
+              [attr.data-review-source]="src.label" [title]="src.hint">
               <strong>{{ src.label }}</strong> {{ src.rating }}
               <span class="reviews-source-count">· {{ src.count }}</span>
               <span aria-hidden="true">↗</span>
@@ -230,7 +230,7 @@
 
     <!-- CTA na napísanie recenzie -->
     <div class="reviews-cta-row">
-      <a [href]="contact.writeReviewUrl" target="_blank" rel="noopener" class="btn btn-primary">
+      <a data-review-source="Google" [href]="contact.writeReviewUrl" target="_blank" rel="noopener" class="btn btn-primary">
         Napíšte nám recenziu
         <span class="sr-only">(otvorí sa v novom okne)</span>
       </a>
